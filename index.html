@@ -213,6 +213,53 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
   .card{padding:16px 16px 13px}
   .card .hot{right:40px}
 }
+
+/* ---------- phase2: GA4·하트 카운트·댓글·제보 ---------- */
+.submitbtn{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;font-size:13px;letter-spacing:-.01em;
+  color:var(--text);background:rgba(255,255,255,.06);white-space:nowrap;transition:background .15s,border-color .15s}
+.submitbtn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.36)}
+@media(max-width:640px){.submitbtn{padding:7px 11px;font-size:12.5px}}
+.bmc{display:inline-block;margin-left:3px;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;vertical-align:1px}
+.popempty{grid-column:1/-1;border:1px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;color:var(--muted)}
+.popempty b{display:block;color:var(--text);font-weight:600;margin-bottom:6px;font-size:15px}
+.popempty span{font-size:13px;line-height:1.6}
+.cmts{margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+.cmts h3{margin:0 0 12px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.cmts .cn{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:2px}
+.cmt{border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;background:var(--card)}
+.cmt-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.cmt-hd b{font-size:12.5px;font-weight:600}
+.cmt-hd span{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.cmt p{margin:0;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.cmt-empty{margin:0 0 10px;color:var(--muted);font-size:13px}
+.cmt-form{display:flex;gap:8px;align-items:center;margin-top:10px}
+.cmt-form input{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);
+  padding:0 12px;font-size:14px;outline:none}
+.cmt-form input:focus{border-color:rgba(255,255,255,.32)}
+#cmt-nick{width:112px;flex:0 0 auto}
+#cmt-body{flex:1 1 auto;min-width:0}
+.cmt-form .btn{height:40px;padding:0 16px;border-radius:10px;white-space:nowrap}
+.cmt-note{margin:8px 0 0;font-size:12.5px;color:#ff9b9b;min-height:1em}
+.cmt-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media(max-width:640px){#cmt-nick{width:86px}.cmt-form .btn{padding:0 12px}}
+.gbm{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:20px;
+  background:rgba(0,0,0,.74);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.gbm.on{display:flex}
+.gbm-in{width:100%;max-width:520px;max-height:88vh;overflow:auto;background:#0D0D0D;border:1px solid var(--line);
+  border-radius:18px;padding:22px}
+.gbm-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.gbm-h h2{margin:0;font-size:18px;letter-spacing:-.02em;font-weight:600}
+.gbm-x{width:32px;height:32px;border-radius:8px;color:var(--muted);font-size:15px}
+.gbm-x:hover{background:var(--pill);color:var(--text)}
+.gbm-d{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.65}
+.gbm-l{display:block;margin:14px 0 6px;font-size:12.5px;color:var(--muted)}
+.gbm-l span{color:rgba(255,255,255,.35);font-size:11.5px;margin-left:4px}
+.gbm-in textarea,.gbm-in input[type=text]{width:100%;border-radius:10px;border:1px solid var(--line);background:#111;
+  color:var(--text);padding:11px 12px;font-size:14px;outline:none;font-family:inherit}
+.gbm-in textarea{min-height:108px;resize:vertical;line-height:1.6}
+.gbm-in textarea:focus,.gbm-in input[type=text]:focus{border-color:rgba(255,255,255,.32)}
+.gbm-row{display:flex;gap:8px;margin-top:18px}
+.gbm-row .btn{flex:1 1 auto;justify-content:center}
 </style>
 </head>
 <body>
@@ -223,9 +270,11 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
       <a href="#view=all">문장 아카이브</a>
       <a href="#view=pop">인기 문장</a>
       <a href="#" id="nav-bm">내가 좋아한 문장</a>
+      <a href="#" id="nav-submit">문장 제보하기</a>
       <a href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램</a>
       <a href="https://smartstore.naver.com/badgeters" target="_blank" rel="noopener">굿즈</a>
     </nav>
+    <button class="submitbtn" id="submit-top">문장 제보하기</button>
   </div>
 </header>
 
@@ -282,6 +331,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
       <a href="https://smartstore.naver.com/badgeters" target="_blank" rel="noopener">뉴랑마켓 굿즈</a>
       <a href="https://newr.kr" target="_blank" rel="noopener">디자인 의뢰 newr.kr</a>
       <a href="mailto:hi@newr.kr">hi@newr.kr</a>
+      <a href="#" id="foot-submit">문장 제보하기</a>
     </div>
     <p class="foot-note">글반장은 2016년부터 하루 한 문장씩 쌓아온 아카이브입니다. 이 페이지는 검색·열람용이며, 문장의 저작권은 각 저자와 출처에 있습니다. 인쇄·굿즈 사용은 문장별 저작권 분류를 확인하세요.</p>
   </div>
@@ -293,6 +343,25 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
   <button class="lbx" id="lbx" aria-label="닫기">✕</button>
   <img id="lbimg" alt="">
   <div class="lbtip">바깥을 누르면 닫힙니다</div>
+</div>
+<div class="gbm" id="gbm" role="dialog" aria-modal="true" aria-labelledby="gbm-t">
+  <div class="gbm-in">
+    <div class="gbm-h"><h2 id="gbm-t">문장 제보하기</h2><button class="gbm-x" id="gbm-x" aria-label="닫기">✕</button></div>
+    <p class="gbm-d">글반장 아카이브에 넣고 싶은 문장을 보내 주세요. 보내주신 문장은 제가 직접 검토하고, 좋은 문장만 아카이브에 등록합니다.</p>
+    <form id="gbm-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeAo1eFGiVf9G7UPn7l38UmqwXV8UB97hQTwUsjlIClrgI-2g/formResponse" method="POST" target="gbm-target">
+      <label class="gbm-l" for="gbm-text">문장 내용 <span>필수</span></label>
+      <textarea id="gbm-text" name="entry.687399703" rows="5" maxlength="600" required placeholder="문장을 그대로 적어 주세요"></textarea>
+      <label class="gbm-l" for="gbm-auth">저자·출처 <span>(선택)</span></label>
+      <input id="gbm-auth" name="entry.2063670818" type="text" maxlength="120" placeholder="예: 김종원, &lt;한 번 사는 인생&gt;">
+      <label class="gbm-l" for="gbm-nick">제보자 닉네임 <span>(선택)</span></label>
+      <input id="gbm-nick" name="entry.1148380929" type="text" maxlength="20" placeholder="익명">
+      <div class="gbm-row">
+        <button type="submit" class="btn solid" id="gbm-send">제보 보내기</button>
+        <button type="button" class="btn" id="gbm-cancel">취소</button>
+      </div>
+    </form>
+    <iframe name="gbm-target" id="gbm-target" title="제보 전송" style="display:none"></iframe>
+  </div>
 </div>
 <div id="toast" role="status"></div>
 <noscript><div class="wrap" style="padding:40px 0;color:#EDECEA">이 아카이브는 자바스크립트로 동작합니다. 브라우저에서 자바스크립트를 켜 주세요.</div></noscript>
@@ -553,7 +622,9 @@ function card(i){
   var on = BMSET[it[NUM]] ? ' on' : '';
   return '<article class="card" data-i="'+i+'" tabindex="0">'+
     hot +
-    '<button class="bm'+on+'" data-num="'+it[NUM]+'" title="좋아요" aria-label="좋아요">'+(on?'♥':'♡')+'</button>'+
+    '<button class="bm'+on+'" data-num="'+it[NUM]+'" title="좋아요" aria-label="좋아요">'+(on?'♥':'♡')+
+      ((window.GB_TODAY_COUNTS && window.GB_TODAY_COUNTS.counts && window.GB_TODAY_COUNTS.counts[it[NUM]] > 0) ? '<span class="bmc">'+window.GB_TODAY_COUNTS.counts[it[NUM]]+'</span>' : '')+
+    '</button>'+
     '<p class="s">'+hl(it[TXT])+'</p>'+
     '<div class="foot"><div><div class="a">— '+esc(it[AUTH])+'</div><div class="tg">'+tg+'</div></div></div>'+
   '</article>';
@@ -616,6 +687,7 @@ function IMG_EXISTS(i){ return !!IMGM[i]; }
 function openImg(i){
   var u = imgURL(i,1200);
   if (!u) return;
+  gbEvent('view_image', { quote_num: ITEMS[i][NUM] });
   el('lbimg').src = u;
   el('lb').classList.add('on');
   document.body.style.overflow = 'hidden';
@@ -626,38 +698,61 @@ function closeImg(){
   if (!el('sheet').classList.contains('on')) document.body.style.overflow = '';
 }
 
-/* ---------- today's popular (daily counts) ---------- */
-/* Hook for the shared counter (Firebase/Supabase) wired in the next step:
-   window.GB_TODAY_COUNTS = { date:'YYYY-MM-DD', counts:{ '<NUM>': <count>, ... } };
-   then call window.GB_REFRESH_POPULAR();                                */
+/* ---------- today's popular (daily hearts, Asia/Seoul date) ---------- */
 var TODAY_I = -1;
-var DKEY = (function(){ var d = new Date(); return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); })();
-function pop3List(){
-  var out = [], seen = {};
-  var live = window.GB_TODAY_COUNTS;
-  if (live && live.date === DKEY && live.counts){
-    var arr = Object.keys(live.counts).map(function(n){ return [+n, live.counts[n]]; })
-      .sort(function(a,b){ return (b[1]-a[1]) || (b[0]-a[0]); });
-    for (var k=0;k<arr.length && out.length<3;k++){
-      var idx = NUM2I[arr[k][0]];
-      if (idx !== undefined && idx !== TODAY_I && !seen[idx]){ seen[idx]=1; out.push(idx); }
-    }
-    if (out.length === 3) return { list: out, mode: 'count' };
-  }
-  var pool = [];
-  for (var i=0;i<N;i++) if (ITEMS[i][REL] >= 150 && i !== TODAY_I) pool.push(i);
-  pool.sort(function(a,b){ return seededRank(ITEMS[a][NUM]) - seededRank(ITEMS[b][NUM]); });
-  out = [];
-  for (var j=0;j<pool.length && out.length<3;j++) out.push(pool[j]);
-  return { list: out, mode: 'init' };
+var TCOUNT = {};
+var DKEY = seoulKey();
+window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
+function paintCounts(){
+  Array.prototype.forEach.call(document.querySelectorAll('.bm'), function(b){
+    var num = +b.getAttribute('data-num');
+    var c = TCOUNT[num] || 0;
+    var e = b.querySelector('.bmc');
+    if (c > 0){
+      if (!e){ e = document.createElement('span'); e.className = 'bmc'; b.appendChild(e); }
+      e.textContent = c;
+    } else if (e && e.parentNode){ e.parentNode.removeChild(e); }
+  });
 }
 function renderPopular(){
-  var r = pop3List();
-  el('pop3sub').textContent = r.mode === 'count' ? '오늘 가장 많이 읽힌 문장' : '지금 많이 읽히는 문장';
-  el('pop3grid').innerHTML = r.list.map(function(i){ return card(i); }).join('');
-  el('pop3').hidden = r.list.length === 0;
+  var live = window.GB_TODAY_COUNTS;
+  var counts = (live && live.date === DKEY) ? live.counts : {};
+  var arr = Object.keys(counts).map(function(n){ return [+n, counts[n]]; })
+    .filter(function(x){ return x[1] > 0 && NUM2I[x[0]] !== undefined; })
+    .sort(function(a, b){ return (b[1] - a[1]) || (b[0] - a[0]); });
+  el('pop3').hidden = false;
+  if (!arr.length){
+    el('pop3sub').textContent = '오늘 하트가 쌓이면 여기에 올라갑니다';
+    el('pop3grid').innerHTML = '<div class="popempty"><b>오늘 첫 하트를 기다리고 있어요</b><span>마음에 드는 문장에 ♡를 눌러 주세요. 하트는 매일 새로 쌓입니다.</span></div>';
+    return;
+  }
+  el('pop3sub').textContent = '오늘 하트를 받은 문장';
+  el('pop3grid').innerHTML = arr.slice(0, 3).map(function(x){ return card(NUM2I[x[0]]); }).join('');
+  paintCounts();
 }
 window.GB_REFRESH_POPULAR = renderPopular;
+function heartSync(num, delta){
+  return sbRpc('increment_heart', { p_day: DKEY, p_quote: num, p_delta: delta })
+    .then(function(c){
+      TCOUNT[num] = c;
+      window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
+      paintCounts(); renderPopular();
+      var sb = el('s-bm');
+      if (sb) sb.textContent = bmGlyph(num) + ' ' + (BMSET[num] ? '좋아한 문장' : '좋아요') + (c > 0 ? ' · ♥ ' + c : '');
+    })
+    .catch(function(){});
+}
+function loadTodayCounts(){
+  DKEY = seoulKey();
+  return sbGet('daily_hearts?select=quote_num,count&day=eq.' + DKEY)
+    .then(function(rows){
+      TCOUNT = {};
+      (rows || []).forEach(function(r){ TCOUNT[r.quote_num] = r.count; });
+      window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
+      paintCounts(); renderPopular();
+    })
+    .catch(function(){ renderPopular(); });
+}
 
 /* ---------- today ---------- */
 function pickToday(shift){
@@ -701,12 +796,14 @@ function mini(j, axis){
 function openDetail(i, noPush){
   lastFocus = document.activeElement;
   var it = ITEMS[i];
+  gbEvent('view_quote', { quote_num: it[NUM], category: CATS[it[CAT]] });
   var axis = PAIRS[it[PAIR]];
   var side = it[POLE] === 0 ? axis[0] : axis[1];
   var other = it[POLE] === 0 ? axis[1] : axis[0];
   var nameA = axis[2], nameB = axis[3];
   var tags = it[TGS].map(function(t){ return '<button class="tagchip" data-tag="'+esc(TAGS[t])+'">'+esc(TAGS[t])+'</button>'; }).join('');
-  var bm = bmGlyph(it[NUM]) + ' ' + (BMSET[it[NUM]] ? '좋아한 문장' : '좋아요');
+  var hc = (window.GB_TODAY_COUNTS && window.GB_TODAY_COUNTS.counts && window.GB_TODAY_COUNTS.counts[it[NUM]]) || 0;
+  var bm = bmGlyph(it[NUM]) + ' ' + (BMSET[it[NUM]] ? '좋아한 문장' : '좋아요') + (hc > 0 ? ' · ♥ ' + hc : '');
   var html = ''+
     '<div class="head"><span class="num">#'+it[NUM]+'</span><span>·</span><span>'+esc(CATS[it[CAT]])+'</span>'+
       (it[REL]>=150?'<span class="hot" style="position:static">인기</span>':'')+
@@ -727,14 +824,17 @@ function openDetail(i, noPush){
       '<h3 style="margin-top:20px">반대 관점의 문장 <span class="axis">'+esc(side)+' ↔ '+esc(other)+'</span></h3>'+
       '<p class="hint">이 문장은 <b>'+esc(side)+'</b> 쪽입니다 ('+esc(nameA)+' / '+esc(nameB)+' 축). 같은 축에서 반대편에 선 문장을 골랐습니다.</p>'+
       it[OPP].slice(0,3).map(function(j){ return mini(j); }).join('')+
-    '</div>';
+    '</div>'+
+    commentsHTML(it[NUM]);
   el('sheetin').innerHTML = html;
   el('sheet').classList.add('on'); el('overlay').classList.add('on');
   document.body.style.overflow = 'hidden';
   el('s-close').onclick = closeDetail;
-  el('s-copy').onclick = function(){ copyText(it[AUTH] ? it[TXT] + '\n\n— ' + it[AUTH] : it[TXT]); };
+  el('s-copy').onclick = function(){ copyText(it[AUTH] ? it[TXT] + '\n\n— ' + it[AUTH] : it[TXT]); gbEvent('copy_quote', { quote_num: it[NUM] }); };
   if (el('s-img')) el('s-img').onclick = function(){ openImg(i); };
   el('s-bm').onclick = function(){ toggleBM(it[NUM]); };
+  loadComments(it[NUM]);
+  commentsInit(it[NUM]);
   Array.prototype.forEach.call(el('sheetin').querySelectorAll('.mini'), function(b){
     b.onclick = function(){ openDetail(+b.getAttribute('data-i')); };
   });
@@ -770,19 +870,23 @@ function fallbackCopy(s){
 function copyItem(i){
   var it = ITEMS[i];
   copyText(it[TXT] + '\n— ' + it[AUTH]);
+  gbEvent('copy_quote', { quote_num: it[NUM] });
 }
 function bmGlyph(num){ return BMSET[num] ? '♥' : '♡'; }
 function toggleBM(num){
   if (BMSET[num]) { delete BMSET[num]; BM = BM.filter(function(x){ return x!==num; }); }
   else { BMSET[num] = 1; BM.push(num); }
   saveBM();
+  var hOn = !!BMSET[num];
+  heartSync(num, hOn ? 1 : -1);
+  if (hOn) gbEvent('heart_quote', { quote_num: num });
   el('n-bm').textContent = BM.length;
   Array.prototype.forEach.call(document.querySelectorAll('.bm[data-num="'+num+'"]'), function(b){
     b.classList.toggle('on', !!BMSET[num]);
     b.textContent = bmGlyph(num);
   });
   var sb = el('s-bm');
-  if (sb) sb.textContent = bmGlyph(num) + ' ' + (BMSET[num] ? '좋아한 문장' : '좋아요');
+  if (sb) sb.textContent = bmGlyph(num) + ' ' + (BMSET[num] ? '좋아한 문장' : '좋아요') + ((TCOUNT[num] || 0) > 0 ? ' · ♥ ' + TCOUNT[num] : '');
 }
 
 /* ---------- chips / toolbar ---------- */
@@ -979,6 +1083,136 @@ document.addEventListener('keydown', function(e){
 
 window.addEventListener('hashchange', function(){ applyHash(); });
 
+/* ---------- GA4 helper ---------- */
+function gbEvent(name, params){ try { if (window.gtag) window.gtag('event', name, params || {}); } catch(e){} }
+
+/* ---------- Supabase: daily hearts + instant comments ---------- */
+var SB_URL = 'https://ecwrolumnuajrkqmzeds.supabase.co';
+var SB_KEY = 'sb_publishable_GWhczqZ14Jir3UytthydNg_9BBUNhCD';
+function sbGet(path){
+  return fetch(SB_URL + '/rest/v1/' + path, { headers: { 'apikey': SB_KEY, 'Accept': 'application/json' }, cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); });
+}
+function sbRpc(fn, body){
+  return fetch(SB_URL + '/rest/v1/rpc/' + fn, { method: 'POST', headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+    .then(function(r){ return r.json().then(function(j){ return r.ok ? j : Promise.reject(j); }); });
+}
+function seoulKey(){
+  var d = new Date(Date.now() + 9 * 3600 * 1000);
+  return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth() + 1) + '-' + pad2(d.getUTCDate());
+}
+function fmtAgo(iso){
+  var t = new Date(iso).getTime(); if (!t) return '';
+  var s = Math.floor((Date.now() - t) / 1000);
+  if (s < 60) return '방금';
+  if (s < 3600) return Math.floor(s / 60) + '분 전';
+  if (s < 86400) return Math.floor(s / 3600) + '시간 전';
+  var d = new Date(t);
+  return (d.getMonth() + 1) + '.' + d.getDate();
+}
+
+/* ---------- instant comments (detail sheet) ---------- */
+var sheetOpenAt = 0;
+var CMT_COOLDOWN = 30000;
+var SPAM_RE = /(https?:\/\/|www\.|\.com|\.net|\.kr|카톡|카카오톡|텔레그램|t\.me\/)/i;
+function commentsHTML(num){
+  return '<div class="cmts" id="cmts">' +
+    '<h3>댓글 <span class="cn" id="cn-cnt"></span></h3>' +
+    '<div class="cmt-list" id="cmt-list"><p class="cmt-empty">불러오는 중…</p></div>' +
+    '<form class="cmt-form" id="cmt-form" autocomplete="off">' +
+      '<div class="cmt-hp" aria-hidden="true"><label>이 칸은 비워 두세요<input type="text" id="cmt-hp" tabindex="-1" autocomplete="off"></label></div>' +
+      '<input id="cmt-nick" type="text" maxlength="20" placeholder="닉네임 (선택)" aria-label="닉네임">' +
+      '<input id="cmt-body" type="text" maxlength="300" placeholder="한 줄 댓글 (2~300자)" aria-label="댓글">' +
+      '<button type="submit" class="btn solid" id="cmt-send">등록</button>' +
+    '</form>' +
+    '<p class="cmt-note" id="cmt-note"></p>' +
+  '</div>';
+}
+function loadComments(num){
+  var list = el('cmt-list'); if (!list) return;
+  sbGet('quote_comments?select=nickname,body,created_at&quote_num=eq.' + num + '&order=created_at.desc&limit=30')
+    .then(function(rows){
+      if (!el('cmt-list')) return;
+      if (!rows || !rows.length){
+        el('cmt-list').innerHTML = '<p class="cmt-empty">아직 댓글이 없습니다. 첫 댓글을 남겨 보세요.</p>';
+        el('cn-cnt').textContent = '';
+        return;
+      }
+      el('cn-cnt').textContent = rows.length;
+      el('cmt-list').innerHTML = rows.map(function(r){
+        return '<div class="cmt"><div class="cmt-hd"><b>' + esc(r.nickname) + '</b><span>' + fmtAgo(r.created_at) + '</span></div><p>' + esc(r.body) + '</p></div>';
+      }).join('');
+    })
+    .catch(function(){
+      if (el('cmt-list')) el('cmt-list').innerHTML = '<p class="cmt-empty">댓글을 불러오지 못했습니다.</p>';
+    });
+}
+function commentsInit(num){
+  var form = el('cmt-form'); if (!form) return;
+  sheetOpenAt = Date.now();
+  form.onsubmit = function(e){
+    e.preventDefault();
+    var note = el('cmt-note');
+    var body = (el('cmt-body').value || '').trim();
+    var nick = (el('cmt-nick').value || '').trim();
+    var hp = el('cmt-hp').value || '';
+    if (Date.now() - sheetOpenAt < 2000){ note.textContent = '잠시 후 다시 시도해 주세요.'; return; }
+    var last = 0; try { last = +(localStorage.getItem('gb_cmt_at') || 0); } catch(err){}
+    if (Date.now() - last < CMT_COOLDOWN){ note.textContent = '연속 등록은 30초 뒤에 가능합니다.'; return; }
+    if (hp){ note.textContent = '등록할 수 없습니다.'; return; }
+    if (body.length < 2 || body.length > 300){ note.textContent = '댓글은 2자 이상 300자 이하로 적어 주세요.'; return; }
+    if (SPAM_RE.test(body)){ note.textContent = '링크나 홍보 문구가 들어간 댓글은 등록할 수 없습니다.'; return; }
+    var btn = el('cmt-send'); btn.disabled = true; note.textContent = '';
+    sbRpc('add_comment', { p_quote: num, p_nick: nick, p_body: body, p_hp: hp })
+      .then(function(){
+        try { localStorage.setItem('gb_cmt_at', String(Date.now())); } catch(err){}
+        el('cmt-body').value = '';
+        toast('댓글을 남겼습니다');
+        gbEvent('comment_quote', { quote_num: num });
+        loadComments(num);
+      })
+      .catch(function(err){
+        var m = (err && err.message) || '';
+        note.textContent = m === 'link' ? '링크나 홍보 문구가 들어간 댓글은 등록할 수 없습니다.'
+          : m === 'length' ? '댓글은 2자 이상 300자 이하로 적어 주세요.'
+          : m === 'duplicate' ? '같은 댓글이 방금 등록되었습니다.'
+          : '등록하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+      })
+      .then(function(){ btn.disabled = false; });
+  };
+}
+
+/* ---------- 문장 제보하기 modal (Google Form + 검토 시트) ---------- */
+function openSubmit(){
+  var m = el('gbm'); if (!m) return;
+  m.classList.add('on'); document.body.style.overflow = 'hidden';
+  setTimeout(function(){ var t = el('gbm-text'); if (t) t.focus(); }, 60);
+  gbEvent('open_submit');
+}
+function closeSubmit(){
+  var m = el('gbm');
+  if (m) m.classList.remove('on');
+  if (!el('sheet').classList.contains('on')) document.body.style.overflow = '';
+}
+function submitInit(){
+  ['submit-top', 'nav-submit', 'foot-submit'].forEach(function(id){
+    var b = el(id); if (b) b.onclick = function(e){ e.preventDefault(); openSubmit(); };
+  });
+  var x = el('gbm-x'); if (x) x.onclick = closeSubmit;
+  var c = el('gbm-cancel'); if (c) c.onclick = closeSubmit;
+  var m = el('gbm'); if (m) m.onclick = function(e){ if (e.target === m) closeSubmit(); };
+  var f = el('gbm-form');
+  if (f) f.onsubmit = function(e){
+    var text = (el('gbm-text').value || '').trim();
+    if (text.length < 2){ e.preventDefault(); toast('문장을 2자 이상 적어 주세요'); return; }
+    setTimeout(function(){
+      f.reset(); closeSubmit();
+      toast('제보를 보냈습니다. 검토 후 등록됩니다');
+      gbEvent('submit_quote');
+    }, 900);
+  };
+}
+
 /* ---------- init ---------- */
 (function init(){
   var pop = 0, all = N;
@@ -988,6 +1222,8 @@ window.addEventListener('hashchange', function(){ applyHash(); });
   el('n-bm').textContent = BM.length;
   renderToday(0);
   renderPopular();
+  loadTodayCounts();
+  submitInit();
   renderChips();
   renderCats();
   renderTags();
