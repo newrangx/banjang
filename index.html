@@ -138,7 +138,7 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .sheet .auth{color:var(--muted);font-size:14px;margin:0 0 16px}
 .sheet .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
 .sheet .acts{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
-.rel{padding-top:22px}
+.rel{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .rel h3{font-size:13px;letter-spacing:.02em;color:var(--muted);font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .rel h3 .axis{font-weight:500;font-size:11.5px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--text);background:var(--pill);letter-spacing:0}
 .rel h3 .axis em{font-style:normal;color:var(--muted)}
@@ -223,7 +223,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .popempty{grid-column:1/-1;border:1px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;color:var(--muted)}
 .popempty b{display:block;color:var(--text);font-weight:600;margin-bottom:6px;font-size:15px}
 .popempty span{font-size:13px;line-height:1.6}
-.cmts{margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+.cmts{margin-top:20px;padding-top:0;border-top:0}
 .cmts h3{margin:0 0 12px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
 .cmts .cn{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:2px}
 .cmt{border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;background:var(--card)}
@@ -825,14 +825,14 @@ function openDetail(i, noPush){
       '<button class="btn" id="s-bm">'+bm+'</button>'+
       '<a class="btn" href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램</a>'+
     '</div>'+
+    commentsHTML(it[NUM])+
     '<div class="rel">'+
       '<h3>이 문장과 비슷한 문장</h3>'+
       it[SIM].slice(0,3).map(function(j){ return mini(j); }).join('')+
       '<h3 style="margin-top:20px">반대 관점의 문장 <span class="axis">'+esc(side)+' ↔ '+esc(other)+'</span></h3>'+
       '<p class="hint">이 문장은 <b>'+esc(side)+'</b> 쪽입니다 ('+esc(nameA)+' / '+esc(nameB)+' 축). 같은 축에서 반대편에 선 문장을 골랐습니다.</p>'+
       it[OPP].slice(0,3).map(function(j){ return mini(j); }).join('')+
-    '</div>'+
-    commentsHTML(it[NUM]);
+    '</div>';
   el('sheetin').innerHTML = html;
   el('sheet').classList.add('on'); el('overlay').classList.add('on');
   document.body.style.overflow = 'hidden';
