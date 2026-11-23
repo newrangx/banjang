@@ -44,7 +44,9 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 .hero h1{margin:0 0 14px;font-size:44px;line-height:1.12;letter-spacing:-.035em;font-weight:600}
 .hero h1 em{font-style:normal;color:var(--muted)}
 .hero p.sub{margin:0 auto 26px;max-width:640px;color:var(--muted);font-size:15.5px;line-height:1.7}
-@media(max-width:640px){.hero{padding:36px 0 20px}.hero h1{font-size:30px}.hero p.sub{font-size:14px}}
+.hero h1{text-wrap:balance}
+.hero p.sub{word-break:keep-all;overflow-wrap:anywhere}
+@media(max-width:640px){.hero{padding:28px 0 18px}.hero h1{font-size:30px}.hero p.sub{font-size:14px}}
 
 /* search */
 .searchbox{position:relative;max-width:680px;margin:0 auto}
@@ -63,10 +65,12 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 /* today */
 .today{margin:34px auto 0;max-width:820px;border:1px solid var(--line);background:linear-gradient(180deg,#111,#0b0b0b);border-radius:18px;padding:26px 28px;text-align:left}
 .today .lbl{font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
-.today .s{font-size:22px;line-height:1.6;letter-spacing:-.02em;margin:0 0 10px;white-space:pre-line}
+.today .s{font-size:22px;line-height:1.62;letter-spacing:-.015em;margin:0 0 10px;white-space:pre-line;
+  word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty}
 .today .a{color:var(--muted);font-size:13.5px;margin:0 0 16px}
 .today .row{display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:8px 13px;font-size:13px;color:var(--text)}
+.btn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:8px 13px;font-size:13px;color:var(--text);
+  display:inline-flex;align-items:center;justify-content:center;min-height:40px;line-height:1}
 .btn:hover{border-color:rgba(255,255,255,.3)}
 .btn.solid{background:var(--text);color:#151618;border-color:var(--text);font-weight:600}
 @media(max-width:640px){.today{padding:20px;border-radius:14px}.today .s{font-size:18px}}
@@ -102,13 +106,15 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .card{position:relative;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:18px 18px 14px;cursor:pointer;
   display:flex;flex-direction:column;gap:12px;min-height:150px;transition:border-color .15s,transform .15s}
 .card:hover{border-color:rgba(255,255,255,.24);transform:translateY(-1px)}
-.card .s{margin:0;font-size:16px;line-height:1.66;letter-spacing:-.015em;white-space:pre-line;overflow:hidden;
+.card .s{margin:0;font-size:16px;line-height:1.66;letter-spacing:-.01em;white-space:pre-line;overflow:hidden;
+  word-break:keep-all;overflow-wrap:anywhere;
   display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
 .card .foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
 .card .a{color:var(--muted);font-size:12.5px;line-height:1.4}
 .card .grade{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
-.card .hot{position:absolute;top:12px;right:44px;font-size:10.5px;color:#151618;background:var(--text);border-radius:5px;padding:1px 6px;font-weight:700}
-.card .bm{position:absolute;top:9px;right:10px;width:28px;height:28px;border-radius:8px;color:var(--muted);font-size:15px;line-height:1}
+.card .hot{position:absolute;top:12px;right:52px;font-size:10.5px;color:#151618;background:var(--text);border-radius:5px;padding:1px 6px;font-weight:700}
+.card .bm{position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:9px;color:var(--muted);font-size:16px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center}
 .card .bm:hover{color:var(--text);background:var(--pill)}
 .card .bm.on{color:var(--text)}
 .card .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
@@ -131,9 +137,10 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 @media(max-width:640px){.sheet-in{padding:16px 18px 40px}}
 .sheet .head{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12.5px;margin-bottom:18px}
 .sheet .head .num{font-variant-numeric:tabular-nums}
-.sheet .close{margin-left:auto;width:34px;height:34px;border:1px solid var(--line);border-radius:9px;font-size:15px;color:var(--muted)}
+.sheet .close{margin-left:auto;width:40px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:15px;color:var(--muted)}
 .sheet .close:hover{color:var(--text)}
-.sheet blockquote{margin:0 0 14px;font-size:23px;line-height:1.62;letter-spacing:-.025em;white-space:pre-line}
+.sheet blockquote{margin:0 0 14px;font-size:23px;line-height:1.7;letter-spacing:-.015em;white-space:pre-line;
+  word-break:keep-all;overflow-wrap:anywhere;max-width:34em}
 @media(max-width:640px){.sheet blockquote{font-size:19px}}
 .sheet .auth{color:var(--muted);font-size:14px;margin:0 0 16px}
 .sheet .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
@@ -144,7 +151,8 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .rel h3 .axis em{font-style:normal;color:var(--muted)}
 .mini{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px;margin-bottom:8px}
 .mini:hover{border-color:rgba(255,255,255,.24)}
-.mini .ms{margin:0 0 6px;font-size:14px;line-height:1.6;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.mini .ms{margin:0 0 6px;font-size:14px;line-height:1.65;white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .mini .ma{font-size:12px;color:var(--muted)}
 .hint{font-size:12px;color:var(--muted);line-height:1.7;margin:10px 0 0}
 .divider{height:1px;background:var(--line);margin:22px 0 0}
@@ -163,9 +171,9 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 
 
 /* today image */
-.today .shot{display:block;margin:0 auto 20px;max-width:100%;max-height:440px;height:auto;border-radius:14px;
+.today .shot{display:block;margin:20px auto 0;max-width:100%;max-height:300px;width:auto;height:auto;border-radius:14px;
   border:1px solid var(--line);background:#0d0d0d;cursor:zoom-in}
-@media(max-width:640px){.today .shot{max-height:52vh;border-radius:12px;margin-bottom:16px}}
+@media(max-width:640px){.today .shot{max-height:240px;border-radius:12px;margin-top:16px}}
 
 /* lightbox */
 .lb{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.94);display:flex;align-items:center;justify-content:center;
@@ -186,6 +194,26 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .pop3 .card .s{-webkit-line-clamp:4}
 @media(max-width:900px){.pop3-grid{grid-template-columns:repeat(3,1fr);gap:10px}}
 @media(max-width:640px){.pop3{margin-top:26px}.pop3-grid{grid-template-columns:1fr;gap:10px}.pop3 .card{min-height:0}}
+
+/* visitor submissions */
+.usub{margin:38px auto 0;max-width:1140px}
+.usub .ph{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.usub .lbl{font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.usub .sub{font-size:12px;color:var(--muted);line-height:1.5}
+.usub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.usub-card{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px 16px 13px;display:flex;flex-direction:column;gap:8px}
+.usub-card.new{border-color:rgba(255,255,255,.42);box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.usub-card .q{margin:0;font-size:15px;line-height:1.68;letter-spacing:-.01em;white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.usub-card .a{margin:0;font-size:12px;color:var(--muted);line-height:1.5;word-break:keep-all}
+.usub-card .f{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--muted)}
+.usub-empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:14px;padding:18px 20px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+.usub-cta{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px;padding:14px 16px;
+  border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#0f0f0f,#0b0b0b)}
+.usub-cta p{margin:0;font-size:13px;color:var(--muted);line-height:1.6;word-break:keep-all}
+@media(max-width:900px){.usub-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.usub{margin-top:26px}.usub-grid{grid-template-columns:1fr;gap:10px}
+  .usub-cta{padding:14px}.usub-cta .btn{width:100%}}
 
 /* ---------- mobile (under 640px) ---------- */
 @media(max-width:640px){
@@ -209,14 +237,22 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
   .tagmore{flex:0 0 auto;white-space:nowrap}
   .searchbox kbd{display:none}
   .searchbox input{padding-right:20px}
+  .qchips{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;-ms-overflow-style:none;margin:12px -14px 0;padding:0 14px 2px}
+  .qchips::-webkit-scrollbar{display:none}
+  .qchip{flex:0 0 auto;white-space:nowrap}
   .meta{flex-wrap:wrap;gap:6px;padding:14px 0 2px}
   .card{padding:16px 16px 13px}
-  .card .hot{right:40px}
+  .card .hot{right:52px}
+  .btn{min-height:44px}
+  .cmt-form input{height:44px}
+  .cmt-form .btn{height:44px}
 }
 
 /* ---------- phase2: GA4·하트 카운트·댓글·제보 ---------- */
 .submitbtn{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;font-size:13px;letter-spacing:-.01em;
-  color:var(--text);background:rgba(255,255,255,.06);white-space:nowrap;transition:background .15s,border-color .15s}
+  color:var(--text);background:rgba(255,255,255,.06);white-space:nowrap;transition:background .15s,border-color .15s;
+  display:inline-flex;align-items:center;min-height:40px}
 .submitbtn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.36)}
 @media(max-width:640px){.submitbtn{padding:7px 11px;font-size:12.5px}}
 .bmc{display:inline-block;margin-left:3px;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;vertical-align:1px}
@@ -260,6 +296,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .gbm-in textarea:focus,.gbm-in input[type=text]:focus{border-color:rgba(255,255,255,.32)}
 .gbm-row{display:flex;gap:8px;margin-top:18px}
 .gbm-row .btn{flex:1 1 auto;justify-content:center}
+.gbm-note{margin:10px 0 0;font-size:12.5px;color:#ff9b9b;min-height:1em}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EQPB5MSEZV"></script>
 <script>
@@ -277,7 +314,6 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
       <a href="#view=all">문장 아카이브</a>
       <a href="#view=pop">인기 문장</a>
       <a href="#" id="nav-bm">내가 좋아한 문장</a>
-      <a href="#" id="nav-submit">문장 제보하기</a>
       <a href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램</a>
       <a href="https://smartstore.naver.com/badgeters" target="_blank" rel="noopener">굿즈</a>
     </nav>
@@ -301,6 +337,15 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
   <section class="pop3" id="pop3" hidden>
     <div class="ph"><span class="lbl">오늘의 인기글</span><span class="sub" id="pop3sub"></span></div>
     <div class="pop3-grid" id="pop3grid"></div>
+  </section>
+
+  <section class="usub" id="usub">
+    <div class="ph"><span class="lbl">방문자 제보 문장</span><span class="sub" id="usub-sub">방문자가 보낸 문장이 바로 올라갑니다</span></div>
+    <div class="usub-grid" id="usub-grid"><div class="usub-empty">불러오는 중…</div></div>
+    <div class="usub-cta">
+      <p>마음에 남은 문장이 있으면 여기에 남겨 주세요. 보낸 문장은 바로 이 자리에 올라가고, 확인 후 아카이브에 등록합니다.</p>
+      <button class="btn solid" id="usub-btn">문장 제보하기</button>
+    </div>
   </section>
 </div>
 
@@ -354,20 +399,21 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
 <div class="gbm" id="gbm" role="dialog" aria-modal="true" aria-labelledby="gbm-t">
   <div class="gbm-in">
     <div class="gbm-h"><h2 id="gbm-t">문장 제보하기</h2><button class="gbm-x" id="gbm-x" aria-label="닫기">✕</button></div>
-    <p class="gbm-d">글반장 아카이브에 넣고 싶은 문장을 보내 주세요. 보내주신 문장은 제가 직접 검토하고, 좋은 문장만 아카이브에 등록합니다.</p>
-    <form id="gbm-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeAo1eFGiVf9G7UPn7l38UmqwXV8UB97hQTwUsjlIClrgI-2g/formResponse" method="POST" target="gbm-target">
-      <label class="gbm-l" for="gbm-text">문장 내용 <span>필수</span></label>
-      <textarea id="gbm-text" name="entry.687399703" rows="5" maxlength="600" required placeholder="문장을 그대로 적어 주세요"></textarea>
+    <p class="gbm-d">글반장 아카이브에 넣고 싶은 문장을 보내 주세요. 보낸 문장은 아래 <b>방문자 제보 문장</b>에 바로 올라가고, 확인 후 아카이브에 등록합니다.</p>
+    <form id="gbm-form" autocomplete="off">
+      <div class="cmt-hp" aria-hidden="true"><label>이 칸은 비워 두세요<input type="text" id="gbm-hp" tabindex="-1" autocomplete="off"></label></div>
+      <label class="gbm-l" for="gbm-text">문장 내용 <span>필수 · 2~300자</span></label>
+      <textarea id="gbm-text" rows="5" maxlength="300" required placeholder="문장을 그대로 적어 주세요"></textarea>
       <label class="gbm-l" for="gbm-auth">저자·출처 <span>(선택)</span></label>
-      <input id="gbm-auth" name="entry.2063670818" type="text" maxlength="120" placeholder="예: 김종원, &lt;한 번 사는 인생&gt;">
+      <input id="gbm-auth" type="text" maxlength="60" placeholder="예: 김종원, &lt;한 번 사는 인생&gt;">
       <label class="gbm-l" for="gbm-nick">제보자 닉네임 <span>(선택)</span></label>
-      <input id="gbm-nick" name="entry.1148380929" type="text" maxlength="20" placeholder="익명">
+      <input id="gbm-nick" type="text" maxlength="20" placeholder="익명">
+      <p class="gbm-note" id="gbm-note"></p>
       <div class="gbm-row">
         <button type="submit" class="btn solid" id="gbm-send">제보 보내기</button>
         <button type="button" class="btn" id="gbm-cancel">취소</button>
       </div>
     </form>
-    <iframe name="gbm-target" id="gbm-target" title="제보 전송" style="display:none"></iframe>
   </div>
 </div>
 <div id="toast" role="status"></div>
@@ -779,17 +825,19 @@ function renderToday(shift){
   TODAY_I = i;
   el('today').innerHTML =
     '<div class="lbl">오늘의 문장</div>'+
-    (shot ? '<img class="shot" id="t-shot" src="'+shot+'" alt="오늘의 문장 원본 카드" loading="eager" decoding="async">' : '')+
     '<p class="s">'+esc(it[TXT])+'</p>'+
     '<p class="a">— '+esc(it[AUTH])+'</p>'+
     '<div class="row">'+
       '<button class="btn solid" id="t-open">문장 열기</button>'+
       '<button class="btn" id="t-copy">복사</button>'+
+      '<button class="btn" id="t-share">링크 복사</button>'+
       '<button class="btn" id="t-next">다른 문장</button>'+
-    '</div>';
+    '</div>'+
+    (shot ? '<img class="shot" id="t-shot" src="'+shot+'" alt="오늘의 문장 원본 카드" loading="eager" decoding="async">' : '');
   if (el('t-shot')) el('t-shot').onclick = function(){ openImg(i); };
   el('t-open').onclick = function(){ openDetail(i); };
   el('t-copy').onclick = function(){ copyItem(i); };
+  el('t-share').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_quote', { quote_num: it[NUM], from: 'today' }); };
   el('t-next').onclick = function(){ TSHIFT++; renderToday(TSHIFT); };
 }
 var TSHIFT = 0;
@@ -822,6 +870,7 @@ function openDetail(i, noPush){
     '<div class="acts">'+
       (IMG_EXISTS(i) ? '<button class="btn" id="s-img">이미지 보기</button>' : '')+
       '<button class="btn solid" id="s-copy">문장 복사</button>'+
+      '<button class="btn" id="s-link">링크 복사</button>'+
       '<button class="btn" id="s-bm">'+bm+'</button>'+
       '<a class="btn" href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램</a>'+
     '</div>'+
@@ -838,6 +887,7 @@ function openDetail(i, noPush){
   document.body.style.overflow = 'hidden';
   el('s-close').onclick = closeDetail;
   el('s-copy').onclick = function(){ copyText(it[AUTH] ? it[TXT] + '\n\n— ' + it[AUTH] : it[TXT]); gbEvent('copy_quote', { quote_num: it[NUM] }); };
+  el('s-link').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_quote', { quote_num: it[NUM], from: 'sheet' }); };
   if (el('s-img')) el('s-img').onclick = function(){ openImg(i); };
   el('s-bm').onclick = function(){ toggleBM(it[NUM]); };
   loadComments(it[NUM]);
@@ -863,15 +913,16 @@ function closeDetail(){
 
 /* ---------- clipboard / bookmarks ---------- */
 function toast(msg){ var t = el('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('on'); }, 1600); }
-function copyText(s){
+function copyText(s, msg){
+  var ok = msg || '복사했습니다';
   if (navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(s).then(function(){ toast('복사했습니다'); }, function(){ fallbackCopy(s); });
-  } else fallbackCopy(s);
+    navigator.clipboard.writeText(s).then(function(){ toast(ok); }, function(){ fallbackCopy(s, ok); });
+  } else fallbackCopy(s, ok);
 }
-function fallbackCopy(s){
+function fallbackCopy(s, msg){
   var ta = document.createElement('textarea'); ta.value = s; ta.style.position='fixed'; ta.style.top='-1000px';
   document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); toast('복사했습니다'); } catch(e){ toast('복사가 막혔습니다. 길게 눌러 선택하세요'); }
+  try { document.execCommand('copy'); toast(msg || '복사했습니다'); } catch(e){ toast('복사가 막혔습니다. 길게 눌러 선택하세요'); }
   document.body.removeChild(ta);
 }
 function copyItem(i){
@@ -1189,10 +1240,43 @@ function commentsInit(num){
   };
 }
 
-/* ---------- 문장 제보하기 modal (Google Form + 검토 시트) ---------- */
+/* ---------- 방문자 제보 문장 (Supabase submitted_quotes) ---------- */
+var SUB_COOLDOWN = 30000;
+var SUB_CACHE = [];
+function subCardHTML(r, isNew){
+  var au = (r.author || '').trim();
+  return '<article class="usub-card' + (isNew ? ' new' : '') + '">' +
+    '<p class="q">' + esc(r.body) + '</p>' +
+    (au ? '<p class="a">— ' + esc(au) + '</p>' : '') +
+    '<div class="f"><span>제보 · ' + esc(r.nickname || '익명') + '</span><span>' + fmtAgo(r.created_at) + '</span></div>' +
+    '</article>';
+}
+function renderSubmissions(rows, newRow){
+  var grid = el('usub-grid'); if (!grid) return;
+  var list = rows || [];
+  if (newRow) list = [newRow].concat(list);
+  SUB_CACHE = list;
+  if (!list.length){
+    grid.innerHTML = '<div class="usub-empty">아직 제보가 없습니다. 첫 문장을 남겨 보세요.</div>';
+    el('usub-sub').textContent = '방문자가 보낸 문장이 바로 올라갑니다';
+    return;
+  }
+  grid.innerHTML = list.slice(0, 6).map(function(r, idx){ return subCardHTML(r, !!newRow && idx === 0); }).join('');
+  el('usub-sub').textContent = '최근 ' + Math.min(list.length, 6) + '건 · 방문자가 보낸 문장';
+}
+function loadSubmissions(){
+  return sbGet('submitted_quotes?select=id,body,author,nickname,created_at&order=created_at.desc&limit=6')
+    .then(function(rows){ renderSubmissions(rows || []); })
+    .catch(function(){ var g = el('usub-grid'); if (g) g.innerHTML = '<div class="usub-empty">제보 문장을 불러오지 못했습니다.</div>'; });
+}
+
+/* ---------- 문장 제보하기 modal (Supabase add_submission) ---------- */
+var gbmOpenAt = 0;
 function openSubmit(){
   var m = el('gbm'); if (!m) return;
+  gbmOpenAt = Date.now();
   m.classList.add('on'); document.body.style.overflow = 'hidden';
+  if (el('gbm-note')) el('gbm-note').textContent = '';
   setTimeout(function(){ var t = el('gbm-text'); if (t) t.focus(); }, 60);
   gbEvent('open_submit');
 }
@@ -1202,7 +1286,7 @@ function closeSubmit(){
   if (!el('sheet').classList.contains('on')) document.body.style.overflow = '';
 }
 function submitInit(){
-  ['submit-top', 'nav-submit', 'foot-submit'].forEach(function(id){
+  ['submit-top', 'nav-submit', 'foot-submit', 'usub-btn'].forEach(function(id){
     var b = el(id); if (b) b.onclick = function(e){ e.preventDefault(); openSubmit(); };
   });
   var x = el('gbm-x'); if (x) x.onclick = closeSubmit;
@@ -1210,13 +1294,38 @@ function submitInit(){
   var m = el('gbm'); if (m) m.onclick = function(e){ if (e.target === m) closeSubmit(); };
   var f = el('gbm-form');
   if (f) f.onsubmit = function(e){
-    var text = (el('gbm-text').value || '').trim();
-    if (text.length < 2){ e.preventDefault(); toast('문장을 2자 이상 적어 주세요'); return; }
-    setTimeout(function(){
-      f.reset(); closeSubmit();
-      toast('제보를 보냈습니다. 검토 후 등록됩니다');
-      gbEvent('submit_quote');
-    }, 900);
+    e.preventDefault();
+    var note = el('gbm-note');
+    var body = (el('gbm-text').value || '').trim();
+    var auth = (el('gbm-auth').value || '').trim();
+    var nick = (el('gbm-nick').value || '').trim();
+    var hp = el('gbm-hp').value || '';
+    note.textContent = '';
+    if (Date.now() - gbmOpenAt < 2000){ note.textContent = '잠시 후 다시 시도해 주세요.'; return; }
+    var last = 0; try { last = +(localStorage.getItem('gb_sub_at') || 0); } catch(err){}
+    if (Date.now() - last < SUB_COOLDOWN){ note.textContent = '연속 제보는 30초 뒤에 가능합니다.'; return; }
+    if (hp){ note.textContent = '제보를 보낼 수 없습니다.'; return; }
+    if (body.length < 2 || body.length > 300){ note.textContent = '문장은 2자 이상 300자 이하로 적어 주세요.'; return; }
+    if (auth.length > 60){ note.textContent = '저자·출처는 60자 이하로 적어 주세요.'; return; }
+    if (SPAM_RE.test(body)){ note.textContent = '링크나 홍보 문구가 들어간 문장은 보낼 수 없습니다.'; return; }
+    var btn = el('gbm-send'); btn.disabled = true;
+    sbRpc('add_submission', { p_body: body, p_author: auth, p_nick: nick, p_hp: hp })
+      .then(function(row){
+        try { localStorage.setItem('gb_sub_at', String(Date.now())); } catch(err){}
+        f.reset(); closeSubmit();
+        toast('제보 문장이 바로 올라갔습니다');
+        gbEvent('submit_quote', { has_author: !!auth });
+        renderSubmissions(SUB_CACHE, row);
+        setTimeout(function(){ var s = el('usub'); if (s && s.scrollIntoView) s.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 260);
+      })
+      .catch(function(err){
+        var msg = (err && err.message) || '';
+        note.textContent = msg === 'link' ? '링크나 홍보 문구가 들어간 문장은 보낼 수 없습니다.'
+          : msg === 'length' ? '문장은 2자 이상 300자 이하로 적어 주세요.'
+          : msg === 'duplicate' ? '같은 문장이 방금 올라갔습니다.'
+          : '제보를 보내지 못했습니다. 잠시 후 다시 시도해 주세요.';
+      })
+      .then(function(){ btn.disabled = false; });
   };
 }
 
@@ -1230,6 +1339,7 @@ function submitInit(){
   renderToday(0);
   renderPopular();
   loadTodayCounts();
+  loadSubmissions();
   submitInit();
   renderChips();
   renderCats();
