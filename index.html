@@ -384,9 +384,9 @@ var ITEMS = D.items;
 var N = ITEMS.length;
 var IMGM = (function(){ try { return (JSON.parse(document.getElementById('imgmap').textContent).ids)||{}; } catch(e){ return {}; } })();
 function imgURL(i,w){ var id = IMGM[i]; return id ? 'https://lh3.googleusercontent.com/d/'+id+'=w'+(w||1200) : ''; }
-var NUM2I = {}; for (var _i=0;_i<N;_i++){ if (NUM2I[ITEMS[_i][NUM]]===undefined) NUM2I[ITEMS[_i][NUM]] = _i; }
 // index: 0 num, 1 text, 2 author, 3 cat, 4 cls, 5 tags, 6 pair, 7 pole, 8 views, 9 rel(x100), 10 sim, 11 opp
 var NUM=0, TXT=1, AUTH=2, CAT=3, CLA=4, TGS=5, PAIR=6, POLE=7, VIEWS=8, REL=9, SIM=10, OPP=11;
+var NUM2I = {}; for (var _i=0;_i<N;_i++){ if (NUM2I[ITEMS[_i][NUM]]===undefined) NUM2I[ITEMS[_i][NUM]] = _i; }
 
 /* ---------- helpers ---------- */
 function norm(s){ return (s||'').toLowerCase().replace(/[^\uAC00-\uD7A3\u1100-\u11FFa-z0-9]+/g,''); }
@@ -756,11 +756,9 @@ function loadTodayCounts(){
       TCOUNT = {};
       (rows || []).forEach(function(r){ TCOUNT[r.quote_num] = r.count; });
       window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
-      try { paintCounts(); } catch(e1){ window.__gbErr = 'paint:' + e1.message; }
-      try { renderPopular(); } catch(e2){ window.__gbErr = 'pop:' + e2.message; }
-      window.__gbDebug = { dkey: DKEY, gdate: window.GB_TODAY_COUNTS.date, n: Object.keys(window.GB_TODAY_COUNTS.counts).length };
+      paintCounts(); renderPopular();
     })
-    .catch(function(e){ window.__gbErr = 'load:' + ((e && (e.message || e))||'?'); renderPopular(); });
+    .catch(function(){ renderPopular(); });
 }
 
 /* ---------- today ---------- */
