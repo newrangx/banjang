@@ -1795,7 +1795,7 @@ function appendArchiveQuotes(rows){
     IDX.push({ t: normSp(it[TXT]+' '+it[AUTH]), tx: normSp(it[TXT]), au: normSp(it[AUTH]), tg:'' });
     added++;
   });
-  if (added){ N = ITEMS.length; }
+  if (added){ N = ITEMS.length; var na = el('n-all'); if (na) na.textContent = fmt(N); }
   return added;
 }
 function loadArchiveQuotes(){
