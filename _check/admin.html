@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>글반장 · 관리자</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#000; --text:#EDECEA; --muted:rgba(255,255,255,.66); --line:rgba(255,255,255,.10);
+  --card:#0E0E0E; --card2:#141414; --pill:rgba(255,255,255,.06); --copy:#F5F4F0; --danger:#ff9b9b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{padding-bottom:40px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.02em}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--text);display:inline-block}
+.brand em{font-style:normal;color:var(--muted);font-weight:500;font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;letter-spacing:0}
+.top-r{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+.top-r .who{font-size:12.5px;font-variant-numeric:tabular-nums}
+.top-r a:hover,.top-r button:hover{color:var(--text)}
+@media(max-width:640px){.top-r .who{display:none}.top-r{gap:11px;font-size:12.5px}}
+
+/* login */
+.login{max-width:402px;margin:72px auto 40px;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:30px 26px}
+.login h1{margin:0 0 8px;font-size:21px;letter-spacing:-.02em;font-weight:600}
+.login .d{margin:0 0 6px;color:var(--muted);font-size:13.5px;line-height:1.65}
+.login label{display:block;font-size:12.5px;color:var(--muted);margin:16px 0 7px}
+.login input{width:100%;height:46px;border-radius:10px;border:1px solid var(--line);background:#111;color:var(--text);padding:0 12px;font-size:15px;outline:none}
+.login input:focus{border-color:rgba(255,255,255,.32)}
+.pwrow{display:flex;gap:8px;align-items:center}
+.pwrow input{flex:1 1 auto;min-width:0}
+.pwrow .eye{flex:0 0 auto;height:46px;padding:0 12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:12.5px}
+.pwrow .eye:hover{color:var(--text)}
+.note{min-height:1.2em;margin:12px 0 0;font-size:12.5px;color:var(--danger);line-height:1.5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--pill);border-radius:10px;
+  padding:9px 14px;font-size:13.5px;color:var(--text);min-height:42px;line-height:1}
+.btn:hover{border-color:rgba(255,255,255,.3)}
+.btn.solid{background:var(--text);color:#151618;border-color:var(--text);font-weight:600}
+.btn.wide{width:100%;height:46px;margin-top:18px}
+.btn:disabled{opacity:.55}
+@media(max-width:640px){.login{margin:26px auto 30px;padding:24px 20px;border-radius:16px}}
+
+/* app */
+.app{padding:22px 0 40px}
+.tabs{display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px;
+  scrollbar-width:none;-ms-overflow-style:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:8px 13px;border-radius:9px;font-size:13.5px;color:var(--muted);white-space:nowrap;border:1px solid transparent;flex:0 0 auto}
+.tab:hover{color:var(--text)}
+.tab.on{color:#151618;background:var(--text);font-weight:600}
+.tab .n{opacity:.6;font-size:12px;margin-left:4px}
+
+.bar{display:flex;gap:8px;margin:0 0 10px}
+.bar input{flex:1 1 auto;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);
+  padding:0 12px;font-size:14px;outline:none;min-width:0}
+.bar input:focus{border-color:rgba(255,255,255,.32)}
+.bar .btn{flex:0 0 auto}
+.meta{margin:0 0 12px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.list{display:flex;flex-direction:column;gap:8px}
+
+.row{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px}
+.row-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:7px}
+.row-h b{color:var(--text);font-size:13px;font-weight:600}
+.num{font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:11.5px;color:var(--text);background:var(--pill)}
+.row p{margin:0;font-size:14.5px;line-height:1.62;color:var(--copy);white-space:pre-wrap;overflow-wrap:anywhere}
+.row .sub-a{margin-top:5px;font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.row-f{display:flex;align-items:center;gap:8px;margin-top:11px;flex-wrap:wrap}
+.sp{flex:1 1 auto}
+.mini{font-size:12.5px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--muted)}
+.mini:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.mini.del:hover{color:var(--danger);border-color:rgba(255,155,155,.45)}
+.hrow{display:flex;align-items:center;gap:12px}
+.rank{width:26px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;font-size:12.5px;flex:0 0 auto}
+.hrow .qno{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.hcnt{margin-left:auto;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.empty{padding:34px 0;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.7}
+.foot{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+@media(max-width:640px){
+  .wrap{padding:0 14px}
+  .row{padding:12px 12px}
+  .row-f .mini{padding:7px 11px}
+  .tab{font-size:13px;padding:7px 11px}
+}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--text);color:#151618;
+  border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.18s;z-index:80}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./"><span class="dot"></span>글반장 <em>관리자</em></a>
+    <div class="top-r">
+      <span class="who" id="who"></span>
+      <a href="./">아카이브 홈</a>
+      <button id="logout" hidden>로그아웃</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="login" id="login">
+    <h1>관리자 로그인</h1>
+    <p class="d">글반장 아카이브 운영 계정으로 로그인합니다. 댓글·제보 삭제와 오늘의 하트 순위를 여기서 관리합니다.</p>
+    <form id="login-form" autocomplete="on">
+      <label for="email">이메일</label>
+      <input id="email" type="email" inputmode="email" autocomplete="username" placeholder="admin@example.com" required>
+      <label for="pw">비밀번호</label>
+      <div class="pwrow">
+        <input id="pw" type="password" autocomplete="current-password" placeholder="비밀번호" required>
+        <button type="button" class="eye" id="pw-eye" aria-label="비밀번호 보기">보기</button>
+      </div>
+      <p class="note" id="login-note"></p>
+      <button type="submit" class="btn solid wide" id="login-btn">로그인</button>
+    </form>
+  </section>
+
+  <section class="app" id="app" hidden>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="cmt" role="tab">💬 댓글 관리 <span class="n" id="cnt-cmt"></span></button>
+      <button class="tab" data-tab="sub" role="tab">✍️ 제보 문장 <span class="n" id="cnt-sub"></span></button>
+      <button class="tab" data-tab="heart" role="tab">♥ 오늘의 하트 <span class="n" id="cnt-heart"></span></button>
+    </div>
+
+    <div class="pane" id="pane-cmt">
+      <div class="bar">
+        <input id="q-cmt" type="search" placeholder="닉네임 · 내용 · 문장번호(#337) 검색" aria-label="댓글 검색">
+        <button class="btn" id="reload-cmt">새로고침</button>
+      </div>
+      <p class="meta" id="meta-cmt"></p>
+      <div class="list" id="list-cmt"><div class="empty">불러오는 중…</div></div>
+    </div>
+
+    <div class="pane" id="pane-sub" hidden>
+      <div class="bar">
+        <input id="q-sub" type="search" placeholder="본문 · 저자 · 닉네임 검색" aria-label="제보 검색">
+        <button class="btn" id="reload-sub">새로고침</button>
+      </div>
+      <p class="meta" id="meta-sub"></p>
+      <div class="list" id="list-sub"><div class="empty">불러오는 중…</div></div>
+    </div>
+
+    <div class="pane" id="pane-heart" hidden>
+      <div class="bar">
+        <button class="btn" id="reload-heart">새로고침</button>
+      </div>
+      <p class="meta" id="meta-heart"></p>
+      <div class="list" id="list-heart"><div class="empty">불러오는 중…</div></div>
+    </div>
+
+    <p class="foot" id="foot-note">댓글·제보 삭제는 되돌릴 수 없습니다. 삭제 전 내용을 확인하세요.</p>
+  </section>
+</main>
+
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+var SB_URL = 'https://ecwrolumnuajrkqmzeds.supabase.co';
+var SB_KEY = 'sb_publishable_GWhczqZ14Jir3UytthydNg_9BBUNhCD';
+var SKEY = 'gb_admin_session_v1';
+
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function pad2(n){ return (n<10?'0':'')+n; }
+function toast(msg){ var t = el('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('on'); }, 1800); }
+function fmtDatetime(iso){
+  var d = new Date(iso); if (!d.getTime()) return '';
+  return d.getFullYear() + '.' + pad2(d.getMonth()+1) + '.' + pad2(d.getDate()) + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+}
+function fmtAgo(iso){
+  var t = new Date(iso).getTime(); if (!t) return '';
+  var s = Math.floor((Date.now() - t) / 1000);
+  if (s < 60) return '방금';
+  if (s < 3600) return Math.floor(s/60) + '분 전';
+  if (s < 86400) return Math.floor(s/3600) + '시간 전';
+  if (s < 86400*7) return Math.floor(s/86400) + '일 전';
+  return fmtDatetime(iso);
+}
+function seoulKey(){
+  var d = new Date(Date.now() + 9*3600*1000);
+  return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth()+1) + '-' + pad2(d.getUTCDate());
+}
+function copyText(s){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(s).then(function(){ toast('복사했습니다'); }, function(){ fallback(s); });
+  } else fallback(s);
+}
+function fallback(s){
+  var ta = document.createElement('textarea'); ta.value = s; ta.style.position='fixed'; ta.style.top='-1000px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); toast('복사했습니다'); } catch(e){ toast('복사가 막혔습니다'); }
+  document.body.removeChild(ta);
+}
+
+/* ---------- session ---------- */
+var S = null;
+function sess(){
+  if (S) return S;
+  try { S = JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch(e){ S = null; }
+  return S;
+}
+function saveSess(s){
+  S = s || null;
+  try { if (s) localStorage.setItem(SKEY, JSON.stringify(s)); else localStorage.removeItem(SKEY); } catch(e){}
+}
+function storeToken(j){
+  saveSess({
+    access_token: j.access_token,
+    refresh_token: j.refresh_token || (sess() && sess().refresh_token) || '',
+    expires_at: Date.now() + ((j.expires_in || 3600) * 1000),
+    email: (j.user && j.user.email) || (sess() && sess().email) || ''
+  });
+}
+function signIn(email, pw){
+  return fetch(SB_URL + '/auth/v1/token?grant_type=password', {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: pw })
+  }).then(function(r){
+    return r.json().then(function(j){
+      if (!r.ok) throw new Error(j.error_description || j.msg || j.error || ('HTTP ' + r.status));
+      return j;
+    });
+  }).then(function(j){ storeToken(j); return sess(); });
+}
+function refreshSession(){
+  var s = sess();
+  if (!s || !s.refresh_token) return Promise.reject(new Error('no_session'));
+  return fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refresh_token: s.refresh_token })
+  }).then(function(r){
+    return r.json().then(function(j){
+      if (!r.ok) throw new Error(j.error_description || j.msg || 'refresh_failed');
+      return j;
+    });
+  }).then(function(j){ storeToken(j); return sess(); });
+}
+function ensureToken(){
+  var s = sess();
+  if (!s || !s.access_token) return Promise.reject(new Error('no_session'));
+  if (s.expires_at && (s.expires_at - Date.now()) > 60000) return Promise.resolve(s);
+  return refreshSession();
+}
+function rest(path, opts){
+  opts = opts || {};
+  return ensureToken().then(function(s){
+    var headers = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + s.access_token };
+    if (opts.body) headers['Content-Type'] = 'application/json';
+    var init = { method: opts.method || 'GET', headers: headers, cache: 'no-store' };
+    if (opts.body) init.body = JSON.stringify(opts.body);
+    if (opts.prefer) headers['Prefer'] = opts.prefer;
+    return fetch(SB_URL + '/rest/v1/' + path, init).then(function(r){
+      if (r.status === 401 || r.status === 403){
+        saveSess(null); showLogin();
+        throw new Error('세션이 만료되었습니다. 다시 로그인해 주세요.');
+      }
+      if (!r.ok){
+        return r.text().then(function(t){ throw new Error('HTTP ' + r.status + ' ' + String(t).slice(0,140)); });
+      }
+      if (r.status === 204) return true;
+      var ct = r.headers.get('content-type') || '';
+      return ct.indexOf('json') >= 0 ? r.json() : true;
+    });
+  });
+}
+
+/* ---------- view ---------- */
+function showLogin(){
+  el('app').hidden = true;
+  el('login').hidden = false;
+  el('logout').hidden = true;
+  el('who').textContent = '';
+}
+function showApp(){
+  var s = sess();
+  el('login').hidden = true;
+  el('app').hidden = false;
+  el('logout').hidden = false;
+  el('who').textContent = (s && s.email) || '';
+  loadAll();
+}
+
+/* ---------- comments ---------- */
+var CMTS = [], SUBS = [], HEARTS = [];
+function cmtRow(r){
+  var num = r.quote_num;
+  return '<article class="row" data-id="'+r.id+'">' +
+    '<div class="row-h"><span class="num">#'+esc(num)+'</span><b>'+esc(r.nickname || '익명')+'</b>' +
+      '<span>'+esc(fmtAgo(r.created_at))+'</span></div>' +
+    '<p>'+esc(r.body)+'</p>' +
+    '<div class="row-f"><span class="sp"></span>' +
+      '<a class="mini" href="./#s='+esc(num)+'" target="_blank" rel="noopener">원문 보기</a>' +
+      '<button class="mini del" data-del-cmt="'+r.id+'" data-num="'+esc(num)+'">삭제</button>' +
+    '</div></article>';
+}
+function renderCmt(){
+  var q = (el('q-cmt').value || '').trim().toLowerCase();
+  var rows = CMTS;
+  if (q){
+    var nq = q.replace(/^#/, '');
+    rows = CMTS.filter(function(r){
+      return String(r.quote_num) === nq || String(r.id) === nq ||
+        String(r.body || '').toLowerCase().indexOf(q) >= 0 ||
+        String(r.nickname || '').toLowerCase().indexOf(q) >= 0;
+    });
+  }
+  el('cnt-cmt').textContent = CMTS.length;
+  el('meta-cmt').textContent = '전체 ' + CMTS.length + '건' + (q ? ' · 검색 ' + rows.length + '건' : ' · 최신순');
+  el('list-cmt').innerHTML = rows.length ? rows.map(cmtRow).join('')
+    : '<div class="empty">' + (CMTS.length ? '검색 결과가 없습니다.' : '아직 댓글이 없습니다.') + '</div>';
+}
+function loadCmt(){
+  el('list-cmt').innerHTML = '<div class="empty">불러오는 중…</div>';
+  return rest('quote_comments?select=id,quote_num,nickname,body,created_at&order=created_at.desc&limit=300')
+    .then(function(rows){ CMTS = rows || []; renderCmt(); })
+    .catch(function(e){ el('list-cmt').innerHTML = '<div class="empty">댓글을 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
+}
+
+/* ---------- submissions ---------- */
+function subRow(r){
+  var au = (r.author || '').trim();
+  return '<article class="row" data-id="'+r.id+'">' +
+    '<div class="row-h"><b>'+esc(r.nickname || '익명')+'</b><span>'+esc(fmtAgo(r.created_at))+'</span></div>' +
+    '<p>'+esc(r.body)+'</p>' +
+    (au ? '<p class="sub-a">— '+esc(au)+'</p>' : '') +
+    '<div class="row-f"><span class="sp"></span>' +
+      '<button class="mini" data-copy-sub="'+r.id+'">복사</button>' +
+      '<button class="mini del" data-del-sub="'+r.id+'">삭제</button>' +
+    '</div></article>';
+}
+function renderSub(){
+  var q = (el('q-sub').value || '').trim().toLowerCase();
+  var rows = SUBS;
+  if (q){
+    rows = SUBS.filter(function(r){
+      return String(r.body || '').toLowerCase().indexOf(q) >= 0 ||
+        String(r.author || '').toLowerCase().indexOf(q) >= 0 ||
+        String(r.nickname || '').toLowerCase().indexOf(q) >= 0;
+    });
+  }
+  el('cnt-sub').textContent = SUBS.length;
+  el('meta-sub').textContent = '전체 ' + SUBS.length + '건' + (q ? ' · 검색 ' + rows.length + '건' : ' · 최신순');
+  el('list-sub').innerHTML = rows.length ? rows.map(subRow).join('')
+    : '<div class="empty">' + (SUBS.length ? '검색 결과가 없습니다.' : '아직 제보가 없습니다.') + '</div>';
+}
+function loadSub(){
+  el('list-sub').innerHTML = '<div class="empty">불러오는 중…</div>';
+  return rest('submitted_quotes?select=id,body,author,nickname,created_at&order=created_at.desc&limit=300')
+    .then(function(rows){ SUBS = rows || []; renderSub(); })
+    .catch(function(e){ el('list-sub').innerHTML = '<div class="empty">제보를 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
+}
+
+/* ---------- hearts ---------- */
+function renderHeart(){
+  var total = HEARTS.reduce(function(a,b){ return a + (b.count || 0); }, 0);
+  el('cnt-heart').textContent = total;
+  el('meta-heart').textContent = seoulKey() + ' (한국 시간) · ' + HEARTS.length + '개 문장 · 총 ' + total + '회';
+  el('list-heart').innerHTML = HEARTS.length ? HEARTS.map(function(h, i){
+    return '<article class="row"><div class="hrow">' +
+      '<span class="rank">'+(i+1)+'</span>' +
+      '<span class="qno">#'+esc(h.quote_num)+'</span>' +
+      '<span class="hcnt">♥ '+esc(h.count)+'</span>' +
+      '<a class="mini" href="./#s='+esc(h.quote_num)+'" target="_blank" rel="noopener">원문</a>' +
+    '</div></article>';
+  }).join('') : '<div class="empty">오늘 아직 하트가 없습니다.</div>';
+}
+function loadHeart(){
+  el('list-heart').innerHTML = '<div class="empty">불러오는 중…</div>';
+  return rest('daily_hearts?select=quote_num,count&day=eq.' + seoulKey() + '&order=count.desc&limit=200')
+    .then(function(rows){ HEARTS = rows || []; renderHeart(); })
+    .catch(function(e){ el('list-heart').innerHTML = '<div class="empty">하트 순위를 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
+}
+
+function loadAll(){ loadCmt(); loadSub(); loadHeart(); }
+
+/* ---------- events ---------- */
+el('login-form').onsubmit = function(e){
+  e.preventDefault();
+  var note = el('login-note'), btn = el('login-btn');
+  var email = (el('email').value || '').trim();
+  var pw = el('pw').value || '';
+  if (!email || !pw){ note.textContent = '이메일과 비밀번호를 입력해 주세요.'; return; }
+  btn.disabled = true; note.textContent = '';
+  signIn(email, pw)
+    .then(function(){ el('pw').value = ''; showApp(); })
+    .catch(function(err){
+      var m = String(err.message || '');
+      note.textContent = /invalid/i.test(m) || /credentials/i.test(m)
+        ? '이메일 또는 비밀번호가 맞지 않습니다.'
+        : '로그인하지 못했습니다. ' + m;
+    })
+    .then(function(){ btn.disabled = false; });
+};
+el('pw-eye').onclick = function(){
+  var p = el('pw');
+  var show = p.type === 'password';
+  p.type = show ? 'text' : 'password';
+  el('pw-eye').textContent = show ? '숨기기' : '보기';
+};
+el('logout').onclick = function(){
+  var s = sess();
+  if (s && s.access_token){
+    fetch(SB_URL + '/auth/v1/logout', { method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + s.access_token } }).catch(function(){});
+  }
+  saveSess(null); CMTS = []; SUBS = []; HEARTS = []; showLogin();
+};
+Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
+  t.onclick = function(){
+    var name = t.getAttribute('data-tab');
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(x){ x.classList.toggle('on', x === t); });
+    ['cmt','sub','heart'].forEach(function(k){ el('pane-'+k).hidden = (k !== name); });
+  };
+});
+el('q-cmt').oninput = renderCmt;
+el('q-sub').oninput = renderSub;
+el('reload-cmt').onclick = loadCmt;
+el('reload-sub').onclick = loadSub;
+el('reload-heart').onclick = loadHeart;
+
+el('list-cmt').onclick = function(e){
+  var b = e.target && e.target.closest ? e.target.closest('[data-del-cmt]') : null;
+  if (!b) return;
+  var id = b.getAttribute('data-del-cmt'), num = b.getAttribute('data-num');
+  if (!window.confirm('#' + num + ' 문장의 댓글을 삭제할까요? 되돌릴 수 없습니다.')) return;
+  b.disabled = true;
+  rest('quote_comments?id=eq.' + encodeURIComponent(id), { method: 'DELETE', prefer: 'return=representation' })
+    .then(function(res){
+      if (!res || !res.length) throw new Error('삭제 권한이 없거나 이미 삭제된 댓글입니다.');
+      CMTS = CMTS.filter(function(r){ return String(r.id) !== String(id); }); renderCmt(); toast('댓글을 삭제했습니다');
+    })
+    .catch(function(err){ b.disabled = false; toast('삭제하지 못했습니다: ' + err.message); });
+};
+el('list-sub').onclick = function(e){
+  var t = e.target && e.target.closest ? e.target : null;
+  if (!t) return;
+  var cbtn = t.closest('[data-copy-sub]');
+  if (cbtn){
+    var cid = cbtn.getAttribute('data-copy-sub');
+    var row = SUBS.filter(function(r){ return String(r.id) === String(cid); })[0];
+    if (row){ copyText(row.author ? row.body + '\n— ' + row.author : row.body); }
+    return;
+  }
+  var dbtn = t.closest('[data-del-sub]');
+  if (!dbtn) return;
+  var did = dbtn.getAttribute('data-del-sub');
+  if (!window.confirm('이 제보 문장을 삭제할까요? 되돌릴 수 없습니다.')) return;
+  dbtn.disabled = true;
+  rest('submitted_quotes?id=eq.' + encodeURIComponent(did), { method: 'DELETE', prefer: 'return=representation' })
+    .then(function(res){
+      if (!res || !res.length) throw new Error('삭제 권한이 없거나 이미 삭제된 제보입니다.');
+      SUBS = SUBS.filter(function(r){ return String(r.id) !== String(did); }); renderSub(); toast('제보를 삭제했습니다');
+    })
+    .catch(function(err){ dbtn.disabled = false; toast('삭제하지 못했습니다: ' + err.message); });
+};
+
+/* ---------- boot ---------- */
+(function boot(){
+  var s = sess();
+  if (!s || !s.access_token){ showLogin(); return; }
+  ensureToken().then(function(){ showApp(); }).catch(function(){
+    saveSess(null); showLogin();
+    el('login-note').textContent = '세션이 만료되었습니다. 다시 로그인해 주세요.';
+  });
+})();
+})();
+</script>
+</body>
+</html>
