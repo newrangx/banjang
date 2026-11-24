@@ -11,14 +11,18 @@
 <meta property="og:url" content="https://newrangx.github.io/banjang/">
 <meta property="og:site_name" content="글반장">
 <meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
-  --bg:#000; --text:#EDECEA; --muted:rgba(255,255,255,.58); --line:rgba(255,255,255,.09);
+  --bg:#000; --text:#EDECEA; --muted:rgba(255,255,255,.66); --line:rgba(255,255,255,.10);
   --card:#0E0E0E; --card2:#141414; --pill:rgba(255,255,255,.06);
+  --copy:#F5F4F0;
+  --surface-a:#0B0B0D; --surface-b:#121215; --surface-c:#16161A;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body{padding-bottom:64px}
 html,body{max-width:100%;overflow-x:hidden}
@@ -40,13 +44,13 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 @media(max-width:640px){.nav{display:none}}
 
 /* hero */
-.hero{padding:56px 0 28px;text-align:center}
+.hero{padding:64px 0 44px;text-align:center}
 .hero h1{margin:0 0 14px;font-size:44px;line-height:1.12;letter-spacing:-.035em;font-weight:600}
 .hero h1 em{font-style:normal;color:var(--muted)}
-.hero p.sub{margin:0 auto 26px;max-width:640px;color:var(--muted);font-size:15.5px;line-height:1.7}
+.hero p.sub{margin:0 auto 28px;max-width:660px;color:var(--muted);font-size:16px;line-height:1.75}
 .hero h1{text-wrap:balance}
 .hero p.sub{word-break:keep-all;overflow-wrap:anywhere}
-@media(max-width:640px){.hero{padding:28px 0 18px}.hero h1{font-size:30px}.hero p.sub{font-size:14px}}
+@media(max-width:640px){.hero{padding:30px 0 26px}.hero h1{font-size:30px}.hero p.sub{font-size:14.5px;line-height:1.72}}
 
 /* search */
 .searchbox{position:relative;max-width:680px;margin:0 auto}
@@ -63,17 +67,17 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 .qchip:hover,.qchip.on{color:var(--text);border-color:rgba(255,255,255,.3)}
 
 /* today */
-.today{margin:34px auto 0;max-width:820px;border:1px solid var(--line);background:linear-gradient(180deg,#111,#0b0b0b);border-radius:18px;padding:26px 28px;text-align:left}
-.today .lbl{font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
-.today .s{font-size:22px;line-height:1.62;letter-spacing:-.015em;margin:0 0 10px;white-space:pre-line;
+.today{margin:40px auto 0;max-width:840px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,#141416,#0B0B0D);border-radius:20px;padding:32px 34px 26px;text-align:left;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.today .lbl{font-size:12px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.today .s{font-size:25px;line-height:1.68;letter-spacing:-.012em;color:var(--copy);margin:0 0 14px;white-space:pre-line;
   word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty}
-.today .a{color:var(--muted);font-size:13.5px;margin:0 0 16px}
-.today .row{display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:8px 13px;font-size:13px;color:var(--text);
-  display:inline-flex;align-items:center;justify-content:center;min-height:40px;line-height:1}
+.today .a{color:var(--muted);font-size:14.5px;margin:0 0 20px}
+.today .row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:9px 14px;font-size:13.5px;color:var(--text);
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;line-height:1}
 .btn:hover{border-color:rgba(255,255,255,.3)}
 .btn.solid{background:var(--text);color:#151618;border-color:var(--text);font-weight:600}
-@media(max-width:640px){.today{padding:20px;border-radius:14px}.today .s{font-size:18px}}
+@media(max-width:640px){.today{padding:24px 20px 20px;border-radius:16px}.today .s{font-size:20.5px;line-height:1.66}}
 
 /* toolbar */
 .toolbar{position:sticky;top:60px;z-index:30;background:rgba(0,0,0,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -103,22 +107,22 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:14px 0 26px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.grid{grid-template-columns:1fr;gap:10px}}
-.card{position:relative;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:18px 18px 14px;cursor:pointer;
-  display:flex;flex-direction:column;gap:12px;min-height:150px;transition:border-color .15s,transform .15s}
+.card{position:relative;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:20px 18px 15px;cursor:pointer;
+  display:flex;flex-direction:column;gap:12px;min-height:160px;transition:border-color .15s,transform .15s}
 .card:hover{border-color:rgba(255,255,255,.24);transform:translateY(-1px)}
-.card .s{margin:0;font-size:16px;line-height:1.66;letter-spacing:-.01em;white-space:pre-line;overflow:hidden;
+.card .s{margin:0;font-size:18px;line-height:1.68;letter-spacing:-.01em;color:var(--copy);white-space:pre-line;overflow:hidden;
   word-break:keep-all;overflow-wrap:anywhere;
   display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
 .card .foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
-.card .a{color:var(--muted);font-size:12.5px;line-height:1.4}
-.card .grade{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
-.card .hot{position:absolute;top:12px;right:52px;font-size:10.5px;color:#151618;background:var(--text);border-radius:5px;padding:1px 6px;font-weight:700}
-.card .bm{position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:9px;color:var(--muted);font-size:16px;line-height:1;
+.card .a{color:var(--muted);font-size:13.5px;line-height:1.45}
+.card .grade{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.card .hot{position:absolute;top:12px;right:52px;font-size:11px;color:#151618;background:var(--text);border-radius:5px;padding:1px 6px;font-weight:700}
+.card .bm{position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:9px;color:var(--muted);font-size:17px;line-height:1;
   display:inline-flex;align-items:center;justify-content:center}
 .card .bm:hover{color:var(--text);background:var(--pill)}
 .card .bm.on{color:var(--text)}
 .card .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
-.card .tg span{font-size:11px;color:var(--muted);background:var(--pill);border-radius:5px;padding:1.5px 6px}
+.card .tg span{font-size:11.5px;color:var(--muted);background:var(--pill);border-radius:5px;padding:1.5px 6px}
 .card mark{background:rgba(237,236,234,.22);color:var(--text);border-radius:3px;padding:0 1px}
 
 .empty{padding:70px 0;text-align:center;color:var(--muted);font-size:14px;line-height:1.8}
@@ -139,10 +143,10 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .sheet .head .num{font-variant-numeric:tabular-nums}
 .sheet .close{margin-left:auto;width:40px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:15px;color:var(--muted)}
 .sheet .close:hover{color:var(--text)}
-.sheet blockquote{margin:0 0 14px;font-size:23px;line-height:1.7;letter-spacing:-.015em;white-space:pre-line;
-  word-break:keep-all;overflow-wrap:anywhere;max-width:34em}
-@media(max-width:640px){.sheet blockquote{font-size:19px}}
-.sheet .auth{color:var(--muted);font-size:14px;margin:0 0 16px}
+.sheet blockquote{margin:0 0 16px;font-size:25px;line-height:1.72;letter-spacing:-.012em;color:var(--copy);white-space:pre-line;
+  word-break:keep-all;overflow-wrap:anywhere;max-width:32em}
+@media(max-width:640px){.sheet blockquote{font-size:20.5px;line-height:1.68}}
+.sheet .auth{color:var(--muted);font-size:15px;margin:0 0 18px}
 .sheet .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
 .sheet .acts{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
 .rel{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
@@ -151,9 +155,9 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .rel h3 .axis em{font-style:normal;color:var(--muted)}
 .mini{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px;margin-bottom:8px}
 .mini:hover{border-color:rgba(255,255,255,.24)}
-.mini .ms{margin:0 0 6px;font-size:14px;line-height:1.65;white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;
+.mini .ms{margin:0 0 6px;font-size:15px;line-height:1.66;color:var(--copy);white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.mini .ma{font-size:12px;color:var(--muted)}
+.mini .ma{font-size:12.5px;color:var(--muted)}
 .hint{font-size:12px;color:var(--muted);line-height:1.7;margin:10px 0 0}
 .divider{height:1px;background:var(--line);margin:22px 0 0}
 
@@ -203,14 +207,14 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .usub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .usub-card{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px 16px 13px;display:flex;flex-direction:column;gap:8px}
 .usub-card.new{border-color:rgba(255,255,255,.42);box-shadow:0 0 0 1px rgba(255,255,255,.08)}
-.usub-card .q{margin:0;font-size:15px;line-height:1.68;letter-spacing:-.01em;white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;
+.usub-card .q{margin:0;font-size:16px;line-height:1.7;letter-spacing:-.01em;color:var(--copy);white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere;
   display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.usub-card .a{margin:0;font-size:12px;color:var(--muted);line-height:1.5;word-break:keep-all}
-.usub-card .f{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--muted)}
+.usub-card .a{margin:0;font-size:13px;color:var(--muted);line-height:1.5;word-break:keep-all}
+.usub-card .f{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
 .usub-empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:14px;padding:18px 20px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
 .usub-cta{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px;padding:14px 16px;
   border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#0f0f0f,#0b0b0b)}
-.usub-cta p{margin:0;font-size:13px;color:var(--muted);line-height:1.6;word-break:keep-all}
+.usub-cta p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.65;word-break:keep-all}
 @media(max-width:900px){.usub-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.usub{margin-top:26px}.usub-grid{grid-template-columns:1fr;gap:10px}
   .usub-cta{padding:14px}.usub-cta .btn{width:100%}}
@@ -263,10 +267,10 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .cmts h3{margin:0 0 12px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
 .cmts .cn{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:2px}
 .cmt{border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;background:var(--card)}
-.cmt-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
-.cmt-hd b{font-size:12.5px;font-weight:600}
-.cmt-hd span{font-size:11.5px;color:var(--muted);white-space:nowrap}
-.cmt p{margin:0;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.cmt-hd{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cmt-hd b{font-size:13px;font-weight:600}
+.cmt-hd .t{font-size:12px;color:var(--muted);white-space:nowrap;margin-left:auto}
+.cmt p{margin:0;font-size:14.5px;line-height:1.62;overflow-wrap:anywhere}
 .cmt-empty{margin:0 0 10px;color:var(--muted);font-size:13px}
 .cmt-form{display:flex;gap:8px;align-items:center;margin-top:10px}
 .cmt-form input{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);
@@ -297,6 +301,31 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .gbm-row{display:flex;gap:8px;margin-top:18px}
 .gbm-row .btn{flex:1 1 auto;justify-content:center}
 .gbm-note{margin:10px 0 0;font-size:12.5px;color:#ff9b9b;min-height:1em}
+
+/* ---------- 2026-11-24: 섹션 구분·버튼 아이콘·댓글 삭제 ---------- */
+.band{margin-top:52px;padding:36px 0 34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band.pop3,.band.usub{margin:52px 0 0;max-width:none;padding:36px 0 34px}
+.band-a{background:var(--surface-a)}
+.band-b{background:var(--surface-b)}
+.sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 20px}
+.sec-h .idx{font-size:11.5px;letter-spacing:.18em;color:rgba(255,255,255,.38);font-variant-numeric:tabular-nums}
+.sec-h h2{margin:0;font-size:19px;font-weight:600;letter-spacing:-.02em}
+.sec-h .sub{font-size:13.5px;color:var(--muted);margin-left:auto;line-height:1.5}
+.band .card{background:var(--surface-c)}
+.arch{margin:56px 0 24px}
+.ic{width:16px;height:16px;flex:0 0 auto;display:block}
+.btn.on .ic-heart{fill:currentColor;stroke:currentColor}
+.cmt-del{margin-left:2px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:3px 8px}
+.cmt-del:hover{color:#ff9b9b;border-color:rgba(255,155,155,.45)}
+.cmt-del:disabled{opacity:.5}
+@media(max-width:640px){
+  .band,.band.pop3,.band.usub{padding:26px 0 24px;margin-top:36px}
+  .sec-h{gap:8px;margin-bottom:16px}
+  .sec-h h2{font-size:17.5px}
+  .sec-h .sub{margin-left:0;width:100%;font-size:12.5px}
+  .arch{margin:36px 0 18px}
+  .card .s{font-size:17.5px}
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EQPB5MSEZV"></script>
 <script>
@@ -333,20 +362,28 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
     <div class="qchips" id="qchips"></div>
     <div class="today" id="today"></div>
   </section>
+</div>
 
-  <section class="pop3" id="pop3" hidden>
-    <div class="ph"><span class="lbl">오늘의 인기글</span><span class="sub" id="pop3sub"></span></div>
+<section class="pop3 band band-a" id="pop3" hidden>
+  <div class="wrap">
+    <div class="sec-h"><span class="idx">01</span><h2>오늘의 인기글</h2><span class="sub" id="pop3sub"></span></div>
     <div class="pop3-grid" id="pop3grid"></div>
-  </section>
+  </div>
+</section>
 
-  <section class="usub" id="usub">
-    <div class="ph"><span class="lbl">방문자 제보 문장</span><span class="sub" id="usub-sub">방문자가 보낸 문장이 바로 올라갑니다</span></div>
+<section class="usub band band-b" id="usub">
+  <div class="wrap">
+    <div class="sec-h"><span class="idx">02</span><h2>방문자 제보 문장</h2><span class="sub" id="usub-sub">방문자가 보낸 문장이 바로 올라갑니다</span></div>
     <div class="usub-grid" id="usub-grid"><div class="usub-empty">불러오는 중…</div></div>
     <div class="usub-cta">
       <p>마음에 남은 문장이 있으면 여기에 남겨 주세요. 보낸 문장은 바로 이 자리에 올라가고, 확인 후 아카이브에 등록합니다.</p>
       <button class="btn solid" id="usub-btn">문장 제보하기</button>
     </div>
-  </section>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="sec-h arch"><span class="idx">03</span><h2>문장 아카이브</h2><span class="sub">상황 · 감정 · 저자로 찾기</span></div>
 </div>
 
 <div class="toolbar">
@@ -790,8 +827,7 @@ function heartSync(num, delta){
       TCOUNT[num] = c;
       window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
       paintCounts(); renderPopular();
-      var sb = el('s-bm');
-      if (sb) sb.textContent = bmGlyph(num) + ' ' + (BMSET[num] ? '좋아한 문장' : '좋아요') + (c > 0 ? ' · ♥ ' + c : '');
+      setHeartBtn(num, c);
     })
     .catch(function(){});
 }
@@ -806,6 +842,17 @@ function loadTodayCounts(){
     })
     .catch(function(){ renderPopular(); });
 }
+
+/* ---------- 아이콘 (16px, stroke 1.6) ---------- */
+var I = {
+  open:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.2 3.2h6.6v6.6"/><path d="M12.8 3.2 6.4 9.6"/><path d="M12 9.8v2.6a1.4 1.4 0 0 1-1.4 1.4H3.6a1.4 1.4 0 0 1-1.4-1.4V5.4A1.4 1.4 0 0 1 3.6 4h2.6"/></svg>',
+  copy:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.4" y="5.4" width="8" height="8" rx="1.6"/><path d="M10.6 5.4V3.8a1.4 1.4 0 0 0-1.4-1.4H3.8a1.4 1.4 0 0 0-1.4 1.4v5.4a1.4 1.4 0 0 0 1.4 1.4h1.6"/></svg>',
+  link:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.7 9.3a2.9 2.9 0 0 0 4.1 0l1.5-1.5a2.9 2.9 0 0 0-4.1-4.1l-.8.8"/><path d="M9.3 6.7a2.9 2.9 0 0 0-4.1 0L3.7 8.2a2.9 2.9 0 0 0 4.1 4.1l.8-.8"/></svg>',
+  kakao:'<svg class="ic ic-kakao" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.1c3.45 0 6.25 2.2 6.25 4.92 0 1.9-1.24 3.55-3.1 4.32l.62 2.2c.05.2-.17.36-.34.25L8.7 12.02c-.23.03-.46.04-.7.04-3.45 0-6.25-2.2-6.25-4.93C1.75 4.3 4.55 2.1 8 2.1Z" fill="currentColor"/></svg>',
+  next:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h9"/><path d="M8.6 4.4 12.2 8l-3.6 3.6"/></svg>',
+  image:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.4" y="2.8" width="11.2" height="10.4" rx="1.8"/><circle cx="5.9" cy="6.1" r="1.05"/><path d="m3.2 11.9 3-3a1.3 1.3 0 0 1 1.8 0l4 3.5"/></svg>',
+  heart:'<svg class="ic ic-heart" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13.1S2.6 10.1 2.6 6.5a3 3 0 0 1 5.4-1.7 3 3 0 0 1 5.4 1.7c0 3.6-5.4 6.6-5.4 6.6Z"/></svg>'
+};
 
 /* ---------- today ---------- */
 function pickToday(shift){
@@ -828,19 +875,47 @@ function renderToday(shift){
     '<p class="s">'+esc(it[TXT])+'</p>'+
     '<p class="a">— '+esc(it[AUTH])+'</p>'+
     '<div class="row">'+
-      '<button class="btn solid" id="t-open">문장 열기</button>'+
-      '<button class="btn" id="t-copy">복사</button>'+
-      '<button class="btn" id="t-share">링크 복사</button>'+
-      '<button class="btn" id="t-next">다른 문장</button>'+
+      '<button class="btn solid" id="t-open">'+I.open+'문장 열기</button>'+
+      '<button class="btn" id="t-copy">'+I.copy+'문장 복사</button>'+
+      '<button class="btn" id="t-share">'+I.link+'링크 복사</button>'+
+      '<button class="btn" id="t-kakao">'+I.kakao+'카톡 공유</button>'+
+      '<button class="btn" id="t-next">'+I.next+'다른 문장</button>'+
     '</div>'+
     (shot ? '<img class="shot" id="t-shot" src="'+shot+'" alt="오늘의 문장 원본 카드" loading="eager" decoding="async">' : '');
   if (el('t-shot')) el('t-shot').onclick = function(){ openImg(i); };
   el('t-open').onclick = function(){ openDetail(i); };
   el('t-copy').onclick = function(){ copyItem(i); };
   el('t-share').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_quote', { quote_num: it[NUM], from: 'today' }); };
+  el('t-kakao').onclick = function(){ shareQuote(it[NUM], 'today'); };
   el('t-next').onclick = function(){ TSHIFT++; renderToday(TSHIFT); };
 }
 var TSHIFT = 0;
+
+function heartLabel(num, c){
+  return (BMSET[num] ? '좋아한 문장' : '좋아요') + ((c || 0) > 0 ? ' · ' + c : '');
+}
+function setHeartBtn(num, c){
+  var btn = el('s-bm'), t = el('s-bm-t');
+  if (btn) btn.classList.toggle('on', !!BMSET[num]);
+  if (t) t.textContent = heartLabel(num, c);
+}
+function shareQuote(num, from){
+  var i = NUM2I[num];
+  var it = (i === undefined) ? null : ITEMS[i];
+  var url = 'https://newrangx.github.io/banjang/#s=' + num;
+  var text = it ? (it[TXT] + '\n— ' + it[AUTH]) : '';
+  if (navigator.share){
+    navigator.share({ title: '글반장 · ' + (it ? it[AUTH] : '문장 아카이브'), text: text || url, url: url })
+      .then(function(){ gbEvent('share_quote', { quote_num: num, from: from, via: 'webshare' }); })
+      .catch(function(err){
+        if (err && err.name === 'AbortError') return;
+        copyText(text ? text + '\n\n' + url : url, '카톡에 붙여넣을 문장과 링크를 복사했습니다');
+      });
+    return;
+  }
+  copyText(text ? text + '\n\n' + url : url, '카톡에 붙여넣을 문장과 링크를 복사했습니다');
+  gbEvent('share_quote', { quote_num: num, from: from, via: 'clipboard' });
+}
 
 /* ---------- detail ---------- */
 var lastFocus = null;
@@ -858,7 +933,6 @@ function openDetail(i, noPush){
   var nameA = axis[2], nameB = axis[3];
   var tags = it[TGS].map(function(t){ return '<button class="tagchip" data-tag="'+esc(TAGS[t])+'">'+esc(TAGS[t])+'</button>'; }).join('');
   var hc = (window.GB_TODAY_COUNTS && window.GB_TODAY_COUNTS.counts && window.GB_TODAY_COUNTS.counts[it[NUM]]) || 0;
-  var bm = bmGlyph(it[NUM]) + ' ' + (BMSET[it[NUM]] ? '좋아한 문장' : '좋아요') + (hc > 0 ? ' · ♥ ' + hc : '');
   var html = ''+
     '<div class="head"><span class="num">#'+it[NUM]+'</span><span>·</span><span>'+esc(CATS[it[CAT]])+'</span>'+
       (it[REL]>=150?'<span class="hot" style="position:static">인기</span>':'')+
@@ -868,11 +942,11 @@ function openDetail(i, noPush){
     (it[CLA] === 0 ? '<p class="hint" style="margin:-6px 0 14px">저작권 분류 · 안전 — 원문 그대로 인쇄·굿즈에 쓸 수 있는 문장입니다.</p>' : '')+
     '<div class="chips">'+tags+'</div>'+
     '<div class="acts">'+
-      (IMG_EXISTS(i) ? '<button class="btn" id="s-img">이미지 보기</button>' : '')+
-      '<button class="btn solid" id="s-copy">문장 복사</button>'+
-      '<button class="btn" id="s-link">링크 복사</button>'+
-      '<button class="btn" id="s-bm">'+bm+'</button>'+
-      '<a class="btn" href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램</a>'+
+      (IMG_EXISTS(i) ? '<button class="btn" id="s-img">'+I.image+'이미지 보기</button>' : '')+
+      '<button class="btn solid" id="s-copy">'+I.copy+'문장 복사</button>'+
+      '<button class="btn" id="s-link">'+I.link+'링크 복사</button>'+
+      '<button class="btn'+(BMSET[it[NUM]]?' on':'')+'" id="s-bm">'+I.heart+'<span id="s-bm-t">'+heartLabel(it[NUM], hc)+'</span></button>'+
+      '<button class="btn" id="s-kakao">'+I.kakao+'카톡 공유</button>'+
     '</div>'+
     commentsHTML(it[NUM])+
     '<div class="rel">'+
@@ -890,6 +964,7 @@ function openDetail(i, noPush){
   el('s-link').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_quote', { quote_num: it[NUM], from: 'sheet' }); };
   if (el('s-img')) el('s-img').onclick = function(){ openImg(i); };
   el('s-bm').onclick = function(){ toggleBM(it[NUM]); };
+  el('s-kakao').onclick = function(){ shareQuote(it[NUM], 'sheet'); };
   loadComments(it[NUM]);
   commentsInit(it[NUM]);
   Array.prototype.forEach.call(el('sheetin').querySelectorAll('.mini'), function(b){
@@ -944,7 +1019,7 @@ function toggleBM(num){
     b.textContent = bmGlyph(num);
   });
   var sb = el('s-bm');
-  if (sb) sb.textContent = bmGlyph(num) + ' ' + (BMSET[num] ? '좋아한 문장' : '좋아요') + ((TCOUNT[num] || 0) > 0 ? ' · ♥ ' + TCOUNT[num] : '');
+  if (sb) setHeartBtn(num, TCOUNT[num]);
 }
 
 /* ---------- chips / toolbar ---------- */
@@ -1173,6 +1248,41 @@ function fmtAgo(iso){
 var sheetOpenAt = 0;
 var CMT_COOLDOWN = 30000;
 var SPAM_RE = /(https?:\/\/|www\.|\.com|\.net|\.kr|카톡|카카오톡|텔레그램|t\.me\/)/i;
+var TOK_KEY = 'gb_cmt_tokens_v1';
+function cmtTokens(){
+  try { var o = JSON.parse(localStorage.getItem(TOK_KEY) || '{}'); return (o && typeof o === 'object') ? o : {}; }
+  catch(e){ return {}; }
+}
+function saveCmtTokens(o){ try { localStorage.setItem(TOK_KEY, JSON.stringify(o)); } catch(e){} }
+function newToken(){
+  try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch(e){}
+  return 'tk-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 10);
+}
+function cmtRowHTML(r, owned){
+  return '<div class="cmt" data-id="'+r.id+'">' +
+    '<div class="cmt-hd"><b>'+esc(r.nickname)+'</b><span class="t">'+fmtAgo(r.created_at)+'</span>' +
+    (owned ? '<button type="button" class="cmt-del" data-id="'+r.id+'">삭제</button>' : '') +
+    '</div><p>'+esc(r.body)+'</p></div>';
+}
+function deleteMyComment(id, btn){
+  var map = cmtTokens(), tok = map[id];
+  if (!tok){ toast('이 브라우저에서 쓴 댓글만 삭제할 수 있습니다'); return; }
+  if (!window.confirm('이 댓글을 삭제할까요? 되돌릴 수 없습니다.')) return;
+  btn.disabled = true;
+  sbRpc('delete_my_comment', { p_id: +id, p_token: tok })
+    .then(function(ok){
+      if (ok !== true){ btn.disabled = false; toast('삭제하지 못했습니다'); return; }
+      delete map[id]; saveCmtTokens(map);
+      var row = btn.closest ? btn.closest('.cmt') : null;
+      if (row && row.parentNode) row.parentNode.removeChild(row);
+      var list = el('cmt-list');
+      var n = list ? list.querySelectorAll('.cmt').length : 0;
+      if (el('cn-cnt')) el('cn-cnt').textContent = n ? n : '';
+      if (list && !n) list.innerHTML = '<p class="cmt-empty">아직 댓글이 없습니다. 첫 댓글을 남겨 보세요.</p>';
+      toast('댓글을 삭제했습니다');
+    })
+    .catch(function(){ btn.disabled = false; toast('삭제하지 못했습니다. 잠시 후 다시 시도해 주세요.'); });
+}
 function commentsHTML(num){
   return '<div class="cmts" id="cmts">' +
     '<h3>댓글 <span class="cn" id="cn-cnt"></span></h3>' +
@@ -1188,7 +1298,11 @@ function commentsHTML(num){
 }
 function loadComments(num){
   var list = el('cmt-list'); if (!list) return;
-  sbGet('quote_comments?select=nickname,body,created_at&quote_num=eq.' + num + '&order=created_at.desc&limit=30')
+  list.onclick = function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cmt-del') : null;
+    if (b) deleteMyComment(b.getAttribute('data-id'), b);
+  };
+  sbGet('quote_comments?select=id,nickname,body,created_at&quote_num=eq.' + num + '&order=created_at.desc&limit=30')
     .then(function(rows){
       if (!el('cmt-list')) return;
       if (!rows || !rows.length){
@@ -1196,10 +1310,9 @@ function loadComments(num){
         el('cn-cnt').textContent = '';
         return;
       }
+      var mine = cmtTokens();
       el('cn-cnt').textContent = rows.length;
-      el('cmt-list').innerHTML = rows.map(function(r){
-        return '<div class="cmt"><div class="cmt-hd"><b>' + esc(r.nickname) + '</b><span>' + fmtAgo(r.created_at) + '</span></div><p>' + esc(r.body) + '</p></div>';
-      }).join('');
+      el('cmt-list').innerHTML = rows.map(function(r){ return cmtRowHTML(r, !!mine[r.id]); }).join('');
     })
     .catch(function(){
       if (el('cmt-list')) el('cmt-list').innerHTML = '<p class="cmt-empty">댓글을 불러오지 못했습니다.</p>';
@@ -1221,8 +1334,10 @@ function commentsInit(num){
     if (body.length < 2 || body.length > 300){ note.textContent = '댓글은 2자 이상 300자 이하로 적어 주세요.'; return; }
     if (SPAM_RE.test(body)){ note.textContent = '링크나 홍보 문구가 들어간 댓글은 등록할 수 없습니다.'; return; }
     var btn = el('cmt-send'); btn.disabled = true; note.textContent = '';
-    sbRpc('add_comment', { p_quote: num, p_nick: nick, p_body: body, p_hp: hp })
-      .then(function(){
+    var token = newToken();
+    sbRpc('add_comment', { p_quote: num, p_nick: nick, p_body: body, p_hp: hp, p_token: token })
+      .then(function(row){
+        if (row && row.id){ var m = cmtTokens(); m[row.id] = token; saveCmtTokens(m); }
         try { localStorage.setItem('gb_cmt_at', String(Date.now())); } catch(err){}
         el('cmt-body').value = '';
         toast('댓글을 남겼습니다');
