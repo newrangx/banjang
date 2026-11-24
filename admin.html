@@ -267,9 +267,12 @@ function rest(path, opts){
     if (opts.body) init.body = JSON.stringify(opts.body);
     if (opts.prefer) headers['Prefer'] = opts.prefer;
     return fetch(SB_URL + '/rest/v1/' + path, init).then(function(r){
-      if (r.status === 401 || r.status === 403){
+      if (r.status === 401){
         saveSess(null); showLogin();
         throw new Error('세션이 만료되었습니다. 다시 로그인해 주세요.');
+      }
+      if (r.status === 403){
+        return r.text().then(function(t){ throw new Error('권한이 없습니다(403). ' + String(t).slice(0,120)); });
       }
       if (!r.ok){
         return r.text().then(function(t){ throw new Error('HTTP ' + r.status + ' ' + String(t).slice(0,140)); });
