@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+/* 테마: 저장값을 첫 페인트 전에 적용 (기본 다크) */
+(function(){try{var t=localStorage.getItem('gb_theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>공지사항 · 글반장</title>
@@ -12,8 +16,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
+  color-scheme:dark;
   --bg:#000; --text:#EDECEA; --muted:rgba(255,255,255,.70); --line:rgba(255,255,255,.10);
   --card:#0E0E0E; --pill:rgba(255,255,255,.06); --copy:#F5F4F0; --gold:#D4A359; --gold-ink:#151618;
+  --header-bg:rgba(0,0,0,.72); --line-strong:rgba(255,255,255,.30); --shadow:0 1px 2px rgba(0,0,0,.5);
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --bg:#FAFAF9; --text:#1C1917; --muted:#6B6560; --line:#E7E5E4;
+  --card:#FFFFFF; --pill:rgba(28,25,23,.045); --copy:#1C1917; --gold:#C4632A; --gold-ink:#FFFFFF;
+  --header-bg:rgba(250,250,249,.86); --line-strong:#D6D3D1; --shadow:0 1px 2px rgba(28,25,23,.05);
 }
 @supports (overflow:clip){html,body{overflow-x:clip}}
 *{box-sizing:border-box}
@@ -27,13 +39,21 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 input{font:inherit}
 .wrap{max-width:760px;margin:0 auto;padding:0 20px}
 header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  background:rgba(0,0,0,.72);border-bottom:1px solid var(--line)}
+  background:var(--header-bg);border-bottom:1px solid var(--line)}
 .top-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:14px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:17px}
 .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--text);display:inline-block}
 .brand em{font-style:normal;font-weight:500;font-size:13px;color:var(--muted)}
 .back{font-size:13.5px;color:var(--muted)}
 .back:hover{color:var(--text)}
+.top-r{display:flex;align-items:center;gap:12px}
+.themebtn{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;display:inline-flex;
+  align-items:center;justify-content:center;color:var(--muted);background:var(--pill)}
+.themebtn:hover{color:var(--text);border-color:var(--line-strong)}
+.themebtn svg{width:17px;height:17px;display:block}
+.themebtn .ic-sun{display:none}
+[data-theme="light"] .themebtn .ic-sun{display:block}
+[data-theme="light"] .themebtn .ic-moon{display:none}
 main{padding:34px 0 0}
 h1.page{margin:0 0 6px;font-size:26px;letter-spacing:-.03em;font-weight:600;line-height:1.25}
 .page-sub{margin:0 0 26px;color:var(--muted);font-size:14px;line-height:1.7}
@@ -61,7 +81,7 @@ h1.page{margin:0 0 6px;font-size:26px;letter-spacing:-.03em;font-weight:600;line
 .tools{display:flex;gap:8px;margin-top:26px;flex-wrap:wrap}
 .tbtn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:9px 14px;font-size:13.5px;min-height:42px;
   display:inline-flex;align-items:center;justify-content:center}
-.tbtn:hover{border-color:rgba(255,255,255,.3)}
+.tbtn:hover{border-color:var(--line-strong)}
 .tbtn.solid{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);font-weight:600}
 .note{margin:16px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
 .empty{border:1px dashed var(--line);border-radius:16px;padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.8}
@@ -92,7 +112,13 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="./"><span class="dot"></span>글반장 <em>공지사항</em></a>
-    <a class="back" href="./">아카이브로 →</a>
+    <div class="top-r">
+      <a class="back" href="./">아카이브로 →</a>
+      <button class="themebtn" id="theme-btn" type="button" aria-label="라이트/다크 테마 전환" title="테마 전환">
+        <svg class="ic-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.2 9.8A5.6 5.6 0 0 1 6.2 2.8a5.6 5.6 0 1 0 7 7Z"/></svg>
+        <svg class="ic-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="2.9"/><path d="M8 1.4v1.5M8 13.1v1.5M1.4 8h1.5M13.1 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M12.6 3.4l-1 1M4.4 11.6l-1 1"/></svg>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -232,6 +258,23 @@ function renderOne(rows, id){
     .then(function(rows){ renderList(rows || []); })
     .catch(function(){ el('view').innerHTML = '<div class="empty">공지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.<br><a href="./" style="text-decoration:underline">아카이브로 돌아가기</a></div>'; });
 })();
+})();
+</script>
+<script>
+(function(){
+  'use strict';
+  function el(id){ return document.getElementById(id); }
+  function currentTheme(){ return document.documentElement.getAttribute('data-theme')==='light' ? 'light':'dark'; }
+  function setTheme(t){
+    if (t==='light') document.documentElement.setAttribute('data-theme','light');
+    else document.documentElement.removeAttribute('data-theme');
+    try{ localStorage.setItem('gb_theme', t==='light'?'light':'dark'); }catch(e){}
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t==='light' ? '#FAFAF9' : '#000000');
+  }
+  var b = el('theme-btn');
+  if (b) b.onclick = function(){ setTheme(currentTheme()==='light' ? 'dark' : 'light'); };
+  setTheme(currentTheme());
 })();
 </script>
 </body>
