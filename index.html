@@ -466,6 +466,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .cmt.depth1 .cmt-hd b:before{content:"↳ ";color:var(--muted)}
 .cmt-rt{display:flex;align-items:center;gap:8px;margin:10px 0 0;padding:8px 11px;border-radius:9px;
   border:1px solid var(--accent-line);background:var(--accent-soft);font-size:12.5px;color:var(--text)}
+.cmt-rt[hidden]{display:none}
 .cmt-rt b{font-weight:600}
 .cmt-rt button{margin-left:auto;font-size:12px;color:var(--muted)}
 .cmt-rt button:hover{color:var(--text)}
@@ -1154,7 +1155,7 @@ function openDetail(i, noPush, from){
   var simList = simArr.slice(0,3).map(function(j){ return mini(j); }).join('');
   var oppList = oppArr.slice(0,3).map(function(j){ return mini(j); }).join('');
   var relBody = '';
-  if (simList) relBody += '<h3 class="relh">이 문장과 비슷한 문장 <span class="cnt">'+simArr.length+'</span></h3>' + simList;
+  if (simList) relBody += '<h3 class="relh">이 문장과 비슷한 문장 <span class="cnt">'+Math.min(simArr.length,3)+'</span></h3>' + simList;
   if (oppList) relBody += '<h3 class="relh"'+(simList?' style="margin-top:26px"':'')+'>반대 관점의 문장 <span class="axisbox">'+esc(side)+' ↔ '+esc(other)+'</span></h3>'+
       '<p class="oppnote">이 문장은 <b>'+esc(side)+'</b> 쪽입니다 ('+esc(nameA)+' / '+esc(nameB)+' 축). 같은 축에서 반대편에 선 문장을 골랐습니다.</p>' + oppList;
   var html = ''+
