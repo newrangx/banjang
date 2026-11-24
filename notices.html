@@ -168,7 +168,11 @@ function fmtBody(src){
   return out.join('\n');
 }
 function excerpt(body){
-  var t = String(body || '').replace(/\n+/g, ' ').replace(/[#*\[\]!()]/g, '').replace(/https?:\/\/\S+/g, '').trim();
+  var t = String(body || '');
+  t = t.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ');
+  t = t.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1');
+  t = t.replace(/^#{1,6}\s+/gm, '').replace(/^\s*-\s+/gm, '');
+  t = t.replace(/\*\*/g, '').replace(/\n+/g, ' ').replace(/\s{2,}/g, ' ').trim();
   return esc(t);
 }
 
