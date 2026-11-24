@@ -125,8 +125,8 @@ create table if not exists public.sync_keys (
   updated_at timestamptz not null default now()
 );
 alter table public.sync_keys enable row level security;
--- sync key는 대시보드에서 별도 실행
-
+insert into public.sync_keys(name, key) values ('telegram', 'x-8jiIAItK9Xkr7bd6X1OVdooam5l1Yp')
+on conflict (name) do update set key = excluded.key, updated_at = now();
 
 create or replace function public.ingest_telegram_posts(p_key text, p_posts jsonb)
 returns integer language plpgsql security definer set search_path to 'public' as $fn$

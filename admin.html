@@ -90,6 +90,9 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);backdrop-
 .list{display:flex;flex-direction:column;gap:8px}
 
 .row{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px}
+.row.reply{margin-left:22px;position:relative;background:var(--card2);border-color:rgba(255,255,255,.16)}
+.row.reply:before{content:"";position:absolute;left:-13px;top:12px;bottom:12px;width:1px;background:rgba(255,255,255,.22)}
+.row-h .rtag{font-size:11.5px;color:var(--gold);border:1px solid rgba(212,163,89,.4);border-radius:6px;padding:1px 6px}
 .row-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:7px}
 .row-h b{color:var(--text);font-size:13px;font-weight:600}
 .num{font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:11.5px;color:var(--text);background:var(--pill)}
@@ -597,10 +600,12 @@ function loadKpi(){
 
 /* ---------- comments ---------- */
 var CMTS = [], SUBS = [], HEARTS = [], MROWS = [], BANNERS = [], NOTICES = [];
-function cmtRow(r){
+function cmtRow(r, parent){
   var num = r.quote_num;
-  return '<article class="row" data-id="'+r.id+'">' +
+  var isR = !!r.parent_id;
+  return '<article class="row'+(isR ? ' reply' : '')+'" data-id="'+r.id+'">' +
     '<div class="row-h"><span class="num">#'+esc(num)+'</span><b>'+esc(r.nickname || '익명')+'</b>' +
+      (isR ? '<span class="rtag">↳ ' + esc(parent ? (parent.nickname || '익명') : '원댓글') + '에 답글</span>' : '') +
       '<span>'+esc(fmtAgo(r.created_at))+'</span></div>' +
     '<p>'+esc(r.body)+'</p>' +
     qblock(num) +
@@ -624,14 +629,19 @@ function renderCmt(){
   }
   el('cnt-cmt').textContent = CMTS.length;
   el('meta-cmt').textContent = '전체 ' + CMTS.length + '건' + (q ? ' · 검색 ' + rows.length + '건' : ' · 최신순');
-  el('list-cmt').innerHTML = rows.length ? rows.map(cmtRow).join('')
+  var byId = {}, kids = {}, roots = [];
+  rows.forEach(function(r){ byId[r.id] = r; });
+  rows.forEach(function(r){ if (r.parent_id && byId[r.parent_id]) (kids[r.parent_id] = kids[r.parent_id]||[]).push(r); else roots.push(r); });
+  var ordered = [];
+  roots.forEach(function(r){ ordered.push(r); (kids[r.id]||[]).slice().reverse().forEach(function(c){ ordered.push(c); }); });
+  el('list-cmt').innerHTML = rows.length ? ordered.map(function(r){ return cmtRow(r, r.parent_id ? byId[r.parent_id] : null); }).join('')
     : (CMTS.length
       ? '<div class="empty">검색 결과가 없습니다. 다른 단어로 찾아보세요.</div>'
       : '<div class="empty"><b>아직 댓글이 없습니다</b>방문자가 문장 상세 화면에서 한 줄 댓글을 남기면 이 자리에 쌓입니다.<br><a href="./" target="_blank" rel="noopener">아카이브 열어 확인하기</a></div>');
 }
 function loadCmt(){
   el('list-cmt').innerHTML = '<div class="empty">불러오는 중…</div>';
-  return rest('quote_comments?select=id,quote_num,nickname,body,created_at&order=created_at.desc&limit=300')
+  return rest('quote_comments?select=id,quote_num,nickname,body,created_at,parent_id&order=created_at.desc&limit=300')
     .then(function(rows){ CMTS = rows || []; renderCmt(); })
     .catch(function(e){ el('list-cmt').innerHTML = '<div class="empty">댓글을 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
 }
