@@ -297,6 +297,7 @@ function showApp(){
   el('app').hidden = false;
   el('logout').hidden = false;
   el('who').textContent = (s && s.email) || '';
+  setTab((location.hash || '').replace('#',''));
   loadAll();
 }
 
@@ -425,12 +426,17 @@ el('logout').onclick = function(){
   saveSess(null); CMTS = []; SUBS = []; HEARTS = []; showLogin();
 };
 Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
-  t.onclick = function(){
-    var name = t.getAttribute('data-tab');
-    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(x){ x.classList.toggle('on', x === t); });
-    ['cmt','sub','heart'].forEach(function(k){ el('pane-'+k).hidden = (k !== name); });
-  };
+  t.onclick = function(){ setTab(t.getAttribute('data-tab')); };
 });
+function setTab(name){
+  if (['cmt','sub','heart'].indexOf(name) < 0) name = 'cmt';
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(x){
+    x.classList.toggle('on', x.getAttribute('data-tab') === name);
+  });
+  ['cmt','sub','heart'].forEach(function(k){ el('pane-'+k).hidden = (k !== name); });
+  if (location.hash !== '#' + name) { try { history.replaceState(null, '', '#' + name); } catch(e){ location.hash = name; } }
+}
+window.addEventListener('hashchange', function(){ setTab((location.hash || '').replace('#','')); });
 el('q-cmt').oninput = renderCmt;
 el('q-sub').oninput = renderSub;
 el('reload-cmt').onclick = loadCmt;
