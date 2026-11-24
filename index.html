@@ -19,6 +19,7 @@
   --card:#0E0E0E; --card2:#141414; --pill:rgba(255,255,255,.06);
   --copy:#F5F4F0;
   --surface-a:#0B0B0D; --surface-b:#121215; --surface-c:#16161A;
+  --gold:#D4A359; --gold-ink:#151618;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
@@ -56,7 +57,7 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 .searchbox{position:relative;max-width:680px;margin:0 auto}
 .searchbox input{width:100%;height:56px;border-radius:14px;border:1px solid var(--line);background:var(--card);
   color:var(--text);padding:0 52px 0 46px;font-size:16px;outline:none;transition:border-color .15s}
-.searchbox input:focus{border-color:rgba(255,255,255,.32)}
+.searchbox input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,163,89,.18)}
 .searchbox .icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px}
 .searchbox kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);
   border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--pill)}
@@ -76,7 +77,8 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 .btn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:9px 14px;font-size:13.5px;color:var(--text);
   display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;line-height:1}
 .btn:hover{border-color:rgba(255,255,255,.3)}
-.btn.solid{background:var(--text);color:#151618;border-color:var(--text);font-weight:600}
+.btn.solid{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);font-weight:600}
+.btn.solid:hover{border-color:var(--gold);filter:brightness(1.06)}
 @media(max-width:640px){.today{padding:24px 20px 20px;border-radius:16px}.today .s{font-size:20.5px;line-height:1.66}}
 
 /* toolbar */
@@ -85,20 +87,20 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 .views{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 .vtab{padding:7px 12px;border-radius:9px;font-size:13.5px;color:var(--muted);border:1px solid transparent}
 .vtab:hover{color:var(--text)}
-.vtab.on{color:#151618;background:var(--text);font-weight:600}
+.vtab.on{color:var(--gold-ink);background:var(--gold);font-weight:600}
 .vtab .n{opacity:.6;font-size:12px;margin-left:5px}
 .sortwrap{margin-left:auto;display:flex;gap:6px;align-items:center}
 select.sort{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:13px;outline:none}
 .cats{display:flex;gap:6px;flex-wrap:wrap}
 .cat{padding:6px 11px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--muted);background:transparent}
 .cat:hover{color:var(--text)}
-.cat.on{color:var(--text);background:var(--pill);border-color:rgba(255,255,255,.34);font-weight:600}
+.cat.on{color:var(--gold-ink);background:var(--gold);border-color:var(--gold);font-weight:600}
 .cat .n{opacity:.55;font-size:11.5px;margin-left:4px}
 .tagsrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;align-items:center}
 .tagsrow .tl{font-size:12px;color:var(--muted);margin-right:2px}
 .tagchip{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 9px}
 .tagchip:hover{color:var(--text)}
-.tagchip.on{color:#151618;background:var(--text);border-color:var(--text);font-weight:600}
+.tagchip.on{color:var(--gold-ink);background:var(--gold);border-color:var(--gold);font-weight:600}
 .tagmore{font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 
 /* list */
@@ -190,9 +192,6 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 
 /* today's popular 3 */
 .pop3{margin:38px auto 0;max-width:1140px}
-.pop3 .ph{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.pop3 .lbl{font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
-.pop3 .sub{font-size:12px;color:var(--muted)}
 .pop3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .pop3 .card{min-height:0}
 .pop3 .card .s{-webkit-line-clamp:4}
@@ -201,9 +200,6 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 
 /* visitor submissions */
 .usub{margin:38px auto 0;max-width:1140px}
-.usub .ph{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.usub .lbl{font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
-.usub .sub{font-size:12px;color:var(--muted);line-height:1.5}
 .usub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .usub-card{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px 16px 13px;display:flex;flex-direction:column;gap:8px}
 .usub-card.new{border-color:rgba(255,255,255,.42);box-shadow:0 0 0 1px rgba(255,255,255,.08)}
@@ -254,10 +250,14 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 }
 
 /* ---------- phase2: GA4·하트 카운트·댓글·제보 ---------- */
-.submitbtn{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;font-size:13px;letter-spacing:-.01em;
-  color:var(--text);background:rgba(255,255,255,.06);white-space:nowrap;transition:background .15s,border-color .15s;
+.submitbtn{border:1px solid var(--gold);border-radius:999px;padding:8px 14px;font-size:13px;letter-spacing:-.01em;font-weight:600;
+  color:var(--gold-ink);background:var(--gold);white-space:nowrap;transition:filter .15s;
   display:inline-flex;align-items:center;min-height:40px}
-.submitbtn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.36)}
+.submitbtn:hover{filter:brightness(1.06)}
+.top-acts{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.noticechip{display:none;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:0 11px;height:40px;
+  font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.04);align-items:center}
+.noticechip:hover{color:var(--text);border-color:rgba(255,255,255,.36)}
 @media(max-width:640px){.submitbtn{padding:7px 11px;font-size:12.5px}}
 .bmc{display:inline-block;margin-left:3px;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;vertical-align:1px}
 .popempty{grid-column:1/-1;border:1px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;color:var(--muted)}
@@ -309,7 +309,6 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .band-b{background:var(--surface-b)}
 .band .usub-card{background:var(--surface-c)}
 .sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 20px}
-.sec-h .idx{font-size:12px;letter-spacing:.18em;color:rgba(255,255,255,.40);font-variant-numeric:tabular-nums}
 .sec-h h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.3}
 .sec-h .sub{font-size:13.5px;color:var(--muted);margin-left:auto;line-height:1.5}
 .band .card{background:var(--surface-c)}
@@ -321,13 +320,24 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .cmt-del:disabled{opacity:.5}
 @media(max-width:640px){
   .band,.band.pop3,.band.usub{padding:36px 0 32px;margin-top:38px}
-  .sec-h{gap:8px;margin-bottom:16px}
-  .sec-h h2{font-size:19px}
-  .sec-h .sub{margin-left:0;width:100%;font-size:12.5px}
+  .sec-h{flex-wrap:nowrap;gap:8px;margin-bottom:14px}
+  .sec-h h2{font-size:19px;flex:0 0 auto;white-space:nowrap}
+  .sec-h .sub{margin-left:auto;width:auto;min-width:0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right}
+  .noticechip{display:inline-flex}
   .arch{margin:36px 0 18px}
   .card .s{font-size:17.5px}
   .today .row .btn{flex:1 1 calc(50% - 5px)}
   .today .row .btn:last-child{flex-basis:100%}
+}
+
+/* ---------- 2026-11-24 2차: 배너 ---------- */
+.bnr{margin:18px auto 0;line-height:0}
+.bnr a{display:block}
+.bnr img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+@media(max-width:640px){
+  .bnr{margin:14px auto 0}
+  .bnr.nomob{display:none}
+  .bnr img{border-radius:12px}
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EQPB5MSEZV"></script>
@@ -346,12 +356,18 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
       <a href="#view=all">문장 아카이브</a>
       <a href="#view=pop">인기 문장</a>
       <a href="#" id="nav-bm">내가 좋아한 문장</a>
+      <a href="notices.html">공지사항</a>
       <a href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램</a>
       <a href="https://smartstore.naver.com/badgeters" target="_blank" rel="noopener">굿즈</a>
     </nav>
-    <button class="submitbtn" id="submit-top">문장 제보하기</button>
+    <div class="top-acts">
+      <a class="noticechip" href="notices.html">공지</a>
+      <button class="submitbtn" id="submit-top">문장 제보하기</button>
+    </div>
   </div>
 </header>
+
+<div class="wrap"><div class="bnr" id="bnr" hidden></div></div>
 
 <div class="wrap">
   <section class="hero">
@@ -369,14 +385,14 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
 
 <section class="pop3 band band-a" id="pop3" hidden>
   <div class="wrap">
-    <div class="sec-h"><span class="idx">01</span><h2>오늘의 인기글</h2><span class="sub" id="pop3sub"></span></div>
+    <div class="sec-h"><h2>오늘의 인기글</h2><span class="sub" id="pop3sub"></span></div>
     <div class="pop3-grid" id="pop3grid"></div>
   </div>
 </section>
 
 <section class="usub band band-b" id="usub">
   <div class="wrap">
-    <div class="sec-h"><span class="idx">02</span><h2>방문자 제보 문장</h2><span class="sub" id="usub-sub">방문자가 보낸 문장이 바로 올라갑니다</span></div>
+    <div class="sec-h"><h2>방문자 제보 문장</h2><span class="sub" id="usub-sub">방문자가 보낸 문장이 바로 올라갑니다</span></div>
     <div class="usub-grid" id="usub-grid"><div class="usub-empty">불러오는 중…</div></div>
     <div class="usub-cta">
       <p>마음에 남은 문장이 있으면 여기에 남겨 주세요. 보낸 문장은 바로 이 자리에 올라가고, 확인 후 아카이브에 등록합니다.</p>
@@ -386,7 +402,7 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
 </section>
 
 <div class="wrap">
-  <div class="sec-h arch"><span class="idx">03</span><h2>문장 아카이브</h2><span class="sub">상황 · 감정 · 저자로 찾기</span></div>
+  <div class="sec-h arch"><h2>문장 아카이브</h2><span class="sub">상황 · 감정 · 저자로 찾기</span></div>
 </div>
 
 <div class="toolbar">
@@ -419,6 +435,7 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
 <footer>
   <div class="wrap">
     <div class="foot-links">
+      <a href="notices.html">공지사항</a>
       <a href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램 @banjang9</a>
       <a href="https://smartstore.naver.com/badgeters" target="_blank" rel="noopener">뉴랑마켓 굿즈</a>
       <a href="https://newr.kr" target="_blank" rel="noopener">디자인 의뢰 newr.kr</a>
@@ -777,10 +794,10 @@ function paint(first){
 
 /* ---------- lightbox / image ---------- */
 function IMG_EXISTS(i){ return !!IMGM[i]; }
-function openImg(i){
+function openImg(i, from){
   var u = imgURL(i,1200);
   if (!u) return;
-  gbEvent('view_image', { quote_num: ITEMS[i][NUM] });
+  gbEvent('view_image', { quote_num: ITEMS[i][NUM], from: from || 'today' });
   el('lbimg').src = u;
   el('lb').classList.add('on');
   document.body.style.overflow = 'hidden';
@@ -885,10 +902,10 @@ function renderToday(shift){
       '<button class="btn" id="t-next">'+I.next+'다른 문장</button>'+
     '</div>'+
     (shot ? '<img class="shot" id="t-shot" src="'+shot+'" alt="오늘의 문장 원본 카드" loading="eager" decoding="async">' : '');
-  if (el('t-shot')) el('t-shot').onclick = function(){ openImg(i); };
-  el('t-open').onclick = function(){ openDetail(i); };
+  if (el('t-shot')) el('t-shot').onclick = function(){ openImg(i, 'today'); };
+  el('t-open').onclick = function(){ openDetail(i, false, 'today'); };
   el('t-copy').onclick = function(){ copyItem(i); };
-  el('t-share').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_quote', { quote_num: it[NUM], from: 'today' }); };
+  el('t-share').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_copy', { quote_num: it[NUM], from: 'today' }); };
   el('t-kakao').onclick = function(){ shareQuote(it[NUM], 'today'); };
   el('t-next').onclick = function(){ TSHIFT++; renderToday(TSHIFT); };
 }
@@ -909,15 +926,16 @@ function shareQuote(num, from){
   var text = it ? (it[TXT] + '\n— ' + it[AUTH]) : '';
   if (navigator.share){
     navigator.share({ title: '글반장 · ' + (it ? it[AUTH] : '문장 아카이브'), text: text || url, url: url })
-      .then(function(){ gbEvent('share_quote', { quote_num: num, from: from, via: 'webshare' }); })
+      .then(function(){ gbEvent('share_kakao', { quote_num: num, from: from, via: 'webshare' }); })
       .catch(function(err){
         if (err && err.name === 'AbortError') return;
         copyText(text ? text + '\n\n' + url : url, '카톡에 붙여넣을 문장과 링크를 복사했습니다');
+        gbEvent('share_copy', { quote_num: num, from: from, via: 'clipboard' });
       });
     return;
   }
   copyText(text ? text + '\n\n' + url : url, '카톡에 붙여넣을 문장과 링크를 복사했습니다');
-  gbEvent('share_quote', { quote_num: num, from: from, via: 'clipboard' });
+  gbEvent('share_copy', { quote_num: num, from: from, via: 'clipboard' });
 }
 
 /* ---------- detail ---------- */
@@ -926,10 +944,10 @@ function mini(j, axis){
   var it = ITEMS[j];
   return '<button class="mini" data-i="'+j+'"><p class="ms">'+esc(it[TXT])+'</p><p class="ma">— '+esc(it[AUTH])+' · '+esc(CATS[it[CAT]])+'</p></button>';
 }
-function openDetail(i, noPush){
+function openDetail(i, noPush, from){
   lastFocus = document.activeElement;
   var it = ITEMS[i];
-  gbEvent('view_quote', { quote_num: it[NUM], category: CATS[it[CAT]] });
+  gbEvent('view_quote', { quote_num: it[NUM], category: CATS[it[CAT]], from: from || 'grid' });
   var axis = PAIRS[it[PAIR]];
   var side = it[POLE] === 0 ? axis[0] : axis[1];
   var other = it[POLE] === 0 ? axis[1] : axis[0];
@@ -964,14 +982,14 @@ function openDetail(i, noPush){
   document.body.style.overflow = 'hidden';
   el('s-close').onclick = closeDetail;
   el('s-copy').onclick = function(){ copyText(it[AUTH] ? it[TXT] + '\n\n— ' + it[AUTH] : it[TXT]); gbEvent('copy_quote', { quote_num: it[NUM] }); };
-  el('s-link').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_quote', { quote_num: it[NUM], from: 'sheet' }); };
-  if (el('s-img')) el('s-img').onclick = function(){ openImg(i); };
+  el('s-link').onclick = function(){ copyText('https://newrangx.github.io/banjang/#s=' + it[NUM], '문장 링크를 복사했습니다'); gbEvent('share_copy', { quote_num: it[NUM], from: 'sheet' }); };
+  if (el('s-img')) el('s-img').onclick = function(){ openImg(i, 'sheet'); };
   el('s-bm').onclick = function(){ toggleBM(it[NUM]); };
   el('s-kakao').onclick = function(){ shareQuote(it[NUM], 'sheet'); };
   loadComments(it[NUM]);
   commentsInit(it[NUM]);
   Array.prototype.forEach.call(el('sheetin').querySelectorAll('.mini'), function(b){
-    b.onclick = function(){ openDetail(+b.getAttribute('data-i')); };
+    b.onclick = function(){ openDetail(+b.getAttribute('data-i'), false, 'related'); };
   });
   Array.prototype.forEach.call(el('sheetin').querySelectorAll('.tagchip'), function(b){
     b.onclick = function(){ closeDetail(); setTag(b.getAttribute('data-tag')); };
@@ -1015,7 +1033,7 @@ function toggleBM(num){
   saveBM();
   var hOn = !!BMSET[num];
   heartSync(num, hOn ? 1 : -1);
-  if (hOn) gbEvent('heart_quote', { quote_num: num });
+  if (hOn) gbEvent('like_quote', { quote_num: num });
   el('n-bm').textContent = BM.length;
   Array.prototype.forEach.call(document.querySelectorAll('.bm[data-num="'+num+'"]'), function(b){
     b.classList.toggle('on', !!BMSET[num]);
@@ -1117,7 +1135,7 @@ function applyHash(){
   renderCats(); renderTags();
   render(true);
   if (h.s){
-    for (var i=0;i<N;i++) if (ITEMS[i][NUM] === +h.s) { openDetail(i, true); break; }
+    for (var i=0;i<N;i++) if (ITEMS[i][NUM] === +h.s) { openDetail(i, true, 'link'); break; }
   }
 }
 
@@ -1167,12 +1185,12 @@ el('grid').addEventListener('click', function(e){
   var bm = e.target.closest ? e.target.closest('.bm') : null;
   if (bm){ e.stopPropagation(); toggleBM(+bm.getAttribute('data-num')); return; }
   var cardEl = e.target.closest ? e.target.closest('.card') : null;
-  if (cardEl) openDetail(+cardEl.getAttribute('data-i'));
+  if (cardEl) openDetail(+cardEl.getAttribute('data-i'), false, 'grid');
 });
 el('grid').addEventListener('keydown', function(e){
   if (e.key !== 'Enter' && e.key !== ' ') return;
   var cardEl = e.target.closest ? e.target.closest('.card') : null;
-  if (cardEl){ e.preventDefault(); openDetail(+cardEl.getAttribute('data-i')); }
+  if (cardEl){ e.preventDefault(); openDetail(+cardEl.getAttribute('data-i'), false, 'grid'); }
 });
 
 el('overlay').onclick = closeDetail;
@@ -1183,7 +1201,7 @@ el('pop3grid').addEventListener('click', function(e){
   var bm = e.target.closest ? e.target.closest('.bm') : null;
   if (bm){ e.stopPropagation(); toggleBM(+bm.getAttribute('data-num')); return; }
   var cardEl = e.target.closest ? e.target.closest('.card') : null;
-  if (cardEl) openDetail(+cardEl.getAttribute('data-i'));
+  if (cardEl) openDetail(+cardEl.getAttribute('data-i'), false, 'pop');
 });
 
 el('brand').onclick = function(e){
@@ -1210,7 +1228,7 @@ document.addEventListener('keydown', function(e){
       var cur = state.sid, pos = results.indexOf(cur);
       if (pos < 0) return;
       var nxt = e.key === 'j' ? pos+1 : pos-1;
-      if (nxt >= 0 && nxt < results.length) openDetail(results[nxt]);
+      if (nxt >= 0 && nxt < results.length) openDetail(results[nxt], false, 'grid');
     }
     if (e.key === 'b' && !typing){ toggleBM(ITEMS[state.sid][NUM]); }
     if (e.key === 'c' && !typing){ copyItem(state.sid); }
@@ -1219,8 +1237,14 @@ document.addEventListener('keydown', function(e){
 
 window.addEventListener('hashchange', function(){ applyHash(); });
 
-/* ---------- GA4 helper ---------- */
-function gbEvent(name, params){ try { if (window.gtag) window.gtag('event', name, params || {}); } catch(e){} }
+/* ---------- GA4 + Supabase 일별 집계 helper ---------- */
+var LOG_EVENTS = { view_quote:1, view_image:1, copy_quote:1, share_kakao:1, share_copy:1, like_quote:1, comment_quote:1 };
+function gbEvent(name, params){
+  try { if (window.gtag) window.gtag('event', name, params || {}); } catch(e){}
+  if (!LOG_EVENTS[name]) return;
+  var q = (params && typeof params.quote_num === 'number') ? params.quote_num : 0;
+  try { sbRpc('log_event', { p_event: name, p_quote: q }).catch(function(){}); } catch(e){}
+}
 
 /* ---------- Supabase: daily hearts + instant comments ---------- */
 var SB_URL = 'https://ecwrolumnuajrkqmzeds.supabase.co';
@@ -1447,6 +1471,32 @@ function submitInit(){
   };
 }
 
+/* ---------- 상단 배너 (banners, 모바일 파일 없으면 모바일에서 숨김) ---------- */
+function renderBanner(){
+  var box = el('bnr'); if (!box) return;
+  sbGet('banners?select=id,title,pc_url,mobile_url,link_url&active=eq.true&order=sort_order.asc&limit=1')
+    .then(function(rows){
+      var b = (rows && rows[0]) || null;
+      if (!b || !b.pc_url){ box.hidden = true; return; }
+      var mob = (b.mobile_url || '').trim();
+      var link = (b.link_url || '').trim();
+      var alt = esc(b.title || '글반장 소식');
+      var img = mob
+        ? '<picture><source media="(max-width:640px)" srcset="' + esc(mob) + '"><img src="' + esc(b.pc_url) + '" width="1140" height="180" alt="' + alt + '"></picture>'
+        : '<img src="' + esc(b.pc_url) + '" width="1140" height="180" alt="' + alt + '">';
+      box.className = 'bnr' + (mob ? '' : ' nomob');
+      if (link){
+        box.innerHTML = '<a href="' + esc(link) + '" target="_blank" rel="noopener">' + img + '</a>';
+        var a = box.querySelector('a');
+        if (a) a.onclick = function(){ gbEvent('banner_click', { banner_id: b.id }); };
+      } else {
+        box.innerHTML = img;
+      }
+      box.hidden = false;
+    })
+    .catch(function(){ box.hidden = true; });
+}
+
 /* ---------- init ---------- */
 (function init(){
   var pop = 0, all = N;
@@ -1458,6 +1508,7 @@ function submitInit(){
   renderPopular();
   loadTodayCounts();
   loadSubmissions();
+  renderBanner();
   submitInit();
   renderChips();
   renderCats();

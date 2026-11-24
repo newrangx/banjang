@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>공지사항 · 글반장</title>
+<meta name="description" content="글반장 아카이브 공지사항입니다.">
+<meta property="og:title" content="공지사항 · 글반장">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#000; --text:#EDECEA; --muted:rgba(255,255,255,.70); --line:rgba(255,255,255,.10);
+  --card:#0E0E0E; --pill:rgba(255,255,255,.06); --copy:#F5F4F0; --gold:#D4A359; --gold-ink:#151618;
+}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html,body{max-width:100%;overflow-x:hidden}
+body{padding-bottom:80px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.72);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:17px}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--text);display:inline-block}
+.brand em{font-style:normal;font-weight:500;font-size:13px;color:var(--muted)}
+.back{font-size:13.5px;color:var(--muted)}
+.back:hover{color:var(--text)}
+main{padding:34px 0 0}
+h1.page{margin:0 0 6px;font-size:26px;letter-spacing:-.03em;font-weight:600;line-height:1.25}
+.page-sub{margin:0 0 26px;color:var(--muted);font-size:14px;line-height:1.7}
+.list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.item{display:block;padding:16px 2px;border-bottom:1px solid var(--line)}
+.item:hover .ti{color:var(--gold)}
+.item .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.item .ti{margin:0;font-size:16.5px;font-weight:600;letter-spacing:-.02em;line-height:1.5;word-break:keep-all;transition:color .15s}
+.item .dt{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;margin-left:auto;flex:0 0 auto}
+.pin{font-size:11px;color:var(--gold-ink);background:var(--gold);border-radius:5px;padding:1px 6px;font-weight:700;flex:0 0 auto}
+.excerpt{margin:0;font-size:13.5px;color:var(--muted);line-height:1.65;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.art{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:26px 26px 30px}
+.art-h{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.art-h h1{margin:0 0 8px;font-size:23px;line-height:1.4;letter-spacing:-.025em;font-weight:600;word-break:keep-all;overflow-wrap:anywhere}
+.art-m{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.art-b{font-size:16px;line-height:1.85;color:var(--copy);word-break:keep-all;overflow-wrap:anywhere}
+.art-b p{margin:0 0 18px}
+.art-b h2{font-size:18px;letter-spacing:-.02em;margin:26px 0 12px;font-weight:600;color:var(--text)}
+.art-b ul{margin:0 0 18px;padding-left:20px}
+.art-b li{margin:0 0 7px}
+.art-b strong{color:var(--text);font-weight:600}
+.art-b a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.art-b img{display:block;max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:6px 0 18px}
+.tools{display:flex;gap:8px;margin-top:26px;flex-wrap:wrap}
+.tbtn{border:1px solid var(--line);background:var(--pill);border-radius:10px;padding:9px 14px;font-size:13.5px;min-height:42px;
+  display:inline-flex;align-items:center;justify-content:center}
+.tbtn:hover{border-color:rgba(255,255,255,.3)}
+.tbtn.solid{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);font-weight:600}
+.note{margin:16px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
+.empty{border:1px dashed var(--line);border-radius:16px;padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.8}
+.skel{color:var(--muted);font-size:14px;padding:30px 0;text-align:center}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 50px;color:var(--muted);font-size:12.5px}
+.foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.foot-links a:hover{color:var(--text)}
+@media(max-width:640px){
+  .wrap{padding:0 14px}
+  main{padding:24px 0 0}
+  h1.page{font-size:22px}
+  .art{padding:20px 17px 24px;border-radius:14px}
+  .art-h h1{font-size:20px}
+  .art-b{font-size:15.5px;line-height:1.82}
+  .item{padding:14px 0}
+  .item .ti{font-size:15.5px}
+}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQPB5MSEZV"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
+</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./"><span class="dot"></span>글반장 <em>공지사항</em></a>
+    <a class="back" href="./">아카이브로 →</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="view"><div class="skel">불러오는 중…</div></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="./">문장 아카이브</a>
+      <a href="notices.html">공지사항</a>
+      <a href="https://t.me/banjang9" target="_blank" rel="noopener">텔레그램 @banjang9</a>
+      <a href="mailto:hi@newr.kr">hi@newr.kr</a>
+    </div>
+    <p style="margin:0;line-height:1.8">글반장은 2016년부터 하루 한 문장씩 쌓아온 아카이브입니다. 문장의 저작권은 각 저자와 출처에 있습니다.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var SB_URL = 'https://ecwrolumnuajrkqmzeds.supabase.co';
+var SB_KEY = 'sb_publishable_GWhczqZ14Jir3UytthydNg_9BBUNhCD';
+
+function el(id){ return document.getElementById(id); }
+function pad2(n){ return (n<10?'0':'')+n; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function fmtDate(iso){
+  if (!iso) return '';
+  var d = new Date(iso);
+  if (!d.getTime()) return '';
+  return d.getFullYear() + '.' + pad2(d.getMonth()+1) + '.' + pad2(d.getDate());
+}
+function fmtDateFull(iso){
+  if (!iso) return '';
+  var d = new Date(iso);
+  if (!d.getTime()) return '';
+  return d.getFullYear() + '.' + pad2(d.getMonth()+1) + '.' + pad2(d.getDate()) + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+}
+function sbGet(path){
+  return fetch(SB_URL + '/rest/v1/' + path, { headers: { 'apikey': SB_KEY, 'Accept': 'application/json' }, cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); });
+}
+
+/* ---------- 본문 서식 (esc 먼저, 화이트리스트만) ---------- */
+function inline(s){
+  s = s.replace(/!\[([^\]\n]*)\]\((https?:\/\/[^\s)]+)\)/g, '<img src="$2" alt="$1" loading="lazy">');
+  s = s.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  return s;
+}
+function fmtBody(src){
+  var s = esc(src || '');
+  var blocks = s.split(/\n{2,}/);
+  var out = [];
+  blocks.forEach(function(b){
+    if (!b.trim()) return;
+    var lines = b.split('\n');
+    while (lines.length && /^##\s+/.test(lines[0])){
+      out.push('<h2>' + inline(lines[0].replace(/^##\s+/, '')) + '</h2>');
+      lines = lines.slice(1);
+    }
+    if (!lines.length) return;
+    if (lines.some(function(l){ return /^-\s+/.test(l); }) &&
+        lines.every(function(l){ return /^-\s+/.test(l) || !l.trim(); })){
+      out.push('<ul>' + lines.filter(function(l){ return /^-\s+/.test(l); })
+        .map(function(l){ return '<li>' + inline(l.replace(/^-\s+/, '')) + '</li>'; }).join('') + '</ul>');
+      return;
+    }
+    out.push('<p>' + inline(lines.join('<br>')) + '</p>');
+  });
+  return out.join('\n');
+}
+function excerpt(body){
+  var t = String(body || '').replace(/\n+/g, ' ').replace(/[#*\[\]!()]/g, '').replace(/https?:\/\/\S+/g, '').trim();
+  return esc(t);
+}
+
+/* ---------- list ---------- */
+function renderList(rows){
+  var v = el('view');
+  if (!rows || !rows.length){
+    v.innerHTML = '<h1 class="page">공지사항</h1><p class="page-sub">아직 올라온 공지가 없습니다.</p>' +
+      '<div class="empty">새 소식이 생기면 이 자리에 올라갑니다.<br><a href="./" style="text-decoration:underline">문장 아카이브로 돌아가기</a></div>';
+    return;
+  }
+  v.innerHTML = '<h1 class="page">공지사항</h1><p class="page-sub">글반장 아카이브 소식과 안내입니다. 총 ' + rows.length + '건.</p>' +
+    '<div class="list">' + rows.map(function(n){
+      return '<a class="item" href="notices.html?id=' + n.id + '">' +
+        '<div class="hd">' + (n.is_pinned ? '<span class="pin">고정</span>' : '') +
+          '<span class="dt">' + esc(fmtDate(n.created_at)) + '</span></div>' +
+        '<h2 class="ti">' + esc(n.title) + '</h2>' +
+        (n.body ? '<p class="excerpt">' + excerpt(n.body) + '</p>' : '') +
+      '</a>';
+    }).join('') + '</div>';
+}
+
+/* ---------- detail ---------- */
+function renderOne(rows, id){
+  var n = rows && rows[0];
+  var v = el('view');
+  if (!n){
+    v.innerHTML = '<h1 class="page">공지사항</h1><div class="empty">' +
+      '이 공지는 없거나 아직 공개되지 않았습니다.<br><a href="notices.html" style="text-decoration:underline">공지 목록 보기</a></div>';
+    return;
+  }
+  document.title = n.title + ' · 공지사항 · 글반장';
+  v.innerHTML = '<article class="art">' +
+    '<div class="art-h">' +
+      '<h1>' + esc(n.title) + '</h1>' +
+      '<div class="art-m">' + (n.is_pinned ? '<span class="pin">고정</span>' : '') +
+        '<span>' + esc(fmtDateFull(n.created_at)) + '</span></div>' +
+    '</div>' +
+    '<div class="art-b">' + fmtBody(n.body) + '</div>' +
+  '</article>' +
+  '<div class="tools">' +
+    '<a class="tbtn solid" href="notices.html">공지 목록</a>' +
+    '<a class="tbtn" href="./">아카이브 홈</a>' +
+  '</div>';
+}
+
+/* ---------- boot ---------- */
+(function boot(){
+  var id = (location.search.match(/[?&]id=(\d+)/) || [])[1];
+  if (id){
+    sbGet('notices?select=id,title,body,is_pinned,created_at&published=eq.true&id=eq.' + id + '&limit=1')
+      .then(function(rows){ renderOne(rows, id); })
+      .catch(function(){ el('view').innerHTML = '<div class="empty">공지를 불러오지 못했습니다.<br><a href="notices.html" style="text-decoration:underline">공지 목록 보기</a></div>'; });
+    return;
+  }
+  sbGet('notices?select=id,title,body,is_pinned,created_at&published=eq.true&order=is_pinned.desc,created_at.desc&limit=50')
+    .then(function(rows){ renderList(rows || []); })
+    .catch(function(){ el('view').innerHTML = '<div class="empty">공지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.<br><a href="./" style="text-decoration:underline">아카이브로 돌아가기</a></div>'; });
+})();
+})();
+</script>
+</body>
+</html>
