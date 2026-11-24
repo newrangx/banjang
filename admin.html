@@ -386,7 +386,7 @@ function renderHeart(){
 }
 function loadHeart(){
   el('list-heart').innerHTML = '<div class="empty">불러오는 중…</div>';
-  return rest('daily_hearts?select=quote_num,count&day=eq.' + seoulKey() + '&order=count.desc&limit=200')
+  return rest('daily_hearts?select=quote_num,count&count=gt.0&day=eq.' + seoulKey() + '&order=count.desc&limit=200')
     .then(function(rows){ HEARTS = rows || []; renderHeart(); })
     .catch(function(e){ el('list-heart').innerHTML = '<div class="empty">하트 순위를 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
 }
