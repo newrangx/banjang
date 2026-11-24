@@ -632,6 +632,7 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
         <select class="sort" id="sort" aria-label="정렬">
           <option value="rec">추천 순</option>
           <option value="pop">조회 많은 순</option>
+          <option value="heart">하트 많은 순</option>
           <option value="new">최근 번호 순</option>
           <option value="rand">무작위</option>
         </select>
@@ -934,6 +935,8 @@ function sorted(list){
   var arr = list.slice();
   if (state.sort === 'pop'){
     arr.sort(function(a,b){ return (ITEMS[b][REL]-ITEMS[a][REL]) || (ITEMS[b][VIEWS]-ITEMS[a][VIEWS]); });
+  } else if (state.sort === 'heart'){
+    arr.sort(function(a,b){ return (heartCum(ITEMS[b][NUM]) - heartCum(ITEMS[a][NUM])) || (ITEMS[b][REL] - ITEMS[a][REL]) || (ITEMS[b][NUM] - ITEMS[a][NUM]); });
   } else if (state.sort === 'new'){
     arr.sort(function(a,b){ return ITEMS[b][NUM]-ITEMS[a][NUM]; });
   } else if (state.sort === 'rand'){
@@ -991,7 +994,7 @@ function render(reset){
   }
   var total = results.length;
   el('count').innerHTML = (q ? '검색 <b>'+esc(q)+'</b> · ' : '') + '<b>'+fmt(total)+'</b>개 문장';
-  el('sortnote').textContent = q ? '관련도 순' : ({rec:'추천 순',pop:'조회 많은 순',new:'최근 번호 순',rand:'무작위'})[state.sort];
+  el('sortnote').textContent = q ? '관련도 순' : ({rec:'추천 순',pop:'조회 많은 순',heart:'하트 많은 순',new:'최근 번호 순',rand:'무작위'})[state.sort];
   el('empty').hidden = total > 0;
   if (!total){
     el('empty').innerHTML = q
