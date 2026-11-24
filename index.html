@@ -147,8 +147,8 @@ select.sort{background:var(--card);color:var(--text);border:1px solid var(--line
 .card .a{color:var(--muted);font-size:14px;line-height:1.45}
 .card .grade{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
 .card .hot{position:absolute;top:12px;right:52px;font-size:11px;color:#151618;background:var(--text);border-radius:5px;padding:1px 6px;font-weight:700}
-.card .bm{position:absolute;top:4px;right:4px;width:36px;height:36px;border-radius:9px;color:var(--muted);font-size:17px;line-height:1;
-  display:inline-flex;align-items:center;justify-content:center}
+.card .bm{position:absolute;top:4px;right:4px;min-width:36px;height:36px;border-radius:9px;color:var(--muted);font-size:17px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;gap:1px;padding:0 7px}
 .card .bm:hover{color:var(--text);background:var(--pill)}
 .card .bm.on{color:var(--text)}
 .card .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
@@ -225,6 +225,20 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 .pop3 .card .s{-webkit-line-clamp:4}
 @media(max-width:900px){.pop3-grid{grid-template-columns:repeat(3,1fr);gap:10px}}
 @media(max-width:640px){.pop3{margin-top:26px}.pop3-grid{grid-template-columns:1fr;gap:10px}.pop3 .card{min-height:0}}
+/* 오늘 / 누적 탭 */
+.pop3 .sec-h{align-items:center}
+.poptabs{display:inline-flex;align-items:center;gap:2px;padding:2px;border-radius:999px;background:var(--pill);border:1px solid var(--line);flex:0 0 auto}
+.poptab{appearance:none;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:12.5px;font-weight:500;letter-spacing:-.01em;
+  padding:5px 13px;border-radius:999px;cursor:pointer;line-height:1.35;transition:background .15s ease,color .15s ease}
+.poptab:hover{color:var(--text)}
+.poptab.on{background:var(--card2);color:var(--text);font-weight:600;box-shadow:var(--shadow)}
+.poptab:focus-visible{outline:none;box-shadow:0 0 0 3px var(--focus-ring)}
+@media(max-width:640px){
+  .pop3 .sec-h{flex-wrap:wrap;gap:8px 10px}
+  .pop3 .sec-h h2{font-size:18px}
+  .pop3 .sec-h .poptabs{margin-left:auto}
+  .pop3 .sec-h .sub{flex:1 1 100%;white-space:normal;text-align:left;font-size:12.5px}
+}
 
 /* visitor submissions */
 .usub{margin:38px auto 0;max-width:1140px}
@@ -287,7 +301,7 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
   font-size:12.5px;color:var(--muted);background:var(--pill);align-items:center}
 .noticechip:hover{color:var(--text);border-color:var(--text)}
 @media(max-width:640px){.submitbtn{padding:7px 11px;font-size:12.5px}}
-.bmc{display:inline-block;margin-left:3px;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;vertical-align:1px}
+.bmc{display:inline-block;margin-left:2px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;line-height:1}
 .popempty{grid-column:1/-1;border:1px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;color:var(--muted)}
 .popempty b{display:block;color:var(--text);font-weight:600;margin-bottom:6px;font-size:15px}
 .popempty span{font-size:13px;line-height:1.6}
@@ -580,7 +594,14 @@ gtag('config', 'G-EQPB5MSEZV', { anonymize_ip: true });
 
 <section class="pop3 band band-a" id="pop3" hidden>
   <div class="wrap">
-    <div class="sec-h"><h2>오늘의 인기글</h2><span class="sub" id="pop3sub"></span></div>
+    <div class="sec-h pop-head">
+      <h2 id="pop3title">오늘의 인기글</h2>
+      <div class="poptabs" role="tablist" aria-label="인기글 기준">
+        <button type="button" class="poptab on" id="poptab-today" role="tab" aria-selected="true" aria-controls="pop3grid">오늘</button>
+        <button type="button" class="poptab" id="poptab-all" role="tab" aria-selected="false" aria-controls="pop3grid">누적</button>
+      </div>
+      <span class="sub" id="pop3sub"></span>
+    </div>
     <div class="pop3-grid" id="pop3grid"></div>
   </div>
 </section>
@@ -931,7 +952,7 @@ function card(i){
   return '<article class="card" data-i="'+i+'" tabindex="0">'+
     hot +
     '<button class="bm'+on+'" data-num="'+it[NUM]+'" title="좋아요" aria-label="좋아요">'+(on?'♥':'♡')+
-      ((window.GB_TODAY_COUNTS && window.GB_TODAY_COUNTS.counts && window.GB_TODAY_COUNTS.counts[it[NUM]] > 0) ? '<span class="bmc">'+window.GB_TODAY_COUNTS.counts[it[NUM]]+'</span>' : '')+
+      ((heartCum(it[NUM]) > 0) ? '<span class="bmc">'+fmt(heartCum(it[NUM]))+'</span>' : '')+
     '</button>'+
     '<p class="s">'+hl(it[TXT])+'</p>'+
     '<div class="foot"><div><div class="a">— '+esc(it[AUTH])+'</div><div class="tg">'+tg+'</div></div>'+
@@ -1010,13 +1031,31 @@ function closeImg(){
 
 /* ---------- today's popular (daily hearts, Asia/Seoul date) ---------- */
 var TODAY_I = -1;
-var TCOUNT = {};
+var TCOUNT = {};   /* 오늘 하트 */
+var HBASE = {};    /* 오늘을 뺀 누적 하트 → 누적 = HBASE + TCOUNT */
+var POPMODE = 'today';
+var POPUSER = false; /* 사용자가 탭을 직접 고르면 자동 기본값이 덮지 않는다 */
 var DKEY = seoulKey();
 window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
+window.GB_HEART_TOTALS = { counts: {} };
+function heartCum(num){
+  return (HBASE[num] || 0) + (TCOUNT[num] || 0);
+}
+function cumMap(){
+  var m = {}, k;
+  for (k in HBASE) m[k] = HBASE[k];
+  for (k in TCOUNT) m[k] = (m[k] || 0) + TCOUNT[k];
+  return m;
+}
+function refreshTotalsGlobal(){
+  var m = cumMap();
+  window.GB_HEART_TOTALS = { counts: m };
+  return m;
+}
 function paintCounts(){
   Array.prototype.forEach.call(document.querySelectorAll('.bm'), function(b){
     var num = +b.getAttribute('data-num');
-    var c = TCOUNT[num] || 0;
+    var c = heartCum(num);
     var e = b.querySelector('.bmc');
     if (c > 0){
       if (!e){ e = document.createElement('span'); e.className = 'bmc'; b.appendChild(e); }
@@ -1024,19 +1063,33 @@ function paintCounts(){
     } else if (e && e.parentNode){ e.parentNode.removeChild(e); }
   });
 }
-function renderPopular(){
-  var live = window.GB_TODAY_COUNTS;
-  var counts = (live && live.date === DKEY) ? live.counts : {};
-  var arr = Object.keys(counts).map(function(n){ return [+n, counts[n]]; })
+function heartRank(counts){
+  return Object.keys(counts).map(function(n){ return [+n, counts[n]]; })
     .filter(function(x){ return x[1] > 0 && NUM2I[x[0]] !== undefined; })
     .sort(function(a, b){ return (b[1] - a[1]) || (b[0] - a[0]); });
+}
+function renderPopular(){
+  var todayArr = heartRank(TCOUNT);
+  var allArr = heartRank(refreshTotalsGlobal());
+  /* 스마트 기본값: 오늘 하트가 있으면 '오늘', 없으면 '누적'으로 채운다 */
+  if (!POPUSER) POPMODE = todayArr.length ? 'today' : (allArr.length ? 'all' : 'today');
+  var arr = (POPMODE === 'all') ? allArr : todayArr;
   el('pop3').hidden = false;
+  var tb = el('poptab-today'), ab = el('poptab-all'), ti = el('pop3title');
+  if (tb){ tb.classList.toggle('on', POPMODE === 'today'); tb.setAttribute('aria-selected', POPMODE === 'today' ? 'true' : 'false'); }
+  if (ab){ ab.classList.toggle('on', POPMODE === 'all'); ab.setAttribute('aria-selected', POPMODE === 'all' ? 'true' : 'false'); }
+  if (ti) ti.textContent = (POPMODE === 'all') ? '누적 인기글' : '오늘의 인기글';
   if (!arr.length){
-    el('pop3sub').textContent = '오늘 하트가 쌓이면 여기에 올라갑니다';
-    el('pop3grid').innerHTML = '<div class="popempty"><b>오늘 첫 하트를 기다리고 있어요</b><span>마음에 드는 문장에 ♡를 눌러 주세요. 하트는 매일 새로 쌓입니다.</span></div>';
+    if (POPMODE === 'all'){
+      el('pop3sub').textContent = '누적 하트가 쌓이면 여기에 올라갑니다';
+      el('pop3grid').innerHTML = '<div class="popempty"><b>아직 하트 기록이 없어요</b><span>마음에 드는 문장에 ♡를 눌러 주세요. 하트는 오늘·누적 두 가지로 함께 쌓입니다.</span></div>';
+    } else {
+      el('pop3sub').textContent = '오늘 하트가 쌓이면 여기에 올라갑니다';
+      el('pop3grid').innerHTML = '<div class="popempty"><b>오늘 첫 하트를 기다리고 있어요</b><span>마음에 드는 문장에 ♡를 눌러 주세요. 누적 탭에서 역대 인기 문장을 볼 수 있습니다.</span></div>';
+    }
     return;
   }
-  el('pop3sub').textContent = '오늘 하트를 받은 문장';
+  el('pop3sub').textContent = (POPMODE === 'all') ? '누적 하트를 많이 받은 문장' : '오늘 하트를 받은 문장';
   el('pop3grid').innerHTML = arr.slice(0, 3).map(function(x){ return card(NUM2I[x[0]]); }).join('');
   paintCounts();
 }
@@ -1044,10 +1097,25 @@ window.GB_REFRESH_POPULAR = renderPopular;
 function heartSync(num, delta){
   return sbRpc('increment_heart', { p_day: DKEY, p_quote: num, p_delta: delta })
     .then(function(c){
+      c = Math.max(0, +c || 0);
       TCOUNT[num] = c;
       window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
+      refreshTotalsGlobal();
       paintCounts(); renderPopular();
-      setHeartBtn(num, c);
+      setHeartBtn(num, heartCum(num));
+    })
+    .catch(function(){});
+}
+function loadHeartTotals(){
+  return sbRpc('quote_heart_totals', {})
+    .then(function(rows){
+      var tot = {};
+      (rows || []).forEach(function(r){ tot[r.quote_num] = +r.cnt || 0; });
+      HBASE = {};
+      Object.keys(tot).forEach(function(n){ HBASE[n] = Math.max(0, tot[n] - (TCOUNT[n] || 0)); });
+      refreshTotalsGlobal();
+      paintCounts(); renderPopular();
+      if (el('sheet').classList.contains('on')) setHeartBtn(ITEMS[state.sid][NUM], heartCum(ITEMS[state.sid][NUM]));
     })
     .catch(function(){});
 }
@@ -1056,11 +1124,12 @@ function loadTodayCounts(){
   return sbGet('daily_hearts?select=quote_num,count&day=eq.' + DKEY)
     .then(function(rows){
       TCOUNT = {};
-      (rows || []).forEach(function(r){ TCOUNT[r.quote_num] = r.count; });
+      (rows || []).forEach(function(r){ if (+r.count > 0) TCOUNT[r.quote_num] = +r.count; });
       window.GB_TODAY_COUNTS = { date: DKEY, counts: TCOUNT };
       paintCounts(); renderPopular();
+      loadHeartTotals();
     })
-    .catch(function(){ renderPopular(); });
+    .catch(function(){ renderPopular(); loadHeartTotals(); });
 }
 
 /* ---------- 아이콘 (16px, stroke 1.6) ---------- */
@@ -1154,7 +1223,7 @@ function openDetail(i, noPush, from){
   var other = it[POLE] === 0 ? axis[1] : axis[0];
   var nameA = axis[2], nameB = axis[3];
   var tags = it[TGS].map(function(t){ return '<button class="tagchip" data-tag="'+esc(TAGS[t])+'">'+esc(TAGS[t])+'</button>'; }).join('');
-  var hc = (window.GB_TODAY_COUNTS && window.GB_TODAY_COUNTS.counts && window.GB_TODAY_COUNTS.counts[it[NUM]]) || 0;
+  var hc = heartCum(it[NUM]);
   var simArr = it[SIM]||[], oppArr = it[OPP]||[];
   var simList = simArr.slice(0,3).map(function(j){ return mini(j); }).join('');
   var oppList = oppArr.slice(0,3).map(function(j){ return mini(j); }).join('');
@@ -1254,8 +1323,9 @@ function toggleBM(num){
     b.classList.toggle('on', !!BMSET[num]);
     b.textContent = bmGlyph(num);
   });
+  paintCounts();
   var sb = el('s-bm');
-  if (sb) setHeartBtn(num, TCOUNT[num]);
+  if (sb) setHeartBtn(num, heartCum(num));
 }
 
 /* ---------- chips / toolbar ---------- */
@@ -1417,6 +1487,12 @@ el('pop3grid').addEventListener('click', function(e){
   if (bm){ e.stopPropagation(); toggleBM(+bm.getAttribute('data-num')); return; }
   var cardEl = e.target.closest ? e.target.closest('.card') : null;
   if (cardEl) openDetail(+cardEl.getAttribute('data-i'), false, 'pop');
+});
+
+['today','all'].forEach(function(k){
+  var b = el('poptab-' + k);
+  if (!b) return;
+  b.onclick = function(){ POPUSER = true; POPMODE = k; renderPopular(); };
 });
 
 el('brand').onclick = function(e){
