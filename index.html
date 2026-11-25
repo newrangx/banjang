@@ -549,6 +549,22 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 60px;colo
 [data-theme="light"] .gbm,[data-theme="light"] .overlay{background:rgba(28,25,23,.42)}
 [data-theme="light"] .btn.solid,[data-theme="light"] .submitbtn{color:#fff}
 
+/* ---------- 2026-11-25 5차: 오늘의 문장 버튼 컴팩트 · 시트 스와이프 닫기 ---------- */
+.today .row{gap:6px}
+.today .row .btn{padding:7px 12px;font-size:12.5px;min-height:36px;border-radius:9px;gap:6px}
+.today .row .btn .ic{width:14px;height:14px}
+@media(min-width:900px){
+  .today .row .btn{padding:6px 11px;font-size:12.5px;min-height:34px}
+}
+@media(max-width:640px){
+  .today .row{gap:6px}
+  .today .row .btn{padding:7px 8px;font-size:12.5px;min-height:36px;border-radius:9px;flex:0 0 calc(33.333% - 4px)}
+  .today .row .btn:last-child{flex-basis:calc(33.333% - 4px);flex-grow:0}
+  .today .row .btn .ic{display:none}
+}
+.sheet{will-change:transform;touch-action:pan-y}
+.sheet.dragging{transition:none}
+
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EQPB5MSEZV"></script>
 <script>
@@ -1279,10 +1295,10 @@ function openDetail(i, noPush, from){
   var tags = it[TGS].map(function(t){ return '<button class="tagchip" data-tag="'+esc(TAGS[t])+'">'+esc(TAGS[t])+'</button>'; }).join('');
   var hc = heartCum(it[NUM]);
   var simArr = relList(it, it[SIM], 'sim'), oppArr = relList(it, it[OPP], 'opp');
-  var simList = simArr.slice(0,3).map(function(j){ return relItem(it[NUM], j, 'sim'); }).join('');
-  var oppList = oppArr.slice(0,3).map(function(j){ return relItem(it[NUM], j, 'opp'); }).join('');
+  var simList = simArr.slice(0,2).map(function(j){ return relItem(it[NUM], j, 'sim'); }).join('');
+  var oppList = oppArr.slice(0,2).map(function(j){ return relItem(it[NUM], j, 'opp'); }).join('');
   var relBody = '';
-  if (simList) relBody += '<h3 class="relh">이 문장과 비슷한 문장 <span class="cnt">'+Math.min(simArr.length,3)+'</span></h3>' + simList;
+  if (simList) relBody += '<h3 class="relh">이 문장과 비슷한 문장 <span class="cnt">'+Math.min(simArr.length,2)+'</span></h3>' + simList;
   if (oppList) relBody += '<h3 class="relh"'+(simList?' style="margin-top:26px"':'')+'>반대 관점의 문장 <span class="axisbox">'+esc(side)+' ↔ '+esc(other)+'</span></h3>'+
       '<p class="oppnote">이 문장은 <b>'+esc(side)+'</b> 쪽입니다 ('+esc(nameA)+' / '+esc(nameB)+' 축). 같은 축에서 반대편에 선 문장을 골랐습니다.</p>' + oppList;
   var html = ''+
@@ -1581,6 +1597,82 @@ el('grid').addEventListener('keydown', function(e){
 });
 
 el('overlay').onclick = closeDetail;
+
+/* ---------- 상세 시트: 왼쪽에서 오른쪽으로 밀어 닫기 ---------- */
+(function(){
+  var sheet = el('sheet'), overlay = el('overlay');
+  var sx = 0, sy = 0, dx = 0, dy = 0;
+  var active = false, decided = false, dragging = false, startT = 0, lastSwipe = 0;
+  function isField(t){
+    return !!t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+  }
+  function clearInline(){
+    sheet.classList.remove('dragging');
+    sheet.style.transition = '';
+    sheet.style.transform = '';
+    overlay.style.transition = '';
+    overlay.style.opacity = '';
+  }
+  function reset(){ active = false; decided = false; dragging = false; dx = 0; dy = 0; clearInline(); }
+  function snapBack(){ sheet.classList.remove('dragging'); sheet.style.transform = ''; overlay.style.opacity = ''; }
+  function finishClose(){
+    clearInline();
+    closeDetail();
+  }
+  sheet.addEventListener('touchstart', function(e){
+    if (!sheet.classList.contains('on') || e.touches.length !== 1 || isField(e.target)) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+    dx = 0; dy = 0; active = true; decided = false; dragging = false; startT = Date.now();
+  }, { passive: true });
+  sheet.addEventListener('touchmove', function(e){
+    if (!active || e.touches.length !== 1) return;
+    var t = e.touches[0];
+    dx = t.clientX - sx; dy = t.clientY - sy;
+    if (!decided){
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      decided = true;
+      if (dx > 0 && dx > Math.abs(dy) * 1.1){ dragging = true; sheet.classList.add('dragging'); }
+      else { active = false; return; } /* 세로 스크롤로 넘긴다 */
+    }
+    if (!dragging) return;
+    if (e.cancelable) e.preventDefault();
+    var move = Math.max(0, dx);
+    var w = sheet.offsetWidth || window.innerWidth || 1;
+    sheet.style.transform = 'translateX(' + move + 'px)';
+    overlay.style.opacity = String(Math.max(0, 1 - move / w));
+  }, { passive: false });
+  function endGesture(){
+    if (!active && !dragging){ reset(); return; }
+    if (!dragging){ reset(); return; }
+    var shouldClose = dx > 70 && dx > Math.abs(dy) * 1.5;
+    lastSwipe = Date.now(); /* 스와이프 직후의 클릭(문장 카드 오작동)을 막는다 */
+    active = false; dragging = false;
+    if (shouldClose){
+      var w = sheet.offsetWidth || window.innerWidth || 1;
+      var left = Math.max(0, w - dx);
+      var dur = Math.min(240, Math.max(120, Math.round(left / Math.max(1, w) * 240)));
+      sheet.classList.remove('dragging');
+      sheet.style.transition = 'transform ' + dur + 'ms ease';
+      sheet.style.transform = 'translateX(102%)';
+      overlay.style.transition = 'opacity ' + dur + 'ms ease';
+      overlay.style.opacity = '0';
+      var done = false;
+      var finish = function(){ if (done) return; done = true; finishClose(); };
+      sheet.addEventListener('transitionend', function onEnd(ev){ if (ev.propertyName === 'transform'){ sheet.removeEventListener('transitionend', onEnd); finish(); } });
+      setTimeout(finish, dur + 60);
+    } else {
+      sheet.classList.remove('dragging');
+      sheet.style.transform = '';
+      overlay.style.opacity = '';
+      dx = 0; dy = 0; decided = false;
+    }
+  }
+  sheet.addEventListener('touchend', endGesture, { passive: true });
+  sheet.addEventListener('touchcancel', function(){ snapBack(); reset(); }, { passive: true });
+  sheet.addEventListener('click', function(e){
+    if (Date.now() - lastSwipe < 450){ e.stopPropagation(); e.preventDefault(); }
+  }, true);
+})();
 
 el('lb').onclick = function(e){ if (e.target === el('lb') || e.target === el('lbx')) closeImg(); };
 
