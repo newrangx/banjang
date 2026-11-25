@@ -1231,7 +1231,7 @@ function mini(j, axis){
   return '<button class="mini" data-i="'+j+'"><p class="ms">'+esc(it[TXT])+'</p><p class="ma">— '+esc(it[AUTH])+' · '+esc(CATS[it[CAT]])+'</p></button>';
 }
 /* 비슷한·반대 묶음: 관리자가 숨긴 쌍은 빼고, 카드마다 '관계없음' 신고 버튼을 붙인다 */
-var BLOCK = {};
+var BLOCK = {}, BLOCK_P = null, BLOCK_READY = false;
 function relList(it, arr, kind){
   return (arr||[]).filter(function(j){ return !BLOCK[kind+'|'+it[NUM]+'|'+ITEMS[j][NUM]]; });
 }
@@ -1258,14 +1258,17 @@ function loadRelationBlocks(){
     (rows || []).forEach(function(r){ BLOCK[r.kind+'|'+r.quote_num+'|'+r.target_num] = 1; });
   }
   try { var c = sessionStorage.getItem(KEY); if (c) put(JSON.parse(c)); } catch(e){}
-  try {
-    sbRpc('relation_block_list', {}).then(function(rows){
-      put(rows);
-      try { sessionStorage.setItem(KEY, JSON.stringify(rows || [])); } catch(e){}
-    }).catch(function(){});
-  } catch(e){}
+  BLOCK_P = sbRpc('relation_block_list', {}).then(function(rows){
+    put(rows);
+    BLOCK_READY = true;
+    try { sessionStorage.setItem(KEY, JSON.stringify(rows || [])); } catch(e){}
+  }).catch(function(){ BLOCK_READY = true; });
 }
 function openDetail(i, noPush, from){
+  if (BLOCK_P && !BLOCK_READY){
+    BLOCK_P.then(function(){ openDetail(i, noPush, from); });
+    return;
+  }
   lastFocus = document.activeElement;
   var it = ITEMS[i];
   gbEvent('view_quote', { quote_num: it[NUM], category: CATS[it[CAT]], from: from || 'grid' });
