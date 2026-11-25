@@ -154,6 +154,7 @@ h3.sec:first-child{margin-top:0}
 .mt tbody tr:last-child td{border-bottom:0}
 .mt .dim{color:var(--muted)}
 .mt td.zero{color:rgba(255,255,255,.28)}
+.mt.vt th:not(:first-child),.mt.vt td:not(:first-child){width:150px;white-space:nowrap}
 
 /* forms */
 .form{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:16px;margin:0 0 16px}
@@ -860,7 +861,7 @@ function visSection(){
   }).join('');
   var su = 0, sp = 0;
   VIS.forEach(function(r){ su += +r.uv || 0; sp += +r.pv || 0; });
-  return '<h3 class="sec">방문자 (최근 7일)</h3><div class="mt"><table><thead><tr><th>날짜</th><th>방문자(UV)</th><th>페이지뷰(PV)</th></tr></thead><tbody>' +
+  return '<h3 class="sec">방문자 (최근 7일)</h3><div class="mt vt"><table><thead><tr><th>날짜</th><th>방문자(UV)</th><th>페이지뷰(PV)</th></tr></thead><tbody>' +
     rows + '<tr><td class="dim">합계</td><td>' + fmtNum(su) + '</td><td>' + fmtNum(sp) + '</td></tr></tbody></table></div>';
 }
 function paintVisKpi(){
