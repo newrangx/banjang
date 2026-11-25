@@ -1252,9 +1252,16 @@ function sendRelReport(b){
     .catch(function(){ b.disabled = false; toast('신고를 남기지 못했습니다. 잠시 후 다시 시도해 주세요.'); });
 }
 function loadRelationBlocks(){
+  var KEY = 'gb_relblk_v1';
+  function put(rows){
+    BLOCK = {};
+    (rows || []).forEach(function(r){ BLOCK[r.kind+'|'+r.quote_num+'|'+r.target_num] = 1; });
+  }
+  try { var c = sessionStorage.getItem(KEY); if (c) put(JSON.parse(c)); } catch(e){}
   try {
     sbRpc('relation_block_list', {}).then(function(rows){
-      (rows||[]).forEach(function(r){ BLOCK[r.kind+'|'+r.quote_num+'|'+r.target_num] = 1; });
+      put(rows);
+      try { sessionStorage.setItem(KEY, JSON.stringify(rows || [])); } catch(e){}
     }).catch(function(){});
   } catch(e){}
 }
@@ -1640,7 +1647,14 @@ function sbGet(path){
 function sbGetIf(path){ return sbGet(path).catch(function(){ return []; }); }
 function sbRpc(fn, body){
   return fetch(SB_URL + '/rest/v1/rpc/' + fn, { method: 'POST', headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-    .then(function(r){ return r.json().then(function(j){ return r.ok ? j : Promise.reject(j); }); });
+    .then(function(r){
+      return r.text().then(function(t){
+        var j = null;
+        if (t){ try { j = JSON.parse(t); } catch(e){ j = t; } }
+        if (!r.ok) return Promise.reject(j || new Error('HTTP ' + r.status));
+        return j;
+      });
+    });
 }
 function seoulKey(){
   var d = new Date(Date.now() + 9 * 3600 * 1000);
