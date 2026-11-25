@@ -1404,14 +1404,14 @@ function renderChips(){
 }
 /* 검색 로그 → 인기 키워드(누적 3회 이상)를 placeholder·칩에 반영. 부족하면 기본 예시 유지 */
 function applyPopularTerms(){
-  if (POTERMS.length < 3) return;
+  if (POPTERMS.length < 3) return;
   el('q').setAttribute('placeholder', '문장, 저자, 상황으로 찾기 — 예: ' + POPTERMS.slice(0,3).join(', '));
   renderChips();
 }
 function loadPopularTerms(){
   try {
     sbRpc('top_search_terms', { p_days: 30, p_limit: 3 }).then(function(rows){
-      POTERMS = (rows || []).map(function(r){ return r.term; });
+      POPTERMS = (rows || []).map(function(r){ return r.term; });
       applyPopularTerms();
     }).catch(function(){});
   } catch(e){}
