@@ -60,7 +60,7 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);backdrop-
 .kbar{display:flex;align-items:center;gap:10px;margin:0 0 10px}
 .kbar .kt{font-size:13px;color:var(--muted);letter-spacing:.02em}
 .kbar .mini{margin-left:auto}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
 .kpi{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px}
 .kpi .l{font-size:12px;color:var(--muted);margin-bottom:6px}
 .kpi .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.2}
@@ -126,6 +126,17 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);backdrop-
 
 /* hearts date */
 .datebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{height:32px;padding:0 11px;font-size:12.5px;color:var(--muted);background:transparent;border:0;border-right:1px solid var(--line);font-variant-numeric:tabular-nums}
+.seg button:last-child{border-right:0}
+.seg button:hover{color:var(--text)}
+.seg button.on{background:var(--gold);color:#191919;font-weight:600}
+.seg .lbl{padding:0 10px;height:32px;display:inline-flex;align-items:center;font-size:12px;color:var(--muted);border-right:1px solid var(--line)}
+.row .relto{margin-top:8px;padding:9px 11px;border-left:2px solid rgba(212,163,89,.4);background:rgba(255,255,255,.03);border-radius:0 8px 8px 0;
+  font-size:13px;line-height:1.6;color:var(--copy);word-break:keep-all;overflow-wrap:anywhere}
+.row .relto .who{display:block;font-size:11.5px;color:var(--muted);margin-bottom:3px;font-weight:600;letter-spacing:.02em}
+.reltag{display:inline-block;font-size:11px;border-radius:5px;padding:1px 6px;margin-left:6px;font-weight:600;background:rgba(212,163,89,.16);color:var(--gold)}
+.reltag.opp{background:rgba(120,160,255,.14);color:#9db9ff}
 .datebar label{font-size:12.5px;color:var(--muted)}
 .datebar input[type=date]{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);
   padding:0 10px;font-size:13.5px;outline:none;font-family:inherit;color-scheme:dark}
@@ -229,6 +240,8 @@ h3.sec:first-child{margin-top:0}
       <div class="kpi"><div class="l">전체 댓글</div><div class="v" id="kpi-cmt">–</div><div class="s" id="kpi-cmt-s"></div></div>
       <div class="kpi"><div class="l">전체 제보</div><div class="v" id="kpi-sub">–</div><div class="s" id="kpi-sub-s"></div></div>
       <div class="kpi"><div class="l">오늘 신규</div><div class="v" id="kpi-new">–</div><div class="s" id="kpi-new-s"></div></div>
+      <div class="kpi"><div class="l">오늘 방문자</div><div class="v" id="kpi-uv">–</div><div class="s" id="kpi-uv-s">고유 방문(UV)</div></div>
+      <div class="kpi"><div class="l">오늘 페이지뷰</div><div class="v" id="kpi-pv">–</div><div class="s" id="kpi-pv-s">총 방문수(PV)</div></div>
     </div>
 
     <details class="guide">
@@ -245,6 +258,7 @@ h3.sec:first-child{margin-top:0}
       <button class="tab" data-tab="sub" role="tab">✍️ 제보 문장 <span class="n" id="cnt-sub"></span></button>
       <button class="tab" data-tab="heart" role="tab">♥ 하트 순위 <span class="n" id="cnt-heart"></span></button>
       <button class="tab" data-tab="metrics" role="tab">📊 지표</button>
+      <button class="tab" data-tab="rel" role="tab">🚩 관계 신고 <span class="n" id="cnt-rel"></span></button>
       <button class="tab" data-tab="banner" role="tab">🖼️ 배너 관리 <span class="n" id="cnt-banner"></span></button>
       <button class="tab" data-tab="notice" role="tab">📢 공지사항 <span class="n" id="cnt-notice"></span></button>
     </div>
@@ -284,10 +298,24 @@ h3.sec:first-child{margin-top:0}
     <div class="pane" id="pane-metrics" hidden>
       <div class="datebar">
         <span class="q" id="meta-metrics" style="margin-left:0"></span>
+        <div class="seg" id="topn-seg" role="group" aria-label="열어본 수 표시 개수">
+          <span class="lbl">열어본 수</span>
+          <button type="button" data-n="5">5</button><button type="button" data-n="10">10</button><button type="button" data-n="20">20</button><button type="button" data-n="50">50</button>
+        </div>
         <button class="mini" id="reload-metrics" style="margin-left:auto">새로고침</button>
       </div>
       <div id="list-metrics"><div class="empty">불러오는 중…</div></div>
       <p class="hint">숫자는 <b>익명 방문자의 실제 동작</b>을 서버에 바로 기록한 값입니다. 구글 애널리틱스(GA4)와는 집계 기준이 달라 숫자가 다를 수 있습니다. 여기서는 “어제 복사가 몇 건이었고 어떤 문장이었나”를 보는 용도로 쓰세요.</p>
+    </div>
+
+    <div class="pane" id="pane-rel" hidden>
+      <div class="bar">
+        <span class="q" style="margin-left:0">방문자가 “관계없음”이라고 신고한 문장쌍입니다. 3건 이상부터 서두에 오도록 정렬됩니다. 자동으로 숨기지는 않습니다.</span>
+        <button class="btn" id="reload-rel">새로고침</button>
+      </div>
+      <p class="meta" id="meta-rel"></p>
+      <div class="list" id="list-rel"><div class="empty">불러오는 중…</div></div>
+      <p class="hint"><b>숨김</b>을 누르면 그 문장쌍은 아카이브 상세 화면의 비슷한·반대 목록에서 바로 빠집니다. <b>신고 비우기</b>는 검토를 마쳤다는 뜻으로 큐에서 지웁니다(추천은 그대로 유지).</p>
     </div>
 
     <div class="pane" id="pane-banner" hidden>
@@ -377,7 +405,7 @@ h3.sec:first-child{margin-top:0}
 var SB_URL = 'https://ecwrolumnuajrkqmzeds.supabase.co';
 var SB_KEY = 'sb_publishable_GWhczqZ14Jir3UytthydNg_9BBUNhCD';
 var SKEY = 'gb_admin_session_v1';
-var TABNAMES = ['cmt','sub','heart','metrics','banner','notice'];
+var TABNAMES = ['cmt','sub','heart','metrics','rel','banner','notice'];
 
 function el(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -537,28 +565,36 @@ function showApp(){
   loadAll();
 }
 
-/* ---------- 문장 인덱스 (index.html의 #data 파싱, sessionStorage 캐시) ---------- */
+/* ---------- 문장 인덱스 (quotes_map.json 우선, 없으면 index.html #data 파싱) ---------- */
 var QMAP = null, QMAP_P = null;
+function qmapDone(m){
+  QMAP = m || {};
+  try { sessionStorage.setItem('gb_qmap_v2', JSON.stringify(QMAP)); } catch(e){}
+  renderCmt(); renderSub(); renderHeart(); renderRel();
+  return QMAP;
+}
 function loadQuoteMap(){
   if (QMAP) return Promise.resolve(QMAP);
   if (QMAP_P) return QMAP_P;
   try {
-    var c = sessionStorage.getItem('gb_qmap_v1');
+    var c = sessionStorage.getItem('gb_qmap_v2');
     if (c){ QMAP = JSON.parse(c); return Promise.resolve(QMAP); }
   } catch(e){}
-  QMAP_P = fetch('index.html', { cache: 'force-cache' })
-    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-    .then(function(t){
-      var doc = new DOMParser().parseFromString(t, 'text/html');
-      var node = doc.getElementById('data');
-      if (!node) throw new Error('no data');
-      var D = JSON.parse(node.textContent);
-      var m = {};
-      (D.items || []).forEach(function(it){ if (m[it[0]] === undefined) m[it[0]] = [it[1], it[2]]; });
-      QMAP = m;
-      try { sessionStorage.setItem('gb_qmap_v1', JSON.stringify(m)); } catch(e){}
-      renderCmt(); renderSub(); renderHeart();
-      return m;
+  QMAP_P = fetch('quotes_map.json', { cache: 'force-cache' })
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(qmapDone)
+    .catch(function(){
+      return fetch('index.html', { cache: 'force-cache' })
+        .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(function(t){
+          var doc = new DOMParser().parseFromString(t, 'text/html');
+          var node = doc.getElementById('data');
+          if (!node) throw new Error('no data');
+          var D = JSON.parse(node.textContent);
+          var m = {};
+          (D.items || []).forEach(function(it){ if (m[it[0]] === undefined) m[it[0]] = [it[1], it[2]]; });
+          return qmapDone(m);
+        });
     })
     .catch(function(){ QMAP_P = null; return null; });
   return QMAP_P;
@@ -739,6 +775,20 @@ function setHeartDay(v){
 /* ---------- 지표 ---------- */
 var EV_ORDER = ['view_quote','view_image','copy_quote','share_copy','share_kakao','like_quote','comment_quote'];
 var EV_LABEL = { view_quote:'문장 열기', view_image:'이미지 보기', copy_quote:'문장 복사', share_copy:'링크 복사', share_kakao:'카톡 공유', like_quote:'하트', comment_quote:'댓글' };
+var TOPNS = [5, 10, 20, 50];
+var TOPN = (function(){ var v = +(localStorage.getItem('gb_topn') || 5); return TOPNS.indexOf(v) >= 0 ? v : 5; })();
+function setTopn(n){
+  if (TOPNS.indexOf(n) < 0) return;
+  TOPN = n;
+  try { localStorage.setItem('gb_topn', String(n)); } catch(e){}
+  paintTopn();
+  renderMetrics();
+}
+function paintTopn(){
+  Array.prototype.forEach.call(document.querySelectorAll('#topn-seg button'), function(b){
+    b.classList.toggle('on', +b.getAttribute('data-n') === TOPN);
+  });
+}
 function sumEv(ev, day){
   var s = 0;
   MROWS.forEach(function(r){
@@ -787,17 +837,87 @@ function renderMetrics(){
       }).join('') + '</div>'
     : '<div class="empty">아직 복사·공유 기록이 없습니다.</div>';
 
-  var views = topQuotes(['view_quote'], 5);
+  var views = topQuotes(['view_quote'], TOPN);
   if (views.length){
-    html += '<h3 class="sec">문장별 · 열어본 수 상위 5 (7일)</h3><div class="list">' + views.map(function(x, i){
+    html += '<h3 class="sec">문장별 · 열어본 수 상위 ' + TOPN + ' (7일)</h3><div class="list">' + views.map(function(x, i){
       return '<article class="row"><div class="hrow"><span class="rank">'+(i+1)+'</span><span class="qno">#'+x[0]+'</span>' +
         '<span class="hcnt">' + fmtNum(x[1]) + '회</span>' +
         '<a class="mini" href="./#s='+x[0]+'" target="_blank" rel="noopener">원문</a></div>' + qblock(x[0]) + '</article>';
     }).join('') + '</div>';
   }
   html += totalAll ? '' : '<div class="empty"><b>아직 쌓인 기록이 없습니다</b>배포 후 방문자가 문장을 열고 복사하면 이 화면에 숫자가 쌓입니다. 익명 방문 기준이라 구글 애널리틱스 숫자와는 다릅니다.</div>';
+  html = visSection() + html;
   el('list-metrics').innerHTML = html;
   el('meta-metrics').textContent = '기준 ' + dayShift(today, -6) + ' ~ ' + today + ' (한국 시간)';
+}
+/* ---------- 방문자 현황 ---------- */
+var VIS = [];
+function visSection(){
+  if (!VIS.length) return '<h3 class="sec">방문자 (최근 7일)</h3><div class="empty">방문 기록이 아직 없습니다. 배포 후 첫 방문부터 쌓입니다.</div>';
+  var rows = VIS.slice().reverse().map(function(r){
+    return '<tr><td>' + esc(r.day) + '</td><td class="' + (+r.uv ? '' : 'zero') + '">' + fmtNum(r.uv) +
+      '</td><td class="' + (+r.pv ? '' : 'zero') + '">' + fmtNum(r.pv) + '</td></tr>';
+  }).join('');
+  var su = 0, sp = 0;
+  VIS.forEach(function(r){ su += +r.uv || 0; sp += +r.pv || 0; });
+  return '<h3 class="sec">방문자 (최근 7일)</h3><div class="mt"><table><thead><tr><th>날짜</th><th>방문자(UV)</th><th>페이지뷰(PV)</th></tr></thead><tbody>' +
+    rows + '<tr><td class="dim">합계</td><td>' + fmtNum(su) + '</td><td>' + fmtNum(sp) + '</td></tr></tbody></table></div>';
+}
+function paintVisKpi(){
+  var t = seoulKey(), row = null;
+  VIS.forEach(function(r){ if (r.day === t) row = r; });
+  el('kpi-uv').textContent = VIS.length ? fmtNum(row ? row.uv : 0) : '–';
+  el('kpi-pv').textContent = VIS.length ? fmtNum(row ? row.pv : 0) : '–';
+}
+function loadVisitors(){
+  return rest('rpc/visit_stats', { method: 'POST', body: { p_days: 7 } })
+    .then(function(rows){ VIS = rows || []; paintVisKpi(); renderMetrics(); })
+    .catch(function(){ VIS = []; paintVisKpi(); });
+}
+
+/* ---------- 관계없음 신고 큐 (#7) ---------- */
+var RELS = [];
+function relRow(r){
+  var a = (QMAP && QMAP[r.quote_num]) ? QMAP[r.quote_num][0] : '';
+  var b = (QMAP && QMAP[r.target_num]) ? QMAP[r.target_num][0] : '';
+  return '<article class="row" data-q="' + esc(r.quote_num) + '" data-t="' + esc(r.target_num) + '" data-k="' + esc(r.kind) + '">' +
+    '<div class="row-h"><span class="num">#' + esc(r.quote_num) + ' → #' + esc(r.target_num) + '</span>' +
+      '<span class="reltag' + (r.kind === 'opp' ? ' opp' : '') + '">' + (r.kind === 'opp' ? '반대 관점' : '비슷한 문장') + '</span>' +
+      (r.hidden ? '<span class="tag off">숨김</span>' : '') +
+      '<span>' + esc(fmtAgo(r.last_at)) + ' · 신고 ' + esc(r.cnt) + '건</span></div>' +
+    (a ? '<p class="qtx">' + esc(String(a).replace(/\s*\n+\s*/g, ' ')) + '</p>' : '') +
+    '<div class="relto"><span class="who">추천된 문장 #' + esc(r.target_num) + '</span>' + esc(b ? String(b).replace(/\s*\n+\s*/g, ' ') : '(문장을 찾지 못함)') + '</div>' +
+    '<div class="row-f"><span class="sp"></span>' +
+      '<a class="mini" href="./#s=' + esc(r.quote_num) + '" target="_blank" rel="noopener">원문 보기</a>' +
+      (r.hidden ? '<button class="mini" data-unhide="1">숨김 해제</button>' : '<button class="mini del" data-hide="1">숨김</button>') +
+      '<button class="mini" data-clear="1">신고 비우기</button>' +
+    '</div></article>';
+}
+function renderRel(){
+  el('cnt-rel').textContent = RELS.length || '';
+  el('meta-rel').textContent = RELS.length ? '검토 대기 ' + RELS.length + '개 문장쌍 · 신고 많은 순' : '';
+  el('list-rel').innerHTML = RELS.length ? RELS.map(relRow).join('')
+    : '<div class="empty"><b>신고된 문장쌍이 없습니다</b>방문자가 상세 화면에서 “관계없음 신고”를 누르면 이 자리에 쌓입니다. 자동 숨김은 없고, 여기서 확인해 직접 정리합니다.</div>';
+}
+function loadRel(){
+  el('list-rel').innerHTML = '<div class="empty">불러오는 중…</div>';
+  return rest('rpc/relation_report_queue', { method: 'POST', body: { p_limit: 200 } })
+    .then(function(rows){ RELS = rows || []; renderRel(); })
+    .catch(function(e){ el('list-rel').innerHTML = '<div class="empty">신고 큐를 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
+}
+function relAct(btn){
+  var row = btn.closest('.row');
+  if (!row) return;
+  var q = +row.getAttribute('data-q'), t = +row.getAttribute('data-t'), k = row.getAttribute('data-k');
+  var p;
+  if (btn.hasAttribute('data-hide')) p = rest('rpc/hide_relation', { method: 'POST', body: { p_quote: q, p_target: t, p_kind: k, p_hide: true } });
+  else if (btn.hasAttribute('data-unhide')) p = rest('rpc/hide_relation', { method: 'POST', body: { p_quote: q, p_target: t, p_kind: k, p_hide: false } });
+  else p = rest('rpc/clear_relation_reports', { method: 'POST', body: { p_quote: q, p_target: t, p_kind: k } });
+  btn.disabled = true;
+  p.then(function(){
+    toast(btn.hasAttribute('data-clear') ? '신고를 비웠습니다' : (btn.hasAttribute('data-hide') ? '이 문장쌍을 숨겼습니다' : '숨김을 해제했습니다'));
+    loadRel();
+  }).catch(function(e){ btn.disabled = false; toast('처리하지 못했습니다: ' + e.message); });
 }
 function sumEvAll(day){
   var s = 0;
@@ -1096,7 +1216,9 @@ function loadAll(){
   loadCmt();
   loadSub();
   loadHeart();
+  loadVisitors();
   loadMetrics();
+  loadRel();
   loadBanners();
   loadNotices();
 }
@@ -1149,7 +1271,16 @@ el('q-sub').oninput = renderSub;
 el('reload-cmt').onclick = loadCmt;
 el('reload-sub').onclick = loadSub;
 el('reload-heart').onclick = loadHeart;
-el('reload-metrics').onclick = loadMetrics;
+el('reload-metrics').onclick = function(){ loadVisitors(); loadMetrics(); };
+Array.prototype.forEach.call(document.querySelectorAll('#topn-seg button'), function(b){
+  b.onclick = function(){ setTopn(+b.getAttribute('data-n')); };
+});
+paintTopn();
+el('reload-rel').onclick = loadRel;
+el('list-rel').onclick = function(e){
+  var b = (e.target && e.target.closest) ? e.target.closest('button[data-hide],button[data-unhide],button[data-clear]') : null;
+  if (b) relAct(b);
+};
 el('backup').onclick = backup;
 
 /* hearts date */
