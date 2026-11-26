@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /banjang/admin.html
+
+Sitemap: https://newrangx.github.io/banjang/sitemap.xml
