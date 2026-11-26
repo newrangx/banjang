@@ -27,7 +27,8 @@ input{font:inherit}
 header.top{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
 .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.02em}
-.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--text);display:inline-block}
+.brand .logo{height:23px;width:auto;display:block;fill:currentColor;color:var(--text)}
+.brand .logo path{fill:currentColor}
 .brand em{font-style:normal;color:var(--muted);font-weight:500;font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;letter-spacing:0}
 .top-r{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
 .top-r .who{font-size:12.5px;font-variant-numeric:tabular-nums}
@@ -174,6 +175,11 @@ h3.sec:first-child{margin-top:0}
 .check input{width:16px;height:16px;accent-color:#D4A359}
 .hint{font-size:12px;color:var(--muted);line-height:1.75;margin:6px 0 0}
 .hint.warn{color:#ffcf8a}
+.hint.err{color:var(--danger)}
+.hint.busy{color:var(--gold)}
+.imgbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:9px 0 0}
+.imgbar .btn{flex:0 0 auto}
+.imgbar .hint{margin:0;flex:1 1 220px;min-width:0}
 .brow{display:flex;gap:12px;align-items:flex-start}
 .bthumb{width:160px;flex:0 0 auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#0a0a0a;line-height:0}
 .bthumb img{display:block;width:100%;height:auto}
@@ -204,7 +210,7 @@ h3.sec:first-child{margin-top:0}
 <body>
 <header class="top">
   <div class="wrap top-in">
-    <a class="brand" href="./"><span class="dot"></span>글반장 <em>관리자</em></a>
+    <a class="brand" href="./" aria-label="글반장"><svg class="logo" viewBox="0 0 76.3 28" role="img" aria-hidden="true" focusable="false"><path d="M27.8,13.2c-.7-.1-1.4-.1-2.3-.1-3.8,0-7.2,0-9.4.2-.9,0-1.5.2-1.8.4-.1,0-.3,0-.3,0s-.2,0-.4,0c-.6-.1-1.2-.4-1.8-.8-.2-.2-.3-.3-.3-.4s.1-.2.4-.1c.8.1,1.7.2,2.8.2,2.6,0,5.7,0,8.6-.2.2-.7.3-1.6.5-2.8,0-.5,0-1.5.1-2.4-1.4,0-3.3,0-5.5.1-.8.1-1.4.2-1.8.5-.1,0-.2,0-.3,0s-.2,0-.4,0c-.6-.2-1.1-.5-1.6-.8-.2,0-.3-.2-.3-.3,0-.2.1-.2.4-.2.8.2,1.6.2,2.4.2,2.3,0,4.7,0,6.6-.2.3,0,.4,0,.5,0,.2-.2.4-.2.5-.2.2,0,.6,0,1.1.1.2.1.3.2.3.4s-.1.2-.4.4c0,.6-.2,1.5-.5,2.4-.2,1-.5,1.9-.9,2.8.9,0,1.4-.1,1.8-.3.2-.1.5-.2.6-.2.7,0,1.3,0,1.8.2.4.1.5.3.5.5C28.7,13,28.4,13.2,27.8,13.2ZM25.2,22.1c-2.2.1-6.1.1-8,.1-.5,0-.9,0-1.1-.2-.3-.3-.4-.6-.4-1.2v-1.5c-.3-.3-.7-.5-1.2-.6-.2,0-.3-.1-.3-.2q0-.2.5-.2c.5,0,1.1,0,1.8,0,.1,0,.2,0,.4.1,0,.1.2.1.4.1,2.1,0,4.2,0,5.8-.1.1,0,.2,0,.3-.2,0-.4,0-1.7,0-2.1-1.9,0-3.7,0-5,.2-.7,0-1.2,0-1.4.2-.2,0-.3.1-.4.1s-.3,0-.4,0c-.6-.2-1.1-.5-1.6-.8,0,0-.1-.1-.1-.2,0-.1.1-.2.3-.2.7.2,1.4.2,2.1.2,2,0,4.1,0,6.1-.1.2,0,.3-.1.5-.2s.2,0,.4,0c.2,0,.6,0,1.1.1.2,0,.3.2.3.2s-.1.3-.3.4c0,0-.1.1-.2.3,0,.4-.3,1.4-.4,2,.4,0,.7.1.7.4s-.2.3-.5.3c-3.3,0-6,0-7.6.2,0,.1,0,.2,0,.3v1.6c0,.3.1.5.4.5,1.2,0,2.8,0,4.2,0,.9-.1,1.5-.2,1.7-.4.3-.1.5-.2.7-.2.7,0,1.2,0,1.6.1.2,0,.4.2.4.5S25.7,22.1,25.2,22.1Z"/><path d="M38.9,7.8c0,.2,0,.4,0,.7v5c0,.3-.1.7-.2,1.2-.2.7-.4,1-.7,1s-.4-.3-.4-.9h-5.1c-.2.9-.4,1.4-.8,1.4s-.3-.4-.4-1.1v-6.2c-.2-.3-.7-.5-1.5-.7-.2,0-.3-.1-.3-.2s.3-.4.6-.4c.6,0,1.4,0,2,.2.4.1.5.3.5.5s0,.2,0,.3c0,.2,0,.3,0,.5v1.2s5,0,5,0v-2.3c-.3-.3-.8-.7-1.4-.9-.2,0-.3,0-.3-.2,0-.1.3-.3.6-.3.7,0,1.5.2,2.2.4.2,0,.3.2.3.4S39,7.7,38.9,7.8ZM37.6,10.9h-5c0,.1,0,3.3,0,3.3h5V10.9ZM43.8,22c-2.6,0-5,0-7,0-1.5,0-2-.4-2-1.6v-2.1c-.1-.3-.7-.5-1.7-.7-.2,0-.3-.1-.3-.2s.4-.4.7-.4c1,0,1.8,0,2.3.2.2,0,.3.2.3.6,0,.2,0,.4,0,.8v2.2c0,.4.1.6.5.6,1,0,2.1,0,3.4,0,.9,0,1.5-.2,1.8-.3.3-.2.5-.2.7-.2.7,0,1.2,0,1.6,0,.4,0,.5.2.5.5C44.6,21.8,44.4,22,43.8,22ZM46,12.4c-.2,0-1.2,0-2.8,0v1.8c0,.9,0,1.8-.2,2.5-.1,1.1-.3,1.6-.6,1.6s-.4-.5-.4-1.6V6.7c-.4-.4-1.1-.8-1.9-1-.2,0-.3-.1-.3-.2,0-.2.2-.3.7-.3.7,0,1.5,0,2.4.4.2,0,.4.2.4.5s-.1.9-.1,1.1v4.6c.4,0,.7,0,1-.3.2,0,.4-.2.5-.2.6-.2,1.2-.2,1.7,0,.3,0,.4.2.4.5C46.8,12.2,46.6,12.4,46,12.4Z"/><path d="M56.7,7.9c0,0-.2.2-.3.3-.5,1-1.2,2.1-2,3l.9.7c.4.3.7.5,1,.5.4.1.6.2.7.3.5.4.8.9,1,1.3s.1.2.1.4c0,.2,0,.3-.3.4-.2,0-.4-.1-.6-.3l-3.3-2.7c-1.6,1.6-3.5,3.1-5.8,4.3-.1,0-.2,0-.3,0s-.2,0-.2-.2.1-.1.2-.2c2.9-1.9,5.9-5,7.2-7.7-.8,0-2.7,0-3.6.2-.3,0-.6,0-.9.2-.1,0-.3.1-.3.1-.1,0-.2,0-.3,0-.6-.2-1-.4-1.5-.7-.1-.1-.2-.2-.2-.3s0-.2.3-.2c.6.1,1.2.2,1.9.2,1.5,0,3.2,0,4.3-.2.2,0,.4,0,.5,0,.2-.2.3-.2.5-.2.2,0,.6,0,.9.2.2,0,.3.1.3.3S56.8,7.8,56.7,7.9ZM57,16.5c0-.1,0-.2,0-.2,0-.2-.4-.5-.4-.6s.2-.2.4-.2.6,0,1,.3c0,0,.2.2.2.3s-.1.2-.3.4c1.9.3,3.1,1.5,3.1,3.2s-1.5,3.1-3.9,3.1-3.9-1.3-3.9-3.1S54.7,16.5,57,16.5ZM57.1,17.3c-1.6,0-2.7,1-2.7,2.3s1.1,2.3,2.7,2.3,2.8-1,2.8-2.3S58.8,17.3,57.1,17.3ZM61.1,7.2v4.2c.5,0,.8,0,1.1-.3.2-.1.4-.2.5-.3.6-.1,1.2-.1,1.7,0,.3.1.4.3.4.5,0,.4-.2.6-.8.6s-1.2,0-2.9,0v1.1c0,.7,0,1.4-.1,2.1-.1,1.1-.4,1.6-.7,1.6s-.4-.5-.4-1.6V6.7c-.4-.4-1-.8-1.9-1-.2,0-.2-.1-.2-.2,0-.2.2-.3.6-.3.8,0,1.6,0,2.4.4.3,0,.4.2.4.5S61.1,7,61.1,7.2Z"/><path d="M62.3.5c7.5,0,13.5,6.1,13.5,13.5s-6,13.5-13.5,13.5H14c-7.4,0-13.5-6.1-13.5-13.5S6.6.5,14,.5H62.3ZM62.3,0H14C6.3,0,0,6.3,0,14h0c0,7.7,6.3,14,14,14h48.3c7.7,0,14-6.3,14-14h0C76.3,6.3,70,0,62.3,0H62.3Z"/></svg> <em>관리자</em></a>
     <div class="top-r">
       <span class="who" id="who"></span>
       <a href="notices.html" target="_blank" rel="noopener">공지 보기</a>
@@ -334,12 +340,12 @@ h3.sec:first-child{margin-top:0}
         </div>
         <div class="frow">
           <div class="fcol">
-            <label for="b-pc">PC 이미지 · 1140×180 (WebP 120KB 이하 권장)</label>
-            <input id="b-pc" type="file" accept="image/webp,image/png,image/jpeg">
+            <label for="b-pc">PC 이미지 · 1140×180 (JPG·PNG·WebP·GIF, 2MB 이하)</label>
+            <input id="b-pc" type="file" accept="image/webp,image/png,image/jpeg,image/gif">
           </div>
           <div class="fcol">
             <label for="b-mob">모바일 이미지 · 750×250 (없으면 모바일에서 숨김)</label>
-            <input id="b-mob" type="file" accept="image/webp,image/png,image/jpeg">
+            <input id="b-mob" type="file" accept="image/webp,image/png,image/jpeg,image/gif">
           </div>
         </div>
         <div class="frow">
@@ -349,7 +355,7 @@ h3.sec:first-child{margin-top:0}
           </div>
         </div>
         <label class="check"><input id="b-active" type="checkbox"> 바로 노출</label>
-        <p class="hint">PC 이미지를 넣으면 저장할 수 있습니다. 모바일 이미지를 비우면 PC 배너가 모바일에서 보이지 않습니다(작은 글자가 읽히지 않아 일부러 숨깁니다).</p>
+        <p class="hint">PC 이미지를 넣으면 저장할 수 있습니다. 모바일 이미지를 비우면 PC 배너가 모바일에서 보이지 않습니다(작은 글자가 읽히지 않아 일부러 숨깁니다). GIF도 올릴 수 있습니다.</p>
         <p class="hint warn" id="b-warn" hidden></p>
         <div class="row-f" style="margin-top:14px">
           <button class="btn solid" id="b-save">저장</button>
@@ -375,6 +381,11 @@ h3.sec:first-child{margin-top:0}
               <div class="fcol">
                 <label for="n-body">본문 — 소제목은 <b>## </b>, 굵게는 <b>**</b>, 목록은 <b>- </b>, 링크는 <b>[이름](https://…)</b>, 이미지는 <b>![설명](https://…)</b></label>
                 <textarea id="n-body" placeholder="첫 문단은 그대로 적으면 됩니다. 문단은 빈 줄로 나눕니다."></textarea>
+                <div class="imgbar">
+                  <button class="btn" type="button" id="n-img-btn">🖼️ 이미지 첨부</button>
+                  <input id="n-img" type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                  <span class="hint" id="n-img-note">JPG·PNG·WebP·GIF · 2MB 이하 · 커서 위치에 바로 들어갑니다</span>
+                </div>
               </div>
             </div>
             <label class="check"><input id="n-pinned" type="checkbox"> 맨 위 고정</label>
@@ -774,8 +785,8 @@ function setHeartDay(v){
 }
 
 /* ---------- 지표 ---------- */
-var EV_ORDER = ['view_quote','view_image','copy_quote','share_copy','share_kakao','like_quote','comment_quote'];
-var EV_LABEL = { view_quote:'문장 열기', view_image:'이미지 보기', copy_quote:'문장 복사', share_copy:'링크 복사', share_kakao:'카톡 공유', like_quote:'하트', comment_quote:'댓글' };
+var EV_ORDER = ['view_quote','view_image','copy_quote','share_copy','share_kakao','like_quote','comment_quote','banner_click'];
+var EV_LABEL = { view_quote:'문장 열기', view_image:'이미지 보기', copy_quote:'문장 복사', share_copy:'링크 복사', share_kakao:'카톡 공유', like_quote:'하트', comment_quote:'댓글', banner_click:'배너 클릭' };
 var TOPNS = [5, 10, 20, 50];
 var TOPN = (function(){ var v = +(localStorage.getItem('gb_topn') || 5); return TOPNS.indexOf(v) >= 0 ? v : 5; })();
 function setTopn(n){
@@ -846,10 +857,33 @@ function renderMetrics(){
         '<a class="mini" href="./#s='+x[0]+'" target="_blank" rel="noopener">원문</a></div>' + qblock(x[0]) + '</article>';
     }).join('') + '</div>';
   }
+  html += bannerClickSection();
   html += totalAll ? '' : '<div class="empty"><b>아직 쌓인 기록이 없습니다</b>배포 후 방문자가 문장을 열고 복사하면 이 화면에 숫자가 쌓입니다. 익명 방문 기준이라 구글 애널리틱스 숫자와는 다릅니다.</div>';
   html = visSection() + html;
   el('list-metrics').innerHTML = html;
   el('meta-metrics').textContent = '기준 ' + dayShift(today, -6) + ' ~ ' + today + ' (한국 시간)';
+}
+function bannerClickSection(){
+  var ids = BANNERS.map(function(b){ return String(b.id); });
+  MROWS.forEach(function(r){
+    if (r.event !== 'banner_click') return;
+    var k = String(r.quote_num || 0);
+    if (ids.indexOf(k) < 0) ids.push(k);
+  });
+  if (!ids.length) return '';
+  var rows = ids.map(function(id){ return { id: id, title: bannerTitle(id), s: bannerClickStat(id) }; });
+  rows.sort(function(a,b){ return (b.s.d7 - a.s.d7) || (b.s.d1 - a.s.d1); });
+  var total = rows.reduce(function(a,x){ return a + x.s.d7; }, 0);
+  var body = rows.map(function(x){
+    return '<tr><td>' + esc(x.title) + '</td>' +
+      '<td class="' + (x.s.d1 ? '' : 'zero') + '">' + fmtNum(x.s.d1) + '</td>' +
+      '<td class="' + (x.s.dy ? '' : 'zero') + '">' + fmtNum(x.s.dy) + '</td>' +
+      '<td class="' + (x.s.d7 ? '' : 'zero') + '">' + fmtNum(x.s.d7) + '</td></tr>';
+  }).join('');
+  return '<h3 class="sec">배너 클릭 (최근 7일)</h3>' +
+    '<div class="mt"><table><thead><tr><th>배너</th><th>오늘</th><th>어제</th><th>7일 합계</th></tr></thead><tbody>' +
+    body + '<tr><td class="dim">합계</td><td></td><td></td><td>' + fmtNum(total) + '</td></tr></tbody></table></div>' +
+    (total ? '' : '<p class="hint">아직 배너 클릭 기록이 없습니다. 배너 클릭은 GA4에도 함께 기록됩니다.</p>');
 }
 /* ---------- 방문자 현황 ---------- */
 var VIS = [];
@@ -941,15 +975,33 @@ function loadMetrics(){
 
 /* ---------- 배너 ---------- */
 var BEDIT = null;
+function bannerClickStat(id){
+  var today = seoulKey(), yest = dayShift(today, -1), t7 = 0, t1 = 0, ty = 0;
+  MROWS.forEach(function(r){
+    if (r.event !== 'banner_click') return;
+    if (String(r.quote_num) !== String(id)) return;
+    var c = r.cnt || 0;
+    t7 += c;
+    if (r.day === today) t1 += c;
+    if (r.day === yest) ty += c;
+  });
+  return { d7: t7, d1: t1, dy: ty };
+}
+function bannerTitle(id){
+  var b = BANNERS.filter(function(x){ return String(x.id) === String(id); })[0];
+  return b ? (b.title || '배너 #' + id) : '배너 #' + id;
+}
 function bannerRow(b){
   var thumb = b.pc_url ? '<div class="bthumb"><img src="' + esc(b.pc_url) + '" alt=""></div>' : '';
   var mob = b.mobile_url ? '모바일 이미지 있음' : '모바일 이미지 없음 → 모바일에서 숨김';
+  var ck = bannerClickStat(b.id);
   return '<article class="row" data-id="' + b.id + '"><div class="brow">' + thumb +
     '<div class="bmeta">' +
       '<b>' + esc(b.title || '(이름 없음)') + '</b>' +
       '<span class="tag ' + (b.active ? 'on' : 'off') + '">' + (b.active ? '노출 중' : '숨김') + '</span>' +
       '<div>순서 ' + esc(b.sort_order) + ' · ' + esc(mob) + '</div>' +
       (b.link_url ? '<div>링크 ' + esc(b.link_url) + '</div>' : '<div>링크 없음 (이미지 전용)</div>') +
+      '<div>클릭 7일 ' + fmtNum(ck.d7) + '회 · 오늘 ' + fmtNum(ck.d1) + '회</div>' +
       '<div>' + esc(fmtDatetime(b.created_at)) + '</div>' +
       '<div class="row-f" style="margin-top:10px">' +
         '<button class="mini" data-toggle-b="' + b.id + '">' + (b.active ? '숨기기' : '노출하기') + '</button>' +
@@ -968,12 +1020,14 @@ function renderBanners(){
 function loadBanners(){
   el('list-banner').innerHTML = '<div class="empty">불러오는 중…</div>';
   return rest('banners?select=*&order=sort_order.asc,created_at.desc')
-    .then(function(rows){ BANNERS = rows || []; renderBanners(); })
+    .then(function(rows){ BANNERS = rows || []; renderBanners(); renderMetrics(); })
     .catch(function(e){ el('list-banner').innerHTML = '<div class="empty">배너를 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
 }
+var IMG_MIME = { 'image/jpeg':1, 'image/png':1, 'image/webp':1, 'image/gif':1 };
 function uploadImage(file, prefix){
-  var m = (file.name || '').match(/\.(webp|png|jpe?g)$/i);
-  var ext = m ? m[0].toLowerCase() : '.webp';
+  var m = (file.name || '').match(/\.(webp|png|jpe?g|gif)$/i);
+  var type = (file.type || '').toLowerCase();
+  var ext = m ? m[0].toLowerCase() : (type === 'image/gif' ? '.gif' : type === 'image/png' ? '.png' : type === 'image/jpeg' ? '.jpg' : '.webp');
   var path = 'b' + Date.now() + '-' + prefix + ext;
   return ensureToken().then(function(s){
     return fetch(SB_URL + '/storage/v1/object/banners/' + path, {
@@ -981,13 +1035,18 @@ function uploadImage(file, prefix){
       headers: {
         'apikey': SB_KEY,
         'Authorization': 'Bearer ' + s.access_token,
-        'Content-Type': file.type || 'image/webp',
+        'Content-Type': type || 'image/webp',
         'cache-control': '31536000',
         'x-upsert': 'true'
       },
       body: file
     }).then(function(r){
-      if (!r.ok) return r.text().then(function(t){ throw new Error('이미지 업로드 실패 (' + r.status + ') ' + String(t).slice(0,120)); });
+      if (!r.ok) return r.text().then(function(t){
+        var msg = '이미지 업로드 실패 (' + r.status + ') ' + String(t).slice(0,120);
+        if (r.status === 413 || /too large|exceeded/i.test(t)) msg = '이미지가 너무 큽니다. 2MB 이하로 줄여 주세요.';
+        else if (r.status === 415 || /mime/i.test(t)) msg = '이 형식은 올릴 수 없습니다. JPG·PNG·WebP·GIF로 저장해 주세요.';
+        throw new Error(msg);
+      });
       return SB_URL + '/storage/v1/object/public/banners/' + path;
     });
   });
@@ -1115,7 +1174,54 @@ function noticeFormReset(){
   el('n-pinned').checked = false; el('n-pub').checked = true;
   el('n-save').textContent = '공지 등록';
   el('n-view').hidden = true;
+  noticeImgDefault();
   renderPreview();
+}
+/* ---------- 공지 본문 이미지 참부 ---------- */
+function noticeImgNote(msg, kind){
+  var n = el('n-img-note');
+  if (!n) return;
+  n.textContent = msg;
+  n.className = 'hint' + (kind ? ' ' + kind : '');
+}
+function noticeImgDefault(){
+  noticeImgNote('JPG·PNG·WebP·GIF · 2MB 이하 · 커서 위치에 바로 들어갑니다', '');
+}
+function noticeInsert(text){
+  var ta = el('n-body');
+  var s = (typeof ta.selectionStart === 'number') ? ta.selectionStart : ta.value.length;
+  var e = (typeof ta.selectionEnd === 'number') ? ta.selectionEnd : ta.value.length;
+  var before = ta.value.slice(0, s), after = ta.value.slice(e);
+  var pre = (before && !/\n$/.test(before)) ? '\n\n' : '';
+  var post = (after && !/^\n/.test(after)) ? '\n\n' : '';
+  var ins = pre + text + post;
+  ta.value = before + ins + after;
+  var pos = before.length + ins.length;
+  try { ta.selectionStart = ta.selectionEnd = pos; } catch(err){}
+  ta.focus();
+  renderPreview();
+}
+function noticeImgUpload(file){
+  var btn = el('n-img-btn');
+  if (!file) return;
+  var type = (file.type || '').toLowerCase();
+  if (!IMG_MIME[type] && !/\.(jpe?g|png|webp|gif)$/i.test(file.name || '')){
+    noticeImgNote('JPG·PNG·WebP·GIF 파일만 올릴 수 있습니다.', 'err'); el('n-img').value = ''; return;
+  }
+  if (file.size > 2097152){
+    noticeImgNote('이미지가 너무 큽니다(' + Math.round(file.size/1024) + 'KB). 2MB 이하로 줄여 주세요.', 'err');
+    el('n-img').value = ''; return;
+  }
+  btn.disabled = true;
+  noticeImgNote('업로드 중… (' + Math.round(file.size/1024) + 'KB)', 'busy');
+  var label = (file.name || '이미지').replace(/\.[^.]+$/, '');
+  uploadImage(file, 'nt').then(function(url){
+    noticeInsert('![' + label + '](' + url + ')');
+    noticeImgNote('본문에 넣었습니다. 오른쪽 미리보기에서 확인하고 저장을 누르세요.', 'busy');
+    toast('이미지를 본문에 넣었습니다');
+  }).catch(function(e){
+    noticeImgNote((e && e.message) || '이미지를 올리지 못했습니다.', 'err');
+  }).then(function(){ btn.disabled = false; el('n-img').value = ''; });
 }
 function plainPreview(body, n){
   var t = String(body || '');
@@ -1162,6 +1268,7 @@ function startNoticeEdit(n){
   el('n-save').textContent = '수정 저장';
   el('n-view').hidden = !n.published;
   el('n-view').href = 'notices.html?id=' + n.id;
+  noticeImgDefault();
   renderPreview();
   el('notice-form-t').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -1332,6 +1439,8 @@ el('n-save').onclick = saveNotice;
 el('n-reset').onclick = noticeFormReset;
 el('n-title').oninput = renderPreview;
 el('n-body').oninput = renderPreview;
+el('n-img-btn').onclick = function(){ el('n-img').click(); };
+el('n-img').onchange = function(){ noticeImgUpload(this.files && this.files[0]); };
 el('list-notice').onclick = function(e){
   var t = e.target;
   if (!t || !t.closest) return;
