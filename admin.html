@@ -1033,6 +1033,8 @@ function renderBanners(){
     : '<div class="empty"><b>올라간 배너가 없습니다</b>위에서 PC(1140×180)와 모바일(750×250) 이미지를 올리면 아카이브 맨 위에 한 장만 노출됩니다.</div>';
 }
 function loadBanners(){
+  var op = el('og-prev');
+  if (op) op.src = OG_URL + '?t=' + Date.now();
   el('list-banner').innerHTML = '<div class="empty">불러오는 중…</div>';
   return rest('banners?select=*&order=sort_order.asc,created_at.desc')
     .then(function(rows){ BANNERS = rows || []; renderBanners(); renderMetrics(); })
