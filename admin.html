@@ -362,6 +362,21 @@ h3.sec:first-child{margin-top:0}
           <button class="btn" id="b-reset">새 배너</button>
         </div>
       </div>
+      <div class="form">
+        <h3>사이트 대표 썸네일 (OG)</h3>
+        <p class="hint">카톡·SNS에 글반장 주소를 붙일 때 뜼는 이미지입니다. 1200×630 권장 · JPG·PNG·WebP·GIF · 2MB 이하. 올리면 같은 주소로 덮어써 바로 교체됩니다(GIF는 첫 장면만).</p>
+        <div class="brow" style="margin-top:12px">
+          <div class="bthumb" style="width:240px"><img id="og-prev" src="https://newrangx.github.io/banjang/og.png" alt="지금 썸네일"></div>
+          <div class="bmeta">
+            <div id="og-url" style="word-break:break-all">https://ecwrolumnuajrkqmzeds.supabase.co/storage/v1/object/public/banners/og-thumbnail.png</div>
+            <div class="row-f" style="margin-top:10px">
+              <input id="og-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif" style="max-width:280px">
+              <button class="btn solid" id="og-save">썸네일 교체</button>
+            </div>
+            <p class="hint" id="og-note">바꾼 터로 카톡·SNS는 이미지를 한동안 저장해 둔 뒤 보여 줍니다. 새 이미지가 바로 안 보일 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
       <p class="meta" id="meta-banner"></p>
       <div class="list" id="list-banner"><div class="empty">불러오는 중…</div></div>
     </div>
@@ -1024,6 +1039,70 @@ function loadBanners(){
     .catch(function(e){ el('list-banner').innerHTML = '<div class="empty">배너를 불러오지 못했습니다.<br>' + esc(e.message) + '</div>'; });
 }
 var IMG_MIME = { 'image/jpeg':1, 'image/png':1, 'image/webp':1, 'image/gif':1 };
+/* ---------- 사이트 대표 썸네일(OG) ---------- */
+var OG_PATH = 'og-thumbnail.png';
+var OG_URL = SB_URL + '/storage/v1/object/public/banners/' + OG_PATH;
+function ogNote(msg, kind){
+  var n = el('og-note');
+  if (!n) return;
+  n.textContent = msg;
+  n.className = 'hint' + (kind ? ' ' + kind : '');
+}
+function toPngBlob(file){
+  if ((file.type || '').toLowerCase() === 'image/png') return Promise.resolve(file);
+  return new Promise(function(res, rej){
+    var img = new Image(), url = URL.createObjectURL(file);
+    img.onload = function(){
+      try {
+        var c = document.createElement('canvas');
+        c.width = img.naturalWidth; c.height = img.naturalHeight;
+        c.getContext('2d').drawImage(img, 0, 0);
+        c.toBlob(function(b){ URL.revokeObjectURL(url); b ? res(b) : rej(new Error('이미지를 PNG로 바꾸지 못했습니다.')); }, 'image/png');
+      } catch(e){ URL.revokeObjectURL(url); rej(new Error('이미지를 PNG로 바꾸지 못했습니다.')); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error('이미지를 읽지 못했습니다.')); };
+    img.src = url;
+  });
+}
+function ogUpload(file){
+  if (!file) return;
+  var note = el('og-note'), btn = el('og-save');
+  if (!IMG_MIME[(file.type || '').toLowerCase()]){
+    ogNote('JPG·PNG·WebP·GIF 파일만 올릴 수 있습니다.', 'err'); el('og-file').value = ''; return;
+  }
+  if (file.size > 2097152){
+    ogNote('이미지가 너무 큽니다(' + Math.round(file.size/1024) + 'KB). 2MB 이하로 줄여 주세요.', 'err'); el('og-file').value = ''; return;
+  }
+  btn.disabled = true;
+  ogNote('업로드 중… (' + Math.round(file.size/1024) + 'KB)', 'busy');
+  toPngBlob(file).then(function(blob){
+    if (blob.size > 2097152) throw new Error('PNG로 바꾸면 ' + Math.round(blob.size/1024) + 'KB가 되어 2MB를 넘습니다. 더 작은 이미지로 올려 주세요.');
+    return ensureToken().then(function(s){
+      return fetch(SB_URL + '/storage/v1/object/banners/' + OG_PATH, {
+        method: 'POST',
+        headers: {
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + s.access_token,
+          'Content-Type': 'image/png',
+          'cache-control': '60',
+          'x-upsert': 'true'
+        },
+        body: blob
+      });
+    });
+  }).then(function(r){
+    if (!r.ok) return r.text().then(function(t){
+      if (r.status === 413) throw new Error('이미지가 너무 큽니다. 2MB 이하로 줄여 주세요.');
+      throw new Error('업로드 실패 (' + r.status + ') ' + String(t).slice(0,140));
+    });
+    var prev = el('og-prev');
+    if (prev) prev.src = OG_URL + '?t=' + Date.now();
+    ogNote('대표 썸네일을 바꿨습니다. 카톡·SNS는 한동안 예전 이미지를 보여 줄 수 있습니다.', 'busy');
+    toast('대표 썸네일을 교체했습니다');
+  }).catch(function(e){
+    ogNote((e && e.message) || '썸네일을 올리지 못했습니다.', 'err');
+  }).then(function(){ btn.disabled = false; el('og-file').value = ''; });
+}
 function uploadImage(file, prefix){
   var m = (file.name || '').match(/\.(webp|png|jpe?g|gif)$/i);
   var type = (file.type || '').toLowerCase();
@@ -1410,6 +1489,7 @@ el('heart-all').onclick = function(){ HEART_ALL = !HEART_ALL; loadHeart(); };
 /* banners */
 el('b-save').onclick = saveBanner;
 el('b-reset').onclick = bannerFormReset;
+el('og-save').onclick = function(){ ogUpload(el('og-file').files && el('og-file').files[0]); };
 el('list-banner').onclick = function(e){
   var t = e.target;
   if (!t || !t.closest) return;

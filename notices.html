@@ -67,6 +67,21 @@ main{padding:34px 0 0}
 h1.page{margin:0 0 6px;font-size:26px;letter-spacing:-.03em;font-weight:600;line-height:1.25}
 .page-sub{margin:0 0 26px;color:var(--muted);font-size:14px;line-height:1.7}
 .list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+/* 2026-11-26: 카드 그리드 */
+.ncards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ncard{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);border-radius:16px;overflow:hidden;
+  transition:border-color .15s, transform .15s}
+.ncard:hover{border-color:var(--line-strong)}
+.ncard .thumb{position:relative;aspect-ratio:16/9;background:var(--pill);overflow:hidden}
+.ncard .thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.ncard .thumb .pin{position:absolute;left:10px;top:10px}
+.ncard .bd{padding:15px 17px 17px;display:flex;flex-direction:column;gap:8px}
+.ncard .ti{margin:0;font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:1.45;word-break:keep-all;
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;transition:color .15s}
+.ncard:hover .ti{color:var(--gold)}
+.ncard .dt{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+@media(max-width:900px){.ncards{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
+@media(max-width:600px){.ncards{grid-template-columns:1fr;gap:12px}.ncard .ti{font-size:15.5px}}
 .item{display:block;padding:16px 2px;border-bottom:1px solid var(--line)}
 .item:hover .ti{color:var(--gold)}
 .item .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -212,6 +227,16 @@ function excerpt(body){
 }
 
 /* ---------- list ---------- */
+var OG_FALLBACK = 'https://newrangx.github.io/banjang/og.png';
+function firstImage(body){
+  var m = String(body || '').match(/!\[[^\]\n]*\]\((https?:\/\/[^\s)]+)\)/);
+  return m ? m[1] : '';
+}
+function thumbURL(body){
+  var u = firstImage(body);
+  if (u) return u;
+  return location.hostname === 'newrangx.github.io' ? OG_FALLBACK : 'og.png';
+}
 function renderList(rows){
   var v = el('view');
   if (!rows || !rows.length){
@@ -220,12 +245,12 @@ function renderList(rows){
     return;
   }
   v.innerHTML = '<h1 class="page">공지사항</h1><p class="page-sub">글반장 아카이브 소식과 안내입니다. 총 ' + rows.length + '건.</p>' +
-    '<div class="list">' + rows.map(function(n){
-      return '<a class="item" href="notices.html?id=' + n.id + '">' +
-        '<div class="hd">' + (n.is_pinned ? '<span class="pin">고정</span>' : '') +
+    '<div class="ncards">' + rows.map(function(n){
+      return '<a class="ncard" href="notices.html?id=' + n.id + '">' +
+        '<div class="thumb"><img src="' + esc(thumbURL(n.body)) + '" alt="" loading="lazy" decoding="async">' +
+          (n.is_pinned ? '<span class="pin">고정</span>' : '') + '</div>' +
+        '<div class="bd"><h2 class="ti">' + esc(n.title) + '</h2>' +
           '<span class="dt">' + esc(fmtDate(n.created_at)) + '</span></div>' +
-        '<h2 class="ti">' + esc(n.title) + '</h2>' +
-        (n.body ? '<p class="excerpt">' + excerpt(n.body) + '</p>' : '') +
       '</a>';
     }).join('') + '</div>';
 }
