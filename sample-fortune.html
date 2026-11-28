@@ -1200,7 +1200,8 @@ function runFortune(y, m, d, hour, cal, isLeap){
   }
 
   var pillars = fourPillars(solar.y, solar.m, solar.d, hour);
-  var key = hash32(solar.y + '-' + solar.m + '-' + solar.d + '-' + (hour==null?'x':hour) + '-' + cal).toString(36);
+  /* 양력·음력 어느 쪽으로 넣어도 같은 사람이면 같은 처방이 나오도록 양력 날짜로 키를 만든다 */
+  var key = hash32(solar.y + '-' + solar.m + '-' + solar.d + '-' + (hour==null?'x':hour)).toString(36);
 
   render({
     key:key, cal:cal,
