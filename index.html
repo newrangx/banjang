@@ -1239,7 +1239,8 @@ function shareQuote(num, from){
   var url = 'https://newrangx.github.io/banjang/#s=' + num;
   var text = it ? (it[TXT] + '\n— ' + it[AUTH]) : '';
   if (navigator.share){
-    navigator.share({ title: (it ? it[AUTH] : '글반장 문장 아카이브'), text: text || url, url: url })
+    /* 안드로이드·카카오톡이 title을 본문 앞에 '출처 - '로 붙여 출처가 두 번 나오던 문제 → title 없이 본문·링크만 넘긴다 */
+    navigator.share(text ? { text: text, url: url } : { text: url })
       .then(function(){ gbEvent('share_kakao', { quote_num: num, from: from, via: 'webshare' }); })
       .catch(function(err){
         if (err && err.name === 'AbortError') return;
