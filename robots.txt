@@ -2,4 +2,45 @@ User-agent: *
 Allow: /
 Disallow: /banjang/admin.html
 
+# AI 검색·답변 엔진 크롤러 — 아카이브 본문 열람 허용 (관리자 화면은 제외)
+User-agent: GPTBot
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: OAI-SearchBot
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: ChatGPT-User
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: ClaudeBot
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: Claude-Web
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: Google-Extended
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: PerplexityBot
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: Applebot-Extended
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: Bingbot
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
+User-agent: Yeti
+Allow: /banjang/
+Disallow: /banjang/admin.html
+
 Sitemap: https://newrangx.github.io/banjang/sitemap.xml
