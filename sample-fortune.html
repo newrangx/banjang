@@ -867,11 +867,12 @@ function poolFor(axis, pole, opt){
   opt = opt || {};
   var maxLen = opt.maxLen || 140, minRel = opt.minRel || 100;
   return DATA.items.filter(function(it){
-    return it[3] === axis && it[4] === pole && it[5] >= minRel && it[1].length <= maxLen;
+    return it[3] === axis && it[4] === pole && it[5] >= minRel &&
+           it[1].length >= 15 && it[1].length <= maxLen;
   });
 }
 function choosePool(axis, pole, seed, exclude){
-  var ladder = [{maxLen:140,minRel:100},{maxLen:200,minRel:100},{maxLen:320,minRel:60},{maxLen:4000,minRel:0}];
+  var ladder = [{maxLen:90,minRel:120},{maxLen:110,minRel:100},{maxLen:150,minRel:100},{maxLen:240,minRel:60},{maxLen:4000,minRel:0}];
   for(var i=0;i<ladder.length;i++){
     var p = poolFor(axis, pole, ladder[i]);
     if(exclude) p = p.filter(function(it){ return exclude.indexOf(it[0]) < 0; });
@@ -1163,6 +1164,13 @@ el('go').addEventListener('click', function(){
 el('lastGo').addEventListener('click', function(){
   if(!DATA) return;
   var o = lastProfile(); if(!o) return;
+  state.cal = o.cal === 'lunar' ? 'lunar' : 'solar';
+  el('cal-solar').setAttribute('aria-pressed', state.cal === 'solar' ? 'true' : 'false');
+  el('cal-lunar').setAttribute('aria-pressed', state.cal === 'lunar' ? 'true' : 'false');
+  el('f-year').value = o.y; el('f-month').value = o.m;
+  if(state.syncLeap) state.syncLeap();
+  el('f-day').value = o.d; el('f-hour').value = o.h == null ? '' : o.h;
+  el('f-leap').checked = !!o.leap;
   runFortune(o.y, o.m, o.d, o.h, o.cal, !!o.leap);
 });
 
