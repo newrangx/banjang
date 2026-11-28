@@ -1239,7 +1239,7 @@ function shareQuote(num, from){
   var url = 'https://newrangx.github.io/banjang/#s=' + num;
   var text = it ? (it[TXT] + '\n— ' + it[AUTH]) : '';
   if (navigator.share){
-    navigator.share({ title: '글반장 · ' + (it ? it[AUTH] : '문장 아카이브'), text: text || url, url: url })
+    navigator.share({ title: (it ? it[AUTH] : '글반장 문장 아카이브'), text: text || url, url: url })
       .then(function(){ gbEvent('share_kakao', { quote_num: num, from: from, via: 'webshare' }); })
       .catch(function(err){
         if (err && err.name === 'AbortError') return;
