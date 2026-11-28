@@ -114,11 +114,13 @@ header.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-b
 .btn.solid:hover{filter:brightness(1.06)}
 .btn.solid[disabled]{opacity:.5;cursor:default;filter:none}
 .btn.small{min-height:38px;font-size:13px;padding:8px 12px}
-.examples{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
-.examples .ex{font-size:12.5px;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:6px 11px}
+.examples{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.examples .ex{font-size:12.5px;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:6px 11px}
 .examples .ex:hover{color:var(--text);border-color:var(--line-strong)}
-.privacy{margin:14px 0 0;font-size:12.5px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.55}
-.privacy svg{flex:0 0 auto;margin-top:2px;width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6}
+.lastbar{display:none;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between;
+  margin-top:14px;border:1px dashed var(--accent-line);background:var(--accent-soft);border-radius:11px;padding:9px 13px;font-size:13px;color:var(--muted)}
+.lastbar.on{display:flex}
+.lastbar b{color:var(--text);font-weight:600}
+.privacy{margin:14px 0 0;font-size:12.5px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.55}.privacy svg{flex:0 0 auto;margin-top:2px;width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6}
 
 /* result */
 #result{margin-top:26px;scroll-margin-top:76px}
@@ -266,6 +268,10 @@ footer a{border-bottom:1px solid var(--line-strong);padding-bottom:1px}
       <button class="btn solid" id="go" type="button" disabled>오늘의 처방 받기</button>
       <span class="mono" id="dataState" style="font-size:12.5px;color:var(--muted)">문장 데이터 불러오는 중…</span>
     </div>
+    <div class="lastbar" id="lastWrap" hidden>
+      <span id="lastText"></span>
+      <button class="btn small" type="button" id="lastGo">바로 보기</button>
+    </div>
     <div class="examples" id="examples">
       <button class="ex" type="button" data-y="1980" data-m="6" data-d="4" data-h="">1980-06-04 · 시간 모름</button>
       <button class="ex" type="button" data-y="1972" data-m="8" data-d="15" data-h="7">1972-08-15 · 07시</button>
@@ -311,11 +317,11 @@ footer a{border-bottom:1px solid var(--line-strong);padding-bottom:1px}
             <b id="b-title">반대 관점 균형추</b>
             <span id="b-sub">오늘 고른 쪽의 반대편 문장을 봅니다</span>
           </div>
-          <button class="switch" id="bal-toggle" type="button" aria-pressed="false" aria-controls="bal-body">
-            <span class="dot"></span><span id="bal-label">반대편 보기</span>
+          <button class="switch" id="bal-toggle" type="button" aria-pressed="true" aria-controls="bal-body">
+            <span class="dot"></span><span id="bal-label">반대편 접기</span>
           </button>
         </div>
-        <div class="balbody" id="bal-body"></div>
+        <div class="balbody open" id="bal-body"></div>
       </div>
     </section>
 
@@ -1004,7 +1010,7 @@ function render(profile){
       else copyText(txt, '공유 문구를 복사했습니다');
     });
     var b3 = document.createElement('a'); b3.className = 'btn small';
-    var kw = it[6].length ? DATA.kws[it[6][0]] : '';
+    var kw = searchTermOf(it);
     b3.href = kw ? ('index.html?q=' + encodeURIComponent(kw)) : 'index.html';
     b3.textContent = '글반장에서 비슷한 문장 더 보기';
     acts.appendChild(b1); acts.appendChild(b2); acts.appendChild(b3);
@@ -1052,14 +1058,16 @@ function render(profile){
   tgw.appendChild(av); tgw.appendChild(bub);
   tg.appendChild(tgw);
 
-  /* ── 키워드 칩 ── */
+  /* ── 키워드 칩 (아카이브 검색과 실제로 연결되는 태그) ── */
   var chips = el('chips'); chips.textContent = '';
-  var kwSet = [];
-  picked.forEach(function(it){ it[6].forEach(function(k2){ if(kwSet.indexOf(k2) < 0) kwSet.push(k2); }); });
-  kwSet.slice(0,6).forEach(function(k2){
+  var tagSet = [];
+  picked.forEach(function(it){
+    it[7].forEach(function(t){ if(tagSet.indexOf(t) < 0) tagSet.push(t); });
+  });
+  tagSet.slice(0,6).forEach(function(t){
     var a = document.createElement('a'); a.className = 'chip';
-    a.href = 'index.html?q=' + encodeURIComponent(DATA.kws[k2]);
-    a.textContent = '#' + DATA.kws[k2];
+    a.href = 'index.html?q=' + encodeURIComponent(DATA.tags[t]);
+    a.textContent = '#' + DATA.tags[t];
     chips.appendChild(a);
   });
 
@@ -1106,8 +1114,13 @@ function render(profile){
   setTimeout(function(){ res.scrollIntoView({behavior:'smooth', block:'start'}); }, 60);
 }
 
-function Ganji(p){
-  var s = GAN[p.year.stem] + ZHI[p.year.branch] + ' ' + GAN[p.month.stem] + ZHI[p.month.branch] + ' ' + GAN[p.day.stem] + ZHI[p.day.branch];
+function searchTermOf(it){
+  var tags = it[7] || [], i;
+  for(i=0;i<tags.length;i++){ if((DATA.tags[tags[i]]||'').length >= 2) return DATA.tags[tags[i]]; }
+  return tags.length ? DATA.tags[tags[0]] : '';
+}
+
+function Ganji(p){  var s = GAN[p.year.stem] + ZHI[p.year.branch] + ' ' + GAN[p.month.stem] + ZHI[p.month.branch] + ' ' + GAN[p.day.stem] + ZHI[p.day.branch];
   if(p.hour) s += ' ' + GAN[p.hour.stem] + ZHI[p.hour.branch];
   return s;
 }
@@ -1142,15 +1155,33 @@ el('tab-tg').addEventListener('click', function(){
 
 el('go').addEventListener('click', function(){
   if(!DATA) return;
+  runFortune(+el('f-year').value, +el('f-month').value, +el('f-day').value,
+             el('f-hour').value === '' ? null : +el('f-hour').value,
+             state.cal, el('f-leap').checked);
+});
+
+el('lastGo').addEventListener('click', function(){
+  if(!DATA) return;
+  var o = lastProfile(); if(!o) return;
+  runFortune(o.y, o.m, o.d, o.h, o.cal, !!o.leap);
+});
+
+function lastProfile(){
+  try{ return JSON.parse(localStorage.getItem('gb_f_last') || 'null'); }catch(e){ return null; }
+}
+function showLast(){
+  var o = lastProfile(); if(!o) return;
+  var wrap = el('lastWrap');
+  el('lastText').innerHTML = '지난번 입력 <b>' + o.y + '-' + pad(o.m) + '-' + pad(o.d) +
+    (o.h == null ? ' · 시간 모름' : ' · ' + pad(o.h) + '시') + (o.cal === 'lunar' ? ' · 음력' : '') + '</b>';
+  wrap.classList.add('on');
+}
+
+function runFortune(y, m, d, hour, cal, isLeap){
   hideErr();
-  var y = +el('f-year').value, m = +el('f-month').value, d = +el('f-day').value;
-  var hv = el('f-hour').value;
-  var hour = hv === '' ? null : +hv;
   var solar = {y:y, m:m, d:d};
-  var cal = state.cal;
 
   if(cal === 'lunar'){
-    var isLeap = el('f-leap').checked;
     if(isLeap && leapMonth(y) !== m){ showErr('선택한 음력 ' + y + '년 ' + m + '월에는 윤달이 없습니다.'); return; }
     var maxD = lunarMonthMax(y, m, isLeap);
     if(d > maxD){ showErr('음력 ' + y + '년 ' + (isLeap?'윤':'') + m + '월은 ' + maxD + '일까지입니다.'); return; }
@@ -1165,10 +1196,15 @@ el('go').addEventListener('click', function(){
 
   render({
     key:key, cal:cal,
-    input:{y:y,m:m,d:d,leap:el('f-leap').checked},
+    input:{y:y,m:m,d:d,leap:isLeap},
     solar:solar, hour:hour, pillars:pillars
   });
-});
+
+  try{ localStorage.setItem('gb_f_last', JSON.stringify({y:y,m:m,d:d,h:hour,cal:cal,leap:!!isLeap})); }catch(e){}
+  showLast();
+}
+
+showLast();
 })();
 </script>
 </body>
