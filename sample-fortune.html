@@ -1012,7 +1012,8 @@ function render(profile){
     var b2 = document.createElement('button'); b2.type = 'button'; b2.className = 'btn small'; b2.textContent = '공유 문구';
     b2.addEventListener('click', function(){
       var txt = it[1] + '\n— ' + it[2] + '\n\n글반장 · 오늘의 처방 (No.' + it[0] + ')\nhttps://newrangx.github.io/banjang/sample-fortune.html';
-      if(navigator.share){
+      /* 공유 시트는 손가락 기기에서만: 데스크톱은 문구를 복사한다 */
+      if(navigator.share && window.matchMedia && window.matchMedia('(pointer: coarse)').matches){
         navigator.share({title:'글반장 오늘의 처방', text:txt}).catch(function(err){
           if(err && err.name === 'AbortError') return;      /* 사용자가 공유 시트를 닫은 경우 */
           copyText(txt, '공유 문구를 복사했습니다');
