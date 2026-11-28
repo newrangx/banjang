@@ -292,6 +292,7 @@ footer a{border-bottom:1px solid var(--line-strong);padding-bottom:1px}
         <p class="lbl">왜 오늘 이 문장인가</p>
         <p id="r-bridge1"></p>
         <p id="r-bridge2"></p>
+        <p id="r-bridge3"></p>
       </div>
     </div>
 
@@ -683,6 +684,14 @@ var AXIS_LINE = [
   ['오늘은 숫자를 확인하는 날입니다. 통장과 고정지출을 10분만 들여다보십시오.',
    '오늘은 돈으로 계산되지 않는 것에 시간을 쓰는 날입니다. 다만 내일의 지출은 오늘 정해 두십시오.']
 ];
+/* 십신 짧은 설명 */
+var GOD_PLAIN = {
+  '비견':'같은 기운끼리 나란히 서는 자리', '겁재':'내 몫을 나눠야 하는 자리',
+  '식신':'기운이 밖으로 나가는 자리', '상관':'표현이 세지는 자리',
+  '편재':'바깥의 조건이 눈에 들어오는 자리', '정재':'쌓고 관리하는 자리',
+  '편관':'압박이 들어오는 자리', '정관':'자리를 지켜야 하는 자리',
+  '편인':'생각이 안으로 깊어지는 자리', '정인':'받아들이고 소화하는 자리'
+};
 /* 십신 한 줄 */
 var GOD_LINE = {
   '비견':'오늘의 간은 내 간과 같은 기운입니다. 내 속도와 남의 속도가 부딪히기 쉬운 날입니다.',
@@ -698,6 +707,21 @@ var GOD_LINE = {
 };
 /* 오행 과다/부족 한 줄 */
 var EL_LINE = {
+  gift:['시작하는','표현하는','버티는','정리하는','가라앉히는'],
+  over:[
+    '벌인 일이 많아지기 쉽습니다.',
+    '말이 앞서기 쉽습니다.',
+    '익숙한 것에 머물기 쉽습니다.',
+    '사람을 정리하는 쪽으로 기웁니다.',
+    '생각이 많아지기 쉽습니다.'
+  ],
+  empty:[
+    '새 일을 벌이기보다 하나를 마무리하는 편이 낫습니다.',
+    '말이 잘 안 나와도 이상한 일이 아닙니다.',
+    '오래 걸리는 일은 오늘 시작하지 않는 편이 낫습니다.',
+    '미뤄 둔 정리 하나를 오늘 처리하십시오.',
+    '잠과 쉼을 일정에 넣으십시오.'
+  ],
   lack:[
     '시작하는 힘이 조금 얇습니다. 새 일을 벌이기보다 하나를 마무리하는 편이 낫습니다.',
     '표현하는 힘이 얇습니다. 오늘 말이 잘 안 나와도 이상한 일이 아닙니다.',
@@ -927,7 +951,8 @@ function render(profile){
   /* 축 2개 (+충·합 보조축) */
   var seed = hash32(profile.key + '|' + todayStr);
   var sup = SUPPLY[lack], exc = EXCESS[excess], gax = GOD_AXIS[god];
-  var a1c = (counts[excess] >= 3 && counts[lack] === 0) ? exc : sup;
+  var useExcess = (counts[excess] >= 3 && counts[lack] === 0);
+  var a1c = useExcess ? exc : sup;
   var a1 = a1c[seed % a1c.length];
   var a2axis = gax[(seed >>> 5) % gax.length];
   if(a2axis === a1[0]) a2axis = gax[(gax.indexOf(a2axis)+1) % gax.length];
@@ -942,16 +967,19 @@ function render(profile){
 
   /* ── 머리 ── */
   el('r-date').textContent = today.y + '년 ' + today.m + '월 ' + today.d + '일 (' + today.dow + ')';
-  el('r-ganji').textContent = GAN[today.stem] + ZHI[today.branch] + '일';
+  el('r-ganji').textContent = GAN[today.stem] + ZHI[today.branch] + '(' + GANH[today.stem] + ZHIH[today.branch] + ')일';
   el('r-mood').textContent = GOD_LINE[god];
-  el('r-moodsub').textContent = EL_LINE.lack[lack];
+  el('r-moodsub').textContent = useExcess ? EL_LINE.excess[excess] : EL_LINE.lack[lack];
 
   var axisName = DATA.pairs[a1[0]][a1[1]];
   el('r-bridge1').textContent =
     '태어난 날의 간은 ' + GAN[p.day.stem] + '(' + GANH[p.day.stem] + '·' + EL_NAME[GAN_EL[p.day.stem]] + ')이고, 오늘의 간은 ' +
-    GAN[today.stem] + '(' + GANH[today.stem] + '·' + EL_NAME[GAN_EL[today.stem]] + ')입니다. ' +
-    '오늘 내게 걸린 자리는 ' + god + '이라, 문장은 [ ' + axisName + ' ] 쪽에서 골랐습니다.';
-  el('r-bridge2').textContent = AXIS_LINE[a1[0]][a1[1]];
+    GAN[today.stem] + '(' + GANH[today.stem] + '·' + EL_NAME[GAN_EL[today.stem]] + ')입니다. 오늘 내게 걸린 자리는 ' +
+    god + ' — ' + GOD_PLAIN[god] + '입니다.';
+  el('r-bridge2').textContent = useExcess
+    ? '타고난 글자에 ' + EL_LINE.gift[excess] + ' 기운이 유난히 많습니다. ' + EL_LINE.over[excess] + ' 그래서 오늘은 [ ' + axisName + ' ] 쪽에서 골랐습니다.'
+    : '타고난 글자에 ' + EL_LINE.gift[lack] + ' 기운이 비어 있습니다. ' + EL_LINE.empty[lack] + ' 그래서 오늘은 [ ' + axisName + ' ] 쪽에서 골랐습니다.';
+  el('r-bridge3').textContent = AXIS_LINE[a1[0]][a1[1]];
 
   /* ── 문장 3선 ── */
   var qbox = el('quotes'); qbox.textContent = '';
