@@ -905,7 +905,12 @@ function selectQuotes(plan, todayStr, profileKey){
     var pool = choosePool(p.axis, p.pole, seedBase + idx, picked.map(function(x){ return x[0]; }));
     var fresh = pool.filter(function(it){ return !seen30[it[0]]; });
     var fresh7 = fresh.filter(function(it){ return !seen7[it[0]]; });
-    var ordered = shuffle(fresh7.length ? fresh7 : (fresh.length ? fresh : pool), seedBase + idx*7919);
+    var cand = fresh7.length ? fresh7 : (fresh.length ? fresh : pool);
+    /* 인기지수 상위 밴드에서 고른다: 관련도 + 날짜 시드 지터로 상위 10건 → 시드 셔플 */
+    var ranked = cand.map(function(it){
+      return { it: it, s: it[5] + (hash32(seedBase + ':' + idx + ':' + it[0]) % 60) };
+    }).sort(function(a,b){ return b.s - a.s; }).slice(0, 10).map(function(x){ return x.it; });
+    var ordered = shuffle(ranked, seedBase + idx*7919);
     if(!ordered.length){
       var any = choosePool(p.axis, p.pole, seedBase + idx, picked.map(function(x){ return x[0]; }));
       ordered = shuffle(any, seedBase + idx*7919);
